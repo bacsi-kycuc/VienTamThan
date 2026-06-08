@@ -979,13 +979,13 @@ function toggleAdminPanel() {
 
 function openAdminPanel() {
   if (isAdmin) {
+    clearAdminForm();
     document.getElementById('adminPanelModal').classList.remove('hidden');
   }
 }
 
 function closeAdminPanel() {
   document.getElementById('adminPanelModal').classList.add('hidden');
-  clearAdminForm();
 }
 
 function closeAdminLoginModal() {
@@ -1090,6 +1090,9 @@ function editPrompt(id) {
   renderTagPrev('genre');
   renderTagPrev('tag');
   togglePwFields();
+  
+  closeViewModal();
+  openAdminPanel();
 }
 
 function deletePrompt(id) {
@@ -1203,7 +1206,6 @@ function unlockPrompt(id) {
   unlockTargetId = id;
   const prompt = prompts.find(p => p.id === id);
   document.getElementById('unlockBotName').textContent = prompt.name;
-  
   if (prompt.hint) {
     document.getElementById('unlockHintWrap').textContent = `💡 ${escHtml(prompt.hint)}`;
     document.getElementById('unlockHintWrap').style.display = 'block';
@@ -1240,9 +1242,9 @@ function closeUnlockModal() {
 // ===== INIT =====
 window.addEventListener('DOMContentLoaded', () => {
   load();
-  renderPrompts();
   checkAdminSession();
   updateAdminStatus();
+  renderPrompts();
 });
 </script>
 </body>
