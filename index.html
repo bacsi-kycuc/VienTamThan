@@ -201,7 +201,7 @@
     color: var(--text3); font-size: 16px; pointer-events: none;
   }
 
-  input[type="text"], input[type="password"], textarea, select {
+  input[type="text"], input[type="password"], input[type="email"], textarea, select {
     background: rgba(30,40,56,0.5);
     border: 1.5px solid var(--border2);
     border-radius: 10px;
@@ -214,7 +214,7 @@
     outline: none;
   }
 
-  input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+  input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
     border-color: var(--primary);
     background: rgba(30,40,56,0.8);
     box-shadow: 0 0 0 3px rgba(0,212,255,0.1), inset 0 0 20px rgba(0,212,255,0.05);
@@ -222,115 +222,6 @@
 
   .search-wrap input { padding-left: 48px; }
   select { appearance: none; cursor: pointer; }
-
-  /* CATEGORY SECTION */
-  .categories-section {
-    background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(255,0,107,0.04) 100%);
-    border: 2px solid var(--primary);
-    border-radius: 16px;
-    padding: 28px;
-    margin-bottom: 36px;
-    box-shadow: 0 8px 32px rgba(0,212,255,0.08);
-  }
-
-  .categories-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 20px;
-    display: flex; align-items: center; gap: 10px;
-  }
-
-  .categories-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 14px;
-  }
-
-  .category-btn {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 18px 14px;
-    background: linear-gradient(135deg, rgba(30,40,56,0.6) 0%, rgba(42,58,79,0.4) 100%);
-    border: 2px solid var(--border2);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-align: center;
-    gap: 10px;
-    font-weight: 600;
-  }
-
-  .category-btn:hover {
-    border-color: var(--primary);
-    background: linear-gradient(135deg, rgba(0,212,255,0.15) 0%, rgba(0,212,255,0.05) 100%);
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(0,212,255,0.15);
-  }
-
-  .category-btn.active {
-    background: linear-gradient(135deg, rgba(0,212,255,0.2) 0%, rgba(0,212,255,0.08) 100%);
-    border-color: var(--primary);
-    box-shadow: var(--glow), 0 0 0 3px rgba(0,212,255,0.1);
-  }
-
-  .category-icon { font-size: 28px; }
-  
-  .category-name {
-    font-family: 'Fredoka', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .category-count {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--primary-light);
-    background: rgba(0,212,255,0.15);
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-weight: 600;
-  }
-
-  .tags-row {
-    display: flex; gap: 10px; flex-wrap: wrap;
-    margin-bottom: 32px;
-    align-items: center;
-  }
-
-  .tag-filter {
-    padding: 7px 16px;
-    border-radius: 20px;
-    border: 1.5px solid var(--border2);
-    background: transparent;
-    color: var(--text2);
-    font-family: 'Fredoka', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.25s;
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-  }
-
-  .tag-filter:hover { 
-    border-color: var(--primary);
-    color: var(--primary-light);
-    background: rgba(0,212,255,0.08);
-  }
-
-  .tag-filter.active { 
-    background: rgba(0,212,255,0.15); 
-    border-color: var(--primary); 
-    color: var(--primary-light);
-    box-shadow: var(--glow);
-  }
 
   .section-header {
     display: flex; align-items: baseline; gap: 14px;
@@ -370,7 +261,7 @@
     cursor: pointer;
     transition: all 0.3s;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     animation: fadeUp 0.5s ease both;
   }
 
@@ -393,7 +284,6 @@
   }
 
   .prompt-card:hover::before { opacity: 1; }
-  .prompt-card.locked .card-content { filter: blur(3px); user-select: none; pointer-events: none; }
 
   .card-top {
     display: flex; align-items: flex-start; justify-content: space-between;
@@ -409,29 +299,15 @@
     flex: 1;
   }
 
-  .card-badges { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
-  
-  .lock-badge {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    border: 1.5px solid var(--border2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    background: rgba(30,40,56,0.6);
-    color: var(--text3);
-  }
-
-  .lock-badge.locked { 
-    border-color: var(--danger); 
-    color: var(--danger); 
-    background: rgba(255,71,87,0.1);
-    box-shadow: 0 0 15px rgba(255,71,87,0.2);
-  }
-
-  .lock-badge.unlocked { 
-    border-color: var(--success); 
-    color: var(--success); 
-    background: rgba(0,217,126,0.1);
+  .lock-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--danger);
+    background: rgba(255,71,87,0.15);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    white-space: nowrap;
   }
 
   .card-desc {
@@ -469,43 +345,6 @@
     border: 1px solid rgba(255,0,107,0.4); 
     color: var(--accent-light);
   }
-
-  .card-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    border-top: 1px solid var(--border);
-    padding-top: 14px;
-    margin-top: 8px;
-  }
-
-  .card-link {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 160px;
-    font-weight: 500;
-  }
-
-  .card-actions { display: flex; gap: 6px; }
-
-  .lock-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(15,20,25,0.9);
-    border-radius: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    backdrop-filter: blur(8px);
-    z-index: 5;
-  }
-
-  .lock-overlay .lock-icon { font-size: 40px; }
-  .lock-overlay p { font-size: 14px; color: var(--text2); text-align: center; max-width: 200px; }
 
   .modal-bg {
     position: fixed; inset: 0;
@@ -631,7 +470,7 @@
     font-weight: 600;
   }
 
-  .pw-toggle input[type="checkbox"] { width: auto; accent-color: var(--primary); cursor: pointer; width: 18px; height: 18px; }
+  .pw-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
   .pw-fields { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
   .pw-fields.hidden { display: none; }
 
@@ -729,6 +568,20 @@
   .toast-icon { font-size: 20px; font-weight: 700; }
   .toast.fade-out { animation: fadeOut 0.3s ease forwards; }
 
+  .admin-status {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--primary-light);
+    font-weight: 600;
+  }
+
+  .admin-badge {
+    background: rgba(0,212,255,0.2);
+    border: 1px solid var(--primary);
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -740,7 +593,6 @@
     main { padding: 24px 20px; }
     .form-row { grid-template-columns: 1fr; }
     .logo-text { font-size: 18px; }
-    .categories-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
     .section-title { font-size: 20px; }
   }
 </style>
@@ -762,6 +614,10 @@
       </div>
     </div>
     <div class="header-actions">
+      <div id="adminStatusInfo" class="admin-status" style="display:none">
+        <span id="adminEmail"></span>
+        <span class="admin-badge">👑 ADMIN</span>
+      </div>
       <button class="btn btn-gold" id="adminBtn" onclick="toggleAdminPanel()">⚙ Admin</button>
     </div>
   </header>
@@ -779,15 +635,6 @@
       </select>
     </div>
 
-    <!-- CATEGORIES BROWSER -->
-    <div class="categories-section" id="categoriesSection" style="display:none">
-      <div class="categories-title">📂 Duyệt theo Thể Loại</div>
-      <div class="categories-grid" id="categoriesGrid"></div>
-    </div>
-
-    <!-- ACTIVE FILTERS -->
-    <div id="tagsRow" class="tags-row"></div>
-
     <!-- RESULTS -->
     <div class="section-header">
       <span class="section-title">💊 Khu Prompts</span>
@@ -798,14 +645,46 @@
   </main>
 </div>
 
-<!-- ADD / EDIT MODAL -->
-<div class="modal-bg hidden" id="addModal">
-  <div class="modal modal-lg">
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-bg hidden" id="adminLoginModal">
+  <div class="modal">
     <div class="modal-header">
-      <span class="modal-title" id="addModalTitle">✨ Thêm Mới</span>
-      <button class="close-btn" onclick="closeAddModal()">✕</button>
+      <span class="modal-title">👑 Đăng Nhập Admin</span>
+      <button class="close-btn" onclick="closeAdminLoginModal()">✕</button>
     </div>
     <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Email Admin</label>
+        <input type="email" id="adminEmailInput" placeholder="your@email.com">
+        <div class="form-hint">📧 Xác nhận bằng email của bạn</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mật Khẩu Master</label>
+        <div class="pw-input-wrap">
+          <input type="password" id="adminPasswordInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginAdmin()">
+          <button class="pw-toggle-vis" onclick="togglePwVis('adminPasswordInput',this)">👁</button>
+        </div>
+        <div class="pw-error" id="adminLoginError"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeAdminLoginModal()">Hủy</button>
+      <button class="btn btn-gold" onclick="loginAdmin()">Đăng Nhập</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL MODAL -->
+<div class="modal-bg hidden" id="adminPanelModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <span class="modal-title">⚙ Bảng Điều Khiển Admin</span>
+      <button class="close-btn" onclick="closeAdminPanel()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="section-header" style="margin-bottom:16px">
+        <span class="section-title" style="font-size:18px">✨ Thêm / Chỉnh Sửa Prompt</span>
+      </div>
       <div class="form-row">
         <div class="form-group">
           <label class="form-label">Tên Prompt *</label>
@@ -857,8 +736,10 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn" onclick="closeAddModal()">Hủy</button>
-      <button class="btn btn-gold" onclick="savePrompt()">💾 Lưu Prompt</button>
+      <button class="btn btn-danger" onclick="logoutAdmin()" id="logoutBtn">🚪 Đăng Xuất</button>
+      <button class="btn" onclick="clearAdminForm()" id="clearBtn">🗑 Xóa Form</button>
+      <button class="btn" onclick="closeAdminPanel()">Hủy</button>
+      <button class="btn btn-gold" onclick="savePrompt()" id="saveBtnAdmin">💾 Lưu Prompt</button>
     </div>
   </div>
 </div>
@@ -912,6 +793,8 @@
       </div>
     </div>
     <div class="modal-footer">
+      <button class="btn btn-danger" id="deleteBtn" onclick="deletePrompt(viewingId)" style="display:none">🗑 Xóa</button>
+      <button class="btn" id="editBtn" onclick="editPrompt(viewingId)" style="display:none">✏️ Chỉnh Sửa</button>
       <button class="btn" onclick="closeViewModal()">Đóng</button>
     </div>
   </div>
@@ -920,16 +803,92 @@
 <script>
 const STORE_KEY = 'hospital_vault_data';
 const ENCRYPTION_KEY = 'BenhVienTamThanCo';
+const ADMIN_KEY = 'hospital_admin_creds';
 
 let prompts = [];
 let editingId = null;
 let unlockTargetId = null;
 let viewingId = null;
 let sessionUnlocked = new Set();
-let activeFilters = { genres: new Set(), tags: new Set() };
 let editGenres = [];
 let editTags = [];
+let isAdmin = false;
+let adminEmail = null;
 
+// ===== ADMIN AUTH =====
+const ADMIN_USERS = [
+  { email: 'admin@hospital.local', password: 'BenhVienAdmin2024' }
+];
+
+function loginAdmin() {
+  const email = document.getElementById('adminEmailInput').value.trim();
+  const password = document.getElementById('adminPasswordInput').value;
+  const errorEl = document.getElementById('adminLoginError');
+  
+  errorEl.textContent = '';
+  
+  if (!email || !password) {
+    errorEl.textContent = '❌ Vui lòng nhập email và mật khẩu!';
+    return;
+  }
+
+  const validUser = ADMIN_USERS.find(u => u.email === email && u.password === password);
+  if (!validUser) {
+    errorEl.textContent = '❌ Email hoặc mật khẩu không đúng!';
+    return;
+  }
+
+  isAdmin = true;
+  adminEmail = email;
+  localStorage.setItem(ADMIN_KEY, JSON.stringify({ email, timestamp: Date.now() }));
+  
+  closeAdminLoginModal();
+  openAdminPanel();
+  updateAdminStatus();
+  showToast('✓ Đăng nhập admin thành công!', 'success');
+}
+
+function logoutAdmin() {
+  if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
+    isAdmin = false;
+    adminEmail = null;
+    localStorage.removeItem(ADMIN_KEY);
+    closeAdminPanel();
+    updateAdminStatus();
+    showToast('✓ Đã đăng xuất!', 'success');
+  }
+}
+
+function updateAdminStatus() {
+  const statusEl = document.getElementById('adminStatusInfo');
+  if (isAdmin && adminEmail) {
+    statusEl.style.display = 'flex';
+    document.getElementById('adminEmail').textContent = adminEmail;
+  } else {
+    statusEl.style.display = 'none';
+  }
+}
+
+function checkAdminSession() {
+  try {
+    const stored = localStorage.getItem(ADMIN_KEY);
+    if (stored) {
+      const data = JSON.parse(stored);
+      const now = Date.now();
+      const sessionAge = now - data.timestamp;
+      const sessionTimeout = 24 * 60 * 60 * 1000;
+      
+      if (sessionAge < sessionTimeout) {
+        isAdmin = true;
+        adminEmail = data.email;
+        return true;
+      }
+    }
+  } catch (e) {}
+  return false;
+}
+
+// ===== UI FUNCTIONS =====
 function escHtml(text) {
   const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
   return text.replace(/[&<>"']/g, m => map[m]);
@@ -947,6 +906,7 @@ function showToast(msg, type = 'info') {
   }, 2800);
 }
 
+// ===== ENCRYPTION =====
 function encryptPassword(plaintext) {
   return CryptoJS.AES.encrypt(plaintext, ENCRYPTION_KEY).toString();
 }
@@ -959,6 +919,7 @@ function decryptPassword(encrypted) {
   }
 }
 
+// ===== STORAGE =====
 function save() {
   const dataToSave = prompts.map(p => ({
     ...p,
@@ -981,7 +942,7 @@ function load() {
 
 function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
-// TAGS
+// ===== TAGS =====
 function handleTagKey(e, type) {
   if (e.key === 'Enter') { e.preventDefault(); addTag(type); }
 }
@@ -1003,289 +964,33 @@ function removeTag(type, val) {
 
 function renderTagPrev(type) {
   const arr = type === 'genre' ? editGenres : editTags;
-  const el = document.getElementById(type === 'genre' ? 'fGenrePrev' : 'fTagPrev');
-  el.innerHTML = arr.map(t =>
-    `<span class="tag-removable ${type}">${escHtml(t)}<span class="rm" onclick="removeTag('${type}','${t}')">✕</span></span>`
-  ).join('');
+  const prev = document.getElementById(type === 'genre' ? 'fGenrePrev' : 'fTagPrev');
+  prev.innerHTML = arr.map(t => `<span class="tag-removable ${type}"><span>${escHtml(t)}</span><span class="rm" onclick="removeTag('${type}','${escHtml(t)}')">✕</span></span>`).join('');
 }
 
-// CATEGORIES
-function getAllGenresWithCount() {
-  const genreMap = {};
-  prompts.forEach(p => {
-    (p.genres||[]).forEach(g => {
-      genreMap[g] = (genreMap[g] || 0) + 1;
-    });
-  });
-  return Object.entries(genreMap).map(([name, count]) => ({ name, count, type: 'genre' }));
-}
-
-function renderCategoriesGrid() {
-  const genres = getAllGenresWithCount();
-  const grid = document.getElementById('categoriesGrid');
-  const section = document.getElementById('categoriesSection');
-  
-  if (!genres.length) {
-    section.style.display = 'none';
-    return;
-  }
-  
-  section.style.display = 'block';
-  grid.innerHTML = genres.map(g => {
-    const active = activeFilters.genres.has(g.name) ? ' active' : '';
-    return `
-      <button class="category-btn${active}" onclick="toggleCategoryFilter('genre','${CSS.escape(g.name)}')">
-        <span class="category-icon">📚</span>
-        <span class="category-name">${escHtml(g.name)}</span>
-        <span class="category-count">${g.count} items</span>
-      </button>
-    `;
-  }).join('');
-}
-
-function toggleCategoryFilter(type, val) {
-  const set = type === 'genre' ? activeFilters.genres : activeFilters.tags;
-  if (set.has(val)) set.delete(val); 
-  else {
-    set.clear();
-    set.add(val);
-  }
-  renderCategoriesGrid();
-  renderTagsRow();
-  renderPrompts();
-}
-
-// FILTERS
-function getAllTagsGenres() {
-  const genres = new Set(), tags = new Set();
-  prompts.forEach(p => {
-    (p.genres||[]).forEach(g => genres.add(g));
-    (p.tags||[]).forEach(t => tags.add(t));
-  });
-  return { genres: [...genres], tags: [...tags] };
-}
-
-function renderTagsRow() {
-  const el = document.getElementById('tagsRow');
-  if (!activeFilters.genres.size && !activeFilters.tags.size) { el.innerHTML = ''; return; }
-  
-  let html = `<span style="font-size:12px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;font-weight:700">🎯 ĐANG LỌC:</span>`;
-  
-  [...activeFilters.genres].forEach(g => {
-    html += `<button class="tag-filter active" onclick="toggleCategoryFilter('genre','${CSS.escape(g)}')">✓ ${escHtml(g)}</button>`;
-  });
-  
-  if (activeFilters.genres.size || activeFilters.tags.size) {
-    html += `<button class="btn btn-sm" onclick="clearAllFilters()" style="font-size:12px">✕ Xóa</button>`;
-  }
-  
-  el.innerHTML = html;
-}
-
-function clearAllFilters() {
-  activeFilters.genres.clear();
-  activeFilters.tags.clear();
-  renderCategoriesGrid();
-  renderTagsRow();
-  renderPrompts();
-}
-
-// RENDER
-function renderPrompts() {
-  const search = document.getElementById('searchInput').value.toLowerCase();
-  const sort = document.getElementById('sortSelect').value;
-
-  let filtered = prompts.filter(p => {
-    const matchSearch = !search ||
-      p.name.toLowerCase().includes(search) ||
-      (p.desc||'').toLowerCase().includes(search) ||
-      (p.genres||[]).some(g => g.toLowerCase().includes(search)) ||
-      (p.tags||[]).some(t => t.toLowerCase().includes(search));
-
-    const matchGenre = !activeFilters.genres.size ||
-      [...activeFilters.genres].some(g => (p.genres||[]).includes(g));
-
-    return matchSearch && matchGenre;
-  });
-
-  if (sort === 'newest') filtered.sort((a,b) => b.created - a.created);
-  else if (sort === 'oldest') filtered.sort((a,b) => a.created - b.created);
-  else if (sort === 'name') filtered.sort((a,b) => a.name.localeCompare(b.name));
-
-  document.getElementById('countBadge').textContent = filtered.length;
-
-  const grid = document.getElementById('promptsGrid');
-  if (!filtered.length) {
-    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
-      <div class="empty-icon">😴</div>
-      <h3>${prompts.length ? 'Không tìm thấy kết quả' : 'Chưa có prompts nào'}</h3>
-      <p>${prompts.length ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm' : 'Admin sẽ thêm prompts sớm thôi!'}</p>
-    </div>`;
-    return;
-  }
-
-  grid.innerHTML = filtered.map((p, i) => buildCard(p, i)).join('');
-}
-
-function buildCard(p, i) {
-  const isLocked = p.password && !sessionUnlocked.has(p.id);
-  const lockBadge = p.password
-    ? `<span class="lock-badge ${isLocked ? 'locked' : 'unlocked'}" title="${isLocked ? 'Đã khóa' : 'Đã mở khóa'}">${isLocked ? '🔒' : '🔓'}</span>`
-    : '';
-
-  const genres = (p.genres||[]).map(g => `<span class="tag-pill genre">${escHtml(g)}</span>`).join('');
-  const tags = (p.tags||[]).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`).join('');
-
-  const lockOverlay = isLocked ? `
-    <div class="lock-overlay" onclick="openUnlockModal('${p.id}')">
-      <span class="lock-icon">🔐</span>
-      <p>Nhấn để nhập mật khẩu</p>
-    </div>` : '';
-
-  const linkPreview = isLocked ? '••••••••' :
-    (p.link.startsWith('http') ? p.link : p.link.slice(0,40)+'...');
-
-  return `<div class="prompt-card${isLocked ? ' locked' : ''}" style="animation-delay:${i*0.05}s" id="card-${p.id}">
-    ${lockOverlay}
-    <div class="card-content">
-      <div class="card-top">
-        <div class="card-name">${escHtml(p.name)}</div>
-        <div class="card-badges">${lockBadge}</div>
-      </div>
-      <div class="card-desc">${escHtml(p.desc||'Không có mô tả.')}</div>
-      <div class="card-tags">${genres}${tags}</div>
-      <div class="card-footer">
-        <span class="card-link" title="${isLocked ? '' : escHtml(p.link)}">${isLocked ? '••••••••' : escHtml(linkPreview)}</span>
-        <div class="card-actions" onclick="event.stopPropagation()">
-          <button class="btn btn-sm btn-icon" onclick="openViewModal('${p.id}')" title="Xem">👁</button>
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-// MODALS
-function openAddModal() {
-  editingId = null;
-  editGenres = []; editTags = [];
-  document.getElementById('addModalTitle').textContent = '✨ Thêm Mới';
-  document.getElementById('fName').value = '';
-  document.getElementById('fLink').value = '';
-  document.getElementById('fDesc').value = '';
-  document.getElementById('fPassword').value = '';
-  document.getElementById('fHint').value = '';
-  document.getElementById('fPwEnabled').checked = false;
-  document.getElementById('pwFields').classList.add('hidden');
-  renderTagPrev('genre'); renderTagPrev('tag');
-  document.getElementById('addModal').classList.remove('hidden');
-}
-
-function closeAddModal() {
-  document.getElementById('addModal').classList.add('hidden');
-}
-
-function savePrompt() {
-  const name = document.getElementById('fName').value.trim();
-  const link = document.getElementById('fLink').value.trim();
-  if (!name || !link) { showToast('⚠️ Điền tên và link', 'error'); return; }
-
-  if (editingId) {
-    const p = prompts.find(x => x.id === editingId);
-    p.name = name;
-    p.link = link;
-    p.desc = document.getElementById('fDesc').value;
-    p.genres = editGenres;
-    p.tags = editTags;
-    p.password = document.getElementById('fPwEnabled').checked ? document.getElementById('fPassword').value : '';
-    p.hint = document.getElementById('fHint').value;
+// ===== MODALS =====
+function toggleAdminPanel() {
+  if (!isAdmin) {
+    document.getElementById('adminLoginModal').classList.remove('hidden');
   } else {
-    prompts.push({
-      id: genId(),
-      name,
-      link,
-      desc: document.getElementById('fDesc').value,
-      genres: editGenres,
-      tags: editTags,
-      password: document.getElementById('fPwEnabled').checked ? document.getElementById('fPassword').value : '',
-      hint: document.getElementById('fHint').value,
-      created: Date.now()
-    });
+    closeAdminPanel();
   }
-
-  save();
-  closeAddModal();
-  renderCategoriesGrid();
-  renderPrompts();
-  showToast(editingId ? '✓ Đã cập nhật' : '✓ Đã thêm', 'success');
 }
 
-function togglePwFields() {
-  const el = document.getElementById('pwFields');
-  if (document.getElementById('fPwEnabled').checked) el.classList.remove('hidden');
-  else el.classList.add('hidden');
+function openAdminPanel() {
+  document.getElementById('adminPanelModal').classList.remove('hidden');
 }
 
-function openViewModal(id) {
-  const p = prompts.find(x => x.id === id);
-  if (!p) return;
-  viewingId = id;
-  document.getElementById('viewTitle').textContent = escHtml(p.name);
-  document.getElementById('viewDesc').textContent = p.desc || 'Không có mô tả';
-  
-  let linkHtml = p.link;
-  if (p.link.startsWith('http')) {
-    linkHtml = `<a href="${escHtml(p.link)}" target="_blank" style="color:var(--primary-light);font-weight:600;text-decoration:none">→ ${escHtml(p.link.slice(0,50))}</a>`;
-  } else {
-    linkHtml = `<div class="prompt-text-display">${escHtml(p.link)}</div>`;
-  }
-  document.getElementById('viewLink').innerHTML = linkHtml;
-
-  let tagsHtml = '';
-  (p.genres||[]).forEach(g => tagsHtml += `<span class="tag-pill genre">${escHtml(g)}</span>`);
-  (p.tags||[]).forEach(t => tagsHtml += `<span class="tag-pill tag">${escHtml(t)}</span>`);
-  document.getElementById('viewTags').innerHTML = tagsHtml;
-
-  document.getElementById('viewModal').classList.remove('hidden');
+function closeAdminPanel() {
+  document.getElementById('adminPanelModal').classList.add('hidden');
+  clearAdminForm();
 }
 
-function closeViewModal() {
-  document.getElementById('viewModal').classList.add('hidden');
-}
-
-function openUnlockModal(id) {
-  unlockTargetId = id;
-  const p = prompts.find(x => x.id === id);
-  document.getElementById('unlockBotName').textContent = escHtml(p.name);
-  
-  const hintWrap = document.getElementById('unlockHintWrap');
-  if (p.hint) {
-    hintWrap.textContent = '💡 ' + escHtml(p.hint);
-    hintWrap.style.display = 'block';
-  } else {
-    hintWrap.style.display = 'none';
-  }
-  
-  document.getElementById('unlockInput').value = '';
-  document.getElementById('unlockError').classList.remove('show');
-  document.getElementById('unlockModal').classList.remove('hidden');
-}
-
-function closeUnlockModal() {
-  document.getElementById('unlockModal').classList.add('hidden');
-}
-
-function tryUnlock() {
-  const pw = document.getElementById('unlockInput').value;
-  const p = prompts.find(x => x.id === unlockTargetId);
-  
-  if (pw === p.password) {
-    sessionUnlocked.add(unlockTargetId);
-    closeUnlockModal();
-    renderPrompts();
-    showToast('✓ Đã mở khóa', 'success');
-  } else {
-    document.getElementById('unlockError').classList.add('show');
-  }
+function closeAdminLoginModal() {
+  document.getElementById('adminLoginModal').classList.add('hidden');
+  document.getElementById('adminEmailInput').value = '';
+  document.getElementById('adminPasswordInput').value = '';
+  document.getElementById('adminLoginError').textContent = '';
 }
 
 function togglePwVis(inputId, btn) {
@@ -1299,16 +1004,273 @@ function togglePwVis(inputId, btn) {
   }
 }
 
-function toggleAdminPanel() {
-  showToast('💻 Admin panel coming soon!', 'info');
+function togglePwFields() {
+  const chk = document.getElementById('fPwEnabled').checked;
+  document.getElementById('pwFields').classList.toggle('hidden', !chk);
 }
 
-// INIT
-window.addEventListener('DOMContentLoaded', () => {
-  load();
-  renderCategoriesGrid();
+// ===== FORM =====
+function clearAdminForm() {
+  editingId = null;
+  editGenres = [];
+  editTags = [];
+  document.getElementById('fName').value = '';
+  document.getElementById('fLink').value = '';
+  document.getElementById('fDesc').value = '';
+  document.getElementById('fGenreInput').value = '';
+  document.getElementById('fTagInput').value = '';
+  document.getElementById('fPwEnabled').checked = false;
+  document.getElementById('fPassword').value = '';
+  document.getElementById('fHint').value = '';
+  document.getElementById('fGenrePrev').innerHTML = '';
+  document.getElementById('fTagPrev').innerHTML = '';
+  togglePwFields();
+  document.getElementById('saveBtnAdmin').textContent = '💾 Lưu Prompt';
+}
+
+function editPrompt(id) {
+  const p = prompts.find(x => x.id === id);
+  if (!p) return;
+  editingId = id;
+  editGenres = [...(p.genres || [])];
+  editTags = [...(p.tags || [])];
+  document.getElementById('fName').value = p.name;
+  document.getElementById('fLink').value = p.link;
+  document.getElementById('fDesc').value = p.desc || '';
+  document.getElementById('fPwEnabled').checked = !!p.password;
+  document.getElementById('fPassword').value = p.password || '';
+  document.getElementById('fHint').value = p.hint || '';
+  renderTagPrev('genre');
+  renderTagPrev('tag');
+  togglePwFields();
+  closeViewModal();
+  openAdminPanel();
+  document.getElementById('saveBtnAdmin').textContent = '✏️ Cập Nhật Prompt';
+}
+
+function savePrompt() {
+  if (!isAdmin) {
+    showToast('❌ Bạn cần đăng nhập admin!', 'error');
+    return;
+  }
+
+  const name = document.getElementById('fName').value.trim();
+  const link = document.getElementById('fLink').value.trim();
+  if (!name || !link) {
+    showToast('❌ Vui lòng nhập tên và link!', 'error');
+    return;
+  }
+
+  const desc = document.getElementById('fDesc').value.trim();
+  const pw = document.getElementById('fPwEnabled').checked ? document.getElementById('fPassword').value : '';
+  const hint = document.getElementById('fHint').value.trim();
+
+  if (editingId) {
+    const idx = prompts.findIndex(p => p.id === editingId);
+    if (idx !== -1) {
+      prompts[idx] = {
+        ...prompts[idx],
+        name, link, desc, password: pw, hint,
+        genres: editGenres, tags: editTags,
+        updatedAt: new Date().toISOString()
+      };
+    }
+  } else {
+    prompts.push({
+      id: genId(),
+      name, link, desc, password: pw, hint,
+      genres: editGenres, tags: editTags,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
+  }
+
+  save();
   renderPrompts();
-});
+  clearAdminForm();
+  closeAdminPanel();
+  showToast(editingId ? '✓ Cập nhật thành công!' : '✓ Thêm mới thành công!', 'success');
+}
+
+function deletePrompt(id) {
+  if (!isAdmin) {
+    showToast('❌ Bạn cần đăng nhập admin!', 'error');
+    return;
+  }
+  if (confirm('Bạn chắc chắn muốn xóa prompt này?')) {
+    prompts = prompts.filter(p => p.id !== id);
+    save();
+    renderPrompts();
+    closeViewModal();
+    showToast('✓ Xóa thành công!', 'success');
+  }
+}
+
+// ===== VIEWING =====
+function openViewModal(id) {
+  const p = prompts.find(x => x.id === id);
+  if (!p) return;
+  viewingId = id;
+  
+  document.getElementById('viewTitle').textContent = p.name;
+  document.getElementById('viewDesc').textContent = p.desc || '(Không có mô tả)';
+  
+  const linkDiv = document.getElementById('viewLink');
+  const isUrl = p.link.startsWith('http://') || p.link.startsWith('https://');
+  if (isUrl) {
+    linkDiv.innerHTML = `<a href="${escHtml(p.link)}" target="_blank" style="color:var(--primary-light);text-decoration:underline;flex:1;word-break:break-all">${escHtml(p.link)}</a><button class="btn btn-sm" onclick="copyToClip('${escHtml(p.link)}')">📋</button>`;
+  } else {
+    linkDiv.innerHTML = `<div class="prompt-text-display" style="flex:1">${escHtml(p.link)}</div><button class="btn btn-sm" onclick="copyToClip('${escHtml(p.link)}')">📋</button>`;
+  }
+  
+  const tagsHtml = [
+    ...(p.genres || []).map(t => `<span class="tag-pill genre">${escHtml(t)}</span>`),
+    ...(p.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`)
+  ].join('');
+  document.getElementById('viewTags').innerHTML = tagsHtml || '(Không có tags)';
+  
+  const editBtn = document.getElementById('editBtn');
+  const deleteBtn = document.getElementById('deleteBtn');
+  if (isAdmin) {
+    editBtn.style.display = 'block';
+    deleteBtn.style.display = 'block';
+  } else {
+    editBtn.style.display = 'none';
+    deleteBtn.style.display = 'none';
+  }
+  
+  document.getElementById('viewModal').classList.remove('hidden');
+}
+
+function closeViewModal() {
+  document.getElementById('viewModal').classList.add('hidden');
+}
+
+function copyToClip(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('✓ Đã sao chép!', 'success');
+  }).catch(() => {
+    showToast('❌ Sao chép thất bại!', 'error');
+  });
+}
+
+// ===== PASSWORD UNLOCK =====
+function openUnlockModal(id) {
+  const p = prompts.find(x => x.id === id);
+  if (!p || !p.password) return;
+  unlockTargetId = id;
+  document.getElementById('unlockBotName').textContent = p.name;
+  const hintWrap = document.getElementById('unlockHintWrap');
+  if (p.hint) {
+    hintWrap.textContent = `💡 Gợi ý: ${p.hint}`;
+    hintWrap.style.display = 'block';
+  } else {
+    hintWrap.style.display = 'none';
+  }
+  document.getElementById('unlockInput').value = '';
+  document.getElementById('unlockError').classList.remove('show');
+  document.getElementById('unlockModal').classList.remove('hidden');
+}
+
+function closeUnlockModal() {
+  document.getElementById('unlockModal').classList.add('hidden');
+  unlockTargetId = null;
+}
+
+function tryUnlock() {
+  if (!unlockTargetId) return;
+  const p = prompts.find(x => x.id === unlockTargetId);
+  if (!p || !p.password) return;
+  
+  const entered = document.getElementById('unlockInput').value;
+  if (entered === p.password) {
+    sessionUnlocked.add(unlockTargetId);
+    closeUnlockModal();
+    renderPrompts();
+    showToast('✓ Đã mở khóa!', 'success');
+  } else {
+    document.getElementById('unlockError').classList.add('show');
+  }
+}
+
+// ===== RENDERING =====
+function renderPrompts() {
+  const searchText = document.getElementById('searchInput').value.toLowerCase();
+  const sortVal = document.getElementById('sortSelect').value;
+  
+  let filtered = prompts.filter(p => {
+    const matchText = p.name.toLowerCase().includes(searchText) || 
+                      (p.desc || '').toLowerCase().includes(searchText) ||
+                      p.link.toLowerCase().includes(searchText);
+    return matchText;
+  });
+
+  filtered.sort((a, b) => {
+    if (sortVal === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
+    if (sortVal === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
+    if (sortVal === 'name') return a.name.localeCompare(b.name);
+  });
+
+  const grid = document.getElementById('promptsGrid');
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><h3>Không có prompts</h3><p>Hãy thêm prompts mới để bắt đầu!</p></div>';
+  } else {
+    grid.innerHTML = filtered.map(p => {
+      const isLocked = p.password && !sessionUnlocked.has(p.id);
+      const lockStatusHtml = isLocked ? '<span class="lock-status">🔒 Đang Khóa</span>' : '';
+      const cardContent = `
+        <div class="card-top">
+          <div style="flex:1">
+            <div class="card-name">${escHtml(p.name)}</div>
+            ${lockStatusHtml}
+          </div>
+        </div>
+        <div class="card-desc">${escHtml(p.desc || '(Không có mô tả)')}</div>
+        <div class="card-tags">
+          ${(p.genres || []).map(t => `<span class="tag-pill genre">${escHtml(t)}</span>`).join('')}
+          ${(p.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`).join('')}
+        </div>
+      `;
+      
+      if (isLocked) {
+        return `<div class="prompt-card" onclick="openUnlockModal('${p.id}')">${cardContent}</div>`;
+      } else {
+        return `<div class="prompt-card" onclick="openViewModal('${p.id}')">${cardContent}</div>`;
+      }
+    }).join('');
+  }
+
+  document.getElementById('countBadge').textContent = filtered.length;
+}
+
+// ===== INIT =====
+function init() {
+  load();
+  checkAdminSession();
+  updateAdminStatus();
+  renderPrompts();
+  
+  if (prompts.length === 0) {
+    prompts = [
+      {
+        id: genId(),
+        name: 'Cố Lăng Hiên',
+        link: 'https://example.com/prompt1',
+        desc: 'Một prompt tuyệt vời về nhân vật cố lăng hiên',
+        genres: ['Nhân Vật', 'Lịch Sử'],
+        tags: ['Điểm Danh', 'Quan Trọng'],
+        password: 'test123',
+        hint: 'Tên con vật đầu tiên',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+    ];
+    save();
+    renderPrompts();
+  }
+}
+
+window.addEventListener('DOMContentLoaded', init);
 </script>
 </body>
 </html>
