@@ -186,6 +186,39 @@
 
   main { padding: 40px; max-width: 1400px; margin: 0 auto; }
 
+  .genre-filter-bar {
+    display: flex; gap: 10px; align-items: center; margin-bottom: 24px; flex-wrap: wrap;
+  }
+
+  .genre-label { font-size: 13px; color: var(--text2); font-weight: 600; text-transform: uppercase; }
+
+  .genre-btn {
+    padding: 8px 16px;
+    border: 1.5px solid var(--border2);
+    border-radius: 20px;
+    background: rgba(30,40,56,0.5);
+    color: var(--text);
+    font-family: 'Fredoka', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .genre-btn:hover {
+    border-color: var(--primary);
+    background: rgba(0,212,255,0.15);
+    color: var(--primary-light);
+  }
+
+  .genre-btn.active {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(0,212,255,0.25), rgba(0,212,255,0.1));
+    color: var(--primary-light);
+    box-shadow: var(--glow);
+  }
+
   .filter-bar {
     display: flex; gap: 14px; align-items: center;
     margin-bottom: 32px;
@@ -455,6 +488,24 @@
     color: var(--accent-light);
   }
 
+  .genre-management {
+    background: rgba(0,212,255,0.08);
+    border: 1.5px solid var(--primary);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 24px;
+  }
+
+  .genre-section-title { font-size: 14px; color: var(--primary-light); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
+  
+  .genre-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .genre-item { display: flex; align-items: center; gap: 6px; background: rgba(30,40,56,0.6); border: 1px solid var(--border2); padding: 6px 12px; border-radius: 8px; font-size: 13px; color: var(--text2); }
+  .genre-item .remove { cursor: pointer; color: var(--danger); font-weight: 700; opacity: 0.7; transition: opacity 0.2s; }
+  .genre-item .remove:hover { opacity: 1; }
+
+  .genre-input-group { display: flex; gap: 8px; }
+  .genre-input-group input { flex: 1; }
+
   .pw-section {
     background: rgba(0,212,255,0.08);
     border: 1.5px solid var(--primary);
@@ -594,6 +645,8 @@
     .form-row { grid-template-columns: 1fr; }
     .logo-text { font-size: 18px; }
     .section-title { font-size: 20px; }
+    .genre-filter-bar { gap: 6px; }
+    .genre-btn { padding: 6px 12px; font-size: 12px; }
   }
 </style>
 </head>
@@ -623,6 +676,13 @@
   </header>
 
   <main>
+    <!-- GENRE FILTER BAR -->
+    <div class="genre-filter-bar" id="genreFilterBar" style="display:none">
+      <span class="genre-label">🏷️ Thể loại:</span>
+      <div id="genreFiltersContainer"></div>
+    </div>
+
+    <!-- SEARCH & SORT -->
     <div class="filter-bar">
       <div class="search-wrap">
         <span class="icon">🔍</span>
@@ -682,6 +742,17 @@
       <button class="close-btn" onclick="closeAdminPanel()">✕</button>
     </div>
     <div class="modal-body">
+      <!-- GENRE MANAGEMENT -->
+      <div class="genre-management">
+        <div class="genre-section-title">🏷️ Quản lý thể loại</div>
+        <div class="genre-list" id="genreListAdmin"></div>
+        <div class="genre-input-group">
+          <input type="text" id="newGenreInput" placeholder="Thêm thể loại mới..." onkeydown="if(event.key==='Enter')addGenre()">
+          <button class="btn btn-sm" onclick="addGenre()">＋ Thêm</button>
+        </div>
+      </div>
+
+      <!-- PROMPT FORM -->
       <div class="section-header" style="margin-bottom:16px">
         <span class="section-title" style="font-size:18px">✨ Thêm / Chỉnh Sửa Prompt</span>
       </div>
@@ -802,10 +873,13 @@
 
 <script>
 const STORE_KEY = 'hospital_vault_data';
+const GENRES_KEY = 'hospital_genres';
 const ENCRYPTION_KEY = 'BenhVienTamThanCo';
 const ADMIN_KEY = 'hospital_admin_creds';
 
 let prompts = [];
+let genres = [];
+let selectedGenre = null;
 let editingId = null;
 let unlockTargetId = null;
 let viewingId = null;
@@ -928,6 +1002,10 @@ function save() {
   localStorage.setItem(STORE_KEY, JSON.stringify(dataToSave));
 }
 
+function saveGenres() {
+  localStorage.setItem(GENRES_KEY, JSON.stringify(genres));
+}
+
 function load() {
   try {
     const stored = JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
@@ -938,9 +1016,82 @@ function load() {
   } catch {
     prompts = [];
   }
+  
+  try {
+    genres = JSON.parse(localStorage.getItem(GENRES_KEY) || '[]');
+  } catch {
+    genres = [];
+  }
 }
 
 function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+// ===== GENRE MANAGEMENT =====
+function renderGenreList() {
+  const container = document.getElementById('genreListAdmin');
+  if (genres.length === 0) {
+    container.innerHTML = '<p style="color:var(--text3);font-size:12px">Chưa có thể loại nào</p>';
+    return;
+  }
+  container.innerHTML = genres.map(g => `
+    <div class="genre-item">
+      <span>${escHtml(g)}</span>
+      <span class="remove" onclick="removeGenre('${escHtml(g)}')">✕</span>
+    </div>
+  `).join('');
+}
+
+function addGenre() {
+  const input = document.getElementById('newGenreInput');
+  const val = input.value.trim();
+  if (!val) return;
+  if (genres.includes(val)) {
+    showToast('❌ Thể loại này đã tồn tại!', 'error');
+    return;
+  }
+  genres.push(val);
+  saveGenres();
+  renderGenreList();
+  renderGenreFilters();
+  input.value = '';
+  input.focus();
+  showToast('✓ Thêm thể loại thành công!', 'success');
+}
+
+function removeGenre(genre) {
+  genres = genres.filter(g => g !== genre);
+  saveGenres();
+  renderGenreList();
+  renderGenreFilters();
+  showToast('✓ Xóa thể loại thành công!', 'success');
+}
+
+function renderGenreFilters() {
+  const container = document.getElementById('genreFiltersContainer');
+  const bar = document.getElementById('genreFilterBar');
+  
+  if (genres.length === 0) {
+    bar.style.display = 'none';
+    return;
+  }
+  
+  bar.style.display = 'flex';
+  container.innerHTML = genres.map(g => `
+    <button class="genre-btn ${selectedGenre === g ? 'active' : ''}" onclick="filterByGenre('${escHtml(g)}')">
+      ${escHtml(g)}
+    </button>
+  `).join('');
+}
+
+function filterByGenre(genre) {
+  if (selectedGenre === genre) {
+    selectedGenre = null;
+  } else {
+    selectedGenre = genre;
+  }
+  renderGenreFilters();
+  renderPrompts();
+}
 
 // ===== TAGS =====
 function handleTagKey(e, type) {
@@ -980,6 +1131,7 @@ function toggleAdminPanel() {
 function openAdminPanel() {
   if (isAdmin) {
     clearAdminForm();
+    renderGenreList();
     document.getElementById('adminPanelModal').classList.remove('hidden');
   }
 }
@@ -1110,10 +1262,11 @@ function renderPrompts() {
   const search = document.getElementById('searchInput').value.toLowerCase();
   const sort = document.getElementById('sortSelect').value;
   
-  let filtered = prompts.filter(p => 
-    p.name.toLowerCase().includes(search) || 
-    p.desc.toLowerCase().includes(search)
-  );
+  let filtered = prompts.filter(p => {
+    const matchSearch = p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
+    const matchGenre = !selectedGenre || (p.genres && p.genres.includes(selectedGenre));
+    return matchSearch && matchGenre;
+  });
 
   if (sort === 'name') {
     filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -1244,6 +1397,7 @@ window.addEventListener('DOMContentLoaded', () => {
   load();
   checkAdminSession();
   updateAdminStatus();
+  renderGenreFilters();
   renderPrompts();
 });
 </script>
