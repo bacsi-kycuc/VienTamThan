@@ -41,18 +41,16 @@
     overflow-x: hidden;
   }
 
-  /* ── NOISE TEXTURE OVERLAY ── */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='50'/%3E%3C/filter%3E%3Crect width='256' height='256' fill='%230a0a0f' filter='url(%23n)'/%3E%3C/svg%3E");
     pointer-events: none;
     z-index: 0;
     opacity: 0.4;
   }
 
-  /* ── ANIMATED BG ORBS ── */
   .bg-orbs {
     position: fixed;
     inset: 0;
@@ -76,10 +74,8 @@
     66% { transform: translate(-20px, 30px) scale(0.95); }
   }
 
-  /* ── LAYOUT ── */
   #app { position: relative; z-index: 1; }
 
-  /* ── HEADER ── */
   header {
     padding: 32px 40px 24px;
     display: flex;
@@ -114,9 +110,8 @@
   }
   .logo-sub { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; }
   
-  .header-actions { display: flex; gap: 10px; align-items: center; }
+  .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
   
-  /* ── BUTTONS ── */
   .btn {
     display: inline-flex; align-items: center; gap: 7px;
     padding: 9px 18px;
@@ -142,10 +137,8 @@
   .btn-sm { padding: 6px 12px; font-size: 13px; }
   .btn-icon { padding: 9px; }
 
-  /* ── MAIN CONTENT ── */
   main { padding: 32px 40px; max-width: 1400px; margin: 0 auto; }
 
-  /* ── SEARCH & FILTER BAR ── */
   .filter-bar {
     display: flex; gap: 12px; align-items: center;
     margin-bottom: 24px;
@@ -177,7 +170,68 @@
   .search-wrap input { padding-left: 42px; }
   select { appearance: none; cursor: pointer; }
 
-  /* ── TAG PILLS ROW ── */
+  /* CATEGORY SECTION */
+  .categories-section {
+    background: rgba(26,26,36,0.5);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  .categories-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 16px;
+    color: var(--gold2);
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  .category-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 16px;
+    background: var(--card);
+    border: 2px solid var(--border2);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-align: center;
+    gap: 8px;
+  }
+  .category-btn:hover {
+    border-color: var(--gold);
+    background: var(--card2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,168,76,0.1);
+  }
+  .category-btn.active {
+    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.1));
+    border-color: var(--gold);
+  }
+  .category-btn.active.is-tag {
+    background: linear-gradient(135deg, rgba(123,94,167,0.2), rgba(123,94,167,0.1));
+    border-color: var(--accent2);
+  }
+  .category-icon { font-size: 24px; }
+  .category-name {
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .category-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--text3);
+    background: rgba(0,0,0,0.3);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
   .tags-row {
     display: flex; gap: 8px; flex-wrap: wrap;
     margin-bottom: 28px;
@@ -197,9 +251,7 @@
   }
   .tag-filter:hover { border-color: var(--gold); color: var(--gold2); }
   .tag-filter.active { background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold2); }
-  .tag-filter.genre-tag.active { background: rgba(123,94,167,0.2); border-color: var(--accent2); color: var(--accent2); }
 
-  /* ── SECTION HEADER ── */
   .section-header {
     display: flex; align-items: baseline; gap: 12px;
     margin-bottom: 20px;
@@ -220,14 +272,12 @@
     border-radius: 20px;
   }
 
-  /* ── GRID ── */
   .prompts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 16px;
   }
 
-  /* ── PROMPT CARD ── */
   .prompt-card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -317,7 +367,6 @@
   }
   .card-actions { display: flex; gap: 6px; }
 
-  /* ── OVERLAY LOCK ── */
   .lock-overlay {
     position: absolute;
     inset: 0;
@@ -333,18 +382,7 @@
   }
   .lock-overlay .lock-icon { font-size: 28px; }
   .lock-overlay p { font-size: 13px; color: var(--text3); font-style: italic; text-align: center; max-width: 200px; }
-  .lock-overlay .hint {
-    font-size: 12px;
-    color: var(--rose);
-    font-family: 'JetBrains Mono', monospace;
-    background: rgba(201,106,123,0.1);
-    border: 1px solid rgba(201,106,123,0.3);
-    padding: 4px 12px;
-    border-radius: 20px;
-    text-align: center;
-  }
 
-  /* ── MODAL ── */
   .modal-bg {
     position: fixed; inset: 0;
     background: rgba(0,0,0,0.75);
@@ -353,6 +391,7 @@
     display: flex; align-items: center; justify-content: center;
     padding: 20px;
     animation: fadeIn 0.2s ease;
+    overflow-y: auto;
   }
   .modal-bg.hidden { display: none; }
   .modal {
@@ -392,7 +431,6 @@
   }
   .close-btn:hover { background: var(--card); color: var(--text); border-color: var(--border2); }
 
-  /* ── FORM ── */
   .form-group { margin-bottom: 18px; }
   .form-label {
     display: block;
@@ -421,7 +459,6 @@
   .tag-removable.genre { background: rgba(123,94,167,0.2); border: 1px solid rgba(123,94,167,0.4); color: var(--accent2); }
   .tag-removable.tag { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); color: #a08840; }
 
-  /* ── PASSWORD SECTION ── */
   .pw-section {
     background: var(--bg3);
     border: 1px solid var(--border);
@@ -449,7 +486,6 @@
     font-style: italic;
   }
 
-  /* ── UNLOCK MODAL ── */
   .unlock-modal .lock-big { font-size: 48px; text-align: center; margin-bottom: 12px; }
   .unlock-modal .hint-text {
     text-align: center;
@@ -473,7 +509,6 @@
   .pw-error { color: var(--rose); font-size: 13px; margin-top: 8px; font-style: italic; display: none; }
   .pw-error.show { display: block; }
 
-  /* ── VIEW MODAL ── */
   .prompt-text-display {
     background: var(--bg3);
     border: 1px solid var(--border);
@@ -488,10 +523,7 @@
     max-height: 300px;
     overflow-y: auto;
   }
-  .copy-success { color: var(--teal); font-size: 13px; font-style: italic; display: none; }
-  .copy-success.show { display: inline; }
 
-  /* ── EMPTY STATE ── */
   .empty-state {
     text-align: center;
     padding: 80px 20px;
@@ -501,7 +533,6 @@
   .empty-state h3 { font-family: 'Cinzel Decorative', serif; font-size: 16px; color: var(--text2); margin-bottom: 8px; }
   .empty-state p { font-size: 14px; font-style: italic; }
 
-  /* ── TOAST ── */
   .toast {
     position: fixed;
     bottom: 30px; right: 30px;
@@ -522,32 +553,19 @@
   .toast-icon { font-size: 18px; }
   .toast.fade-out { animation: fadeOut 0.3s ease forwards; }
 
-  /* ── DIVIDER ── */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 24px 0;
-  }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
-
-  /* ── ANIMATIONS ── */
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes scaleIn { from { opacity: 0; transform: scale(0.93); } to { opacity: 1; transform: scale(1); } }
   @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeOut { to { opacity: 0; transform: translateY(-6px); } }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 640px) {
     header { padding: 16px 20px; }
     main { padding: 20px; }
     .form-row { grid-template-columns: 1fr; }
     .logo-text { font-size: 15px; }
+    .categories-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .category-btn { padding: 12px; }
   }
 </style>
 </head>
@@ -559,7 +577,6 @@
 </div>
 
 <div id="app">
-  <!-- HEADER -->
   <header>
     <div class="logo-wrap">
       <div class="logo-icon">🏥</div>
@@ -569,16 +586,11 @@
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn btn-gold" onclick="openAddModal()">
-        <span>＋</span> Thêm
-      </button>
-      <button class="btn btn-sm" onclick="exportData()" title="Export JSON">⬇ Export</button>
-      <label class="btn btn-sm" style="cursor:pointer" title="Import JSON">⬆ Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
+      <button class="btn btn-sm" id="adminBtn" onclick="toggleAdminPanel()">⚙ Admin</button>
     </div>
   </header>
 
   <main>
-    <!-- FILTER BAR -->
     <div class="filter-bar">
       <div class="search-wrap">
         <span class="icon">🔍</span>
@@ -591,23 +603,26 @@
       </select>
     </div>
 
-    <!-- TAGS ROW -->
+    <!-- CATEGORIES BROWSER -->
+    <div class="categories-section" id="categoriesSection" style="display:none">
+      <div class="categories-title">📂 Duyệt theo Thể Loại</div>
+      <div class="categories-grid" id="categoriesGrid"></div>
+    </div>
+
+    <!-- ACTIVE FILTERS -->
     <div id="tagsRow" class="tags-row"></div>
 
-    <!-- SECTION HEADER -->
+    <!-- RESULTS -->
     <div class="section-header">
-      <span class="section-title">Thư Viện</span>
+      <span class="section-title">Kết Quả</span>
       <span class="count-badge" id="countBadge">0</span>
     </div>
 
-    <!-- GRID -->
     <div class="prompts-grid" id="promptsGrid"></div>
   </main>
 </div>
 
-<!-- ══════════════════════════════════
-     ADD / EDIT MODAL
-══════════════════════════════════ -->
+<!-- ADD / EDIT MODAL -->
 <div class="modal-bg hidden" id="addModal">
   <div class="modal modal-lg">
     <div class="modal-header">
@@ -625,21 +640,18 @@
           <input type="text" id="fLink" placeholder="https://... hoặc paste text">
         </div>
       </div>
-
       <div class="form-group">
         <label class="form-label">Mô tả</label>
         <textarea id="fDesc" placeholder="Mô tả ngắn..."></textarea>
       </div>
-
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Genre</label>
+          <label class="form-label">Genre/Thể Loại</label>
           <div class="tags-input-wrap">
-            <input type="text" id="fGenreInput" placeholder="Fantasy, Romance..." onkeydown="handleTagKey(event,'genre')">
+            <input type="text" id="fGenreInput" placeholder="Ví dụ: AI, Marketing..." onkeydown="handleTagKey(event,'genre')">
             <button class="btn btn-sm" onclick="addTag('genre')">＋</button>
           </div>
           <div class="tags-preview" id="fGenrePrev"></div>
-          <div class="form-hint">Nhấn Enter hoặc ＋ để thêm</div>
         </div>
         <div class="form-group">
           <label class="form-label">Tags</label>
@@ -648,11 +660,8 @@
             <button class="btn btn-sm" onclick="addTag('tag')">＋</button>
           </div>
           <div class="tags-preview" id="fTagPrev"></div>
-          <div class="form-hint">Nhấn Enter hoặc ＋ để thêm</div>
         </div>
       </div>
-
-      <!-- PASSWORD SECTION -->
       <div class="pw-section">
         <label class="pw-toggle">
           <input type="checkbox" id="fPwEnabled" onchange="togglePwFields()">
@@ -664,11 +673,9 @@
             <input type="text" id="fPassword" placeholder="Nhập mật khẩu...">
           </div>
           <div class="form-group" style="margin:0">
-            <label class="form-label">Gợi ý (Hint) — dành cho bạn bè</label>
+            <label class="form-label">Gợi ý (Hint)</label>
             <input type="text" id="fHint" placeholder="Ví dụ: Tên con mèo nhà mình 🐱">
-            <div class="form-hint">Hint giúp bạn bè nhớ mật khẩu mà không tiết lộ trực tiếp</div>
           </div>
-          <div class="security-note">🔐 Mật khẩu được mã hóa AES-256. Bạn bè chỉ có thể đoán dựa vào hint, không ai khác có thể xem được!</div>
         </div>
       </div>
     </div>
@@ -679,9 +686,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════
-     UNLOCK MODAL
-══════════════════════════════════ -->
+<!-- UNLOCK MODAL -->
 <div class="modal-bg hidden" id="unlockModal">
   <div class="modal unlock-modal">
     <div class="modal-header">
@@ -698,7 +703,7 @@
           <input type="password" id="unlockInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryUnlock()">
           <button class="pw-toggle-vis" onclick="togglePwVis('unlockInput',this)">👁</button>
         </div>
-        <div class="pw-error" id="unlockError">Mật khẩu không đúng. Thử lại nhé!</div>
+        <div class="pw-error" id="unlockError">Mật khẩu không đúng!</div>
       </div>
     </div>
     <div class="modal-footer">
@@ -708,9 +713,7 @@
   </div>
 </div>
 
-<!-- ══════════════════════════════════
-     VIEW MODAL
-══════════════════════════════════ -->
+<!-- VIEW MODAL -->
 <div class="modal-bg hidden" id="viewModal">
   <div class="modal modal-lg">
     <div class="modal-header">
@@ -727,53 +730,45 @@
         <div id="viewLink" style="display:flex;gap:10px;align-items:flex-start"></div>
       </div>
       <div class="form-group" id="viewTagsWrap">
-        <label class="form-label">Tags &amp; Genre</label>
+        <label class="form-label">Tags &amp; Thể Loại</label>
         <div class="card-tags" id="viewTags"></div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn" onclick="closeViewModal()">Đóng</button>
-      <button class="btn btn-gold" id="viewEditBtn" onclick="">✏ Chỉnh sửa</button>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════════════════════
-     DELETE CONFIRM MODAL
-══════════════════════════════════ -->
-<div class="modal-bg hidden" id="deleteModal">
-  <div class="modal" style="max-width:420px">
-    <div class="modal-header">
-      <span class="modal-title">⚠ Xác nhận xóa</span>
-      <button class="close-btn" onclick="closeDeleteModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <p style="color:var(--text2);line-height:1.7">Bạn có chắc muốn xóa <strong id="deletePromptName" style="color:var(--gold3)"></strong>?<br>Hành động này không thể hoàn tác.</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeDeleteModal()">Hủy</button>
-      <button class="btn btn-danger" id="confirmDeleteBtn">🗑 Xóa</button>
     </div>
   </div>
 </div>
 
 <script>
-// ════════════════════════════════════════
-//  DATA STORE WITH ENCRYPTION
-// ════════════════════════════════════════
 const STORE_KEY = 'hospital_vault_data';
-const ENCRYPTION_KEY = 'BenhVienTamThanCo'; // Khóa mã hóa cố định
+const ENCRYPTION_KEY = 'BenhVienTamThanCo';
+
 let prompts = [];
 let editingId = null;
 let unlockTargetId = null;
 let viewingId = null;
-let deletingId = null;
 let sessionUnlocked = new Set();
 let activeFilters = { genres: new Set(), tags: new Set() };
+let editGenres = [];
+let editTags = [];
 
-// ════════════════════════════════════════
-//  ENCRYPTION FUNCTIONS (AES-256)
-// ════════════════════════════════════════
+function escHtml(text) {
+  const map = {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'};
+  return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+function showToast(msg, type = 'info') {
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span><span>${escHtml(msg)}</span>`;
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
 function encryptPassword(plaintext) {
   return CryptoJS.AES.encrypt(plaintext, ENCRYPTION_KEY).toString();
 }
@@ -788,7 +783,6 @@ function decryptPassword(encrypted) {
 }
 
 function save() {
-  // Mã hóa password trước khi lưu
   const dataToSave = prompts.map(p => ({
     ...p,
     password: p.password ? encryptPassword(p.password) : ''
@@ -799,7 +793,6 @@ function save() {
 function load() {
   try {
     const stored = JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
-    // Giải mã password khi load
     prompts = stored.map(p => ({
       ...p,
       password: p.password ? decryptPassword(p.password) : ''
@@ -811,12 +804,7 @@ function load() {
 
 function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
-// ════════════════════════════════════════
-//  TAG EDITOR STATE
-// ════════════════════════════════════════
-let editGenres = [];
-let editTags = [];
-
+// TAGS
 function handleTagKey(e, type) {
   if (e.key === 'Enter') { e.preventDefault(); addTag(type); }
 }
@@ -844,9 +832,53 @@ function renderTagPrev(type) {
   ).join('');
 }
 
-// ════════════════════════════════════════
-//  RENDER
-// ════════════════════════════════════════
+// CATEGORIES BROWSER
+function getAllGenresWithCount() {
+  const genreMap = {};
+  prompts.forEach(p => {
+    (p.genres||[]).forEach(g => {
+      genreMap[g] = (genreMap[g] || 0) + 1;
+    });
+  });
+  return Object.entries(genreMap).map(([name, count]) => ({ name, count, type: 'genre' }));
+}
+
+function renderCategoriesGrid() {
+  const genres = getAllGenresWithCount();
+  const grid = document.getElementById('categoriesGrid');
+  const section = document.getElementById('categoriesSection');
+  
+  if (!genres.length) {
+    section.style.display = 'none';
+    return;
+  }
+  
+  section.style.display = 'block';
+  grid.innerHTML = genres.map(g => {
+    const active = activeFilters.genres.has(g.name) ? ' active' : '';
+    return `
+      <button class="category-btn${active}" onclick="toggleCategoryFilter('genre','${CSS.escape(g.name)}')">
+        <span class="category-icon">📚</span>
+        <span class="category-name">${escHtml(g.name)}</span>
+        <span class="category-count">${g.count} items</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function toggleCategoryFilter(type, val) {
+  const set = type === 'genre' ? activeFilters.genres : activeFilters.tags;
+  if (set.has(val)) set.delete(val); 
+  else {
+    set.clear();
+    set.add(val);
+  }
+  renderCategoriesGrid();
+  renderTagsRow();
+  renderPrompts();
+}
+
+// FILTER DISPLAY
 function getAllTagsGenres() {
   const genres = new Set(), tags = new Set();
   prompts.forEach(p => {
@@ -859,36 +891,34 @@ function getAllTagsGenres() {
 function renderTagsRow() {
   const { genres, tags } = getAllTagsGenres();
   const el = document.getElementById('tagsRow');
-  if (!genres.length && !tags.length) { el.innerHTML = ''; return; }
-  let html = `<span style="font-size:12px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:1px">FILTER:</span>`;
-  genres.forEach(g => {
-    const active = activeFilters.genres.has(g) ? ' active genre-tag' : '';
-    html += `<button class="tag-filter genre-tag${active}" onclick="toggleFilter('genre','${CSS.escape(g)}')">${g}</button>`;
+  if (!activeFilters.genres.size && !activeFilters.tags.size) { el.innerHTML = ''; return; }
+  
+  let html = `<span style="font-size:12px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:1px">ĐANG LỌC:</span>`;
+  
+  [...activeFilters.genres].forEach(g => {
+    html += `<button class="tag-filter active genre-tag" onclick="toggleCategoryFilter('genre','${CSS.escape(g)}')">✓ ${escHtml(g)}</button>`;
   });
-  tags.forEach(t => {
-    const active = activeFilters.tags.has(t) ? ' active' : '';
-    html += `<button class="tag-filter${active}" onclick="toggleFilter('tag','${CSS.escape(t)}')">${t}</button>`;
+  
+  [...activeFilters.tags].forEach(t => {
+    html += `<button class="tag-filter active" onclick="toggleCategoryFilter('tag','${CSS.escape(t)}')">✓ ${escHtml(t)}</button>`;
   });
+  
   if (activeFilters.genres.size || activeFilters.tags.size) {
-    html += `<button class="btn btn-sm" onclick="clearFilters()" style="font-size:12px;padding:4px 10px">✕ Xóa filter</button>`;
+    html += `<button class="btn btn-sm" onclick="clearAllFilters()" style="font-size:12px;padding:4px 10px">✕ Xóa</button>`;
   }
+  
   el.innerHTML = html;
 }
 
-function toggleFilter(type, val) {
-  const set = type === 'genre' ? activeFilters.genres : activeFilters.tags;
-  if (set.has(val)) set.delete(val); else set.add(val);
-  renderTagsRow();
-  renderPrompts();
-}
-
-function clearFilters() {
+function clearAllFilters() {
   activeFilters.genres.clear();
   activeFilters.tags.clear();
+  renderCategoriesGrid();
   renderTagsRow();
   renderPrompts();
 }
 
+// RENDER PROMPTS
 function renderPrompts() {
   const search = document.getElementById('searchInput').value.toLowerCase();
   const sort = document.getElementById('sortSelect').value;
@@ -919,13 +949,12 @@ function renderPrompts() {
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
       <div class="empty-icon">🏥</div>
       <h3>${prompts.length ? 'Không tìm thấy kết quả' : 'Chưa có gì'}</h3>
-      <p>${prompts.length ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm' : 'Nhấn "+ Thêm" để bắt đầu'}</p>
+      <p>${prompts.length ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm' : 'Chờ admin thêm nội dung...'}</p>
     </div>`;
     return;
   }
 
   grid.innerHTML = filtered.map((p, i) => buildCard(p, i)).join('');
-  renderTagsRow();
 }
 
 function buildCard(p, i) {
@@ -934,13 +963,12 @@ function buildCard(p, i) {
     ? `<span class="lock-badge ${isLocked ? 'locked' : 'unlocked'}" title="${isLocked ? 'Đã khóa' : 'Đã mở khóa'}">${isLocked ? '🔒' : '🔓'}</span>`
     : '';
 
-  const genres = (p.genres||[]).map(g => `<span class="tag-pill genre">${g}</span>`).join('');
-  const tags = (p.tags||[]).map(t => `<span class="tag-pill tag">${t}</span>`).join('');
+  const genres = (p.genres||[]).map(g => `<span class="tag-pill genre">${escHtml(g)}</span>`).join('');
+  const tags = (p.tags||[]).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`).join('');
 
   const lockOverlay = isLocked ? `
     <div class="lock-overlay" onclick="openUnlockModal('${p.id}')">
       <span class="lock-icon">🔒</span>
-      ${p.hint ? `<div class="hint">💡 ${escHtml(p.hint)}</div>` : ''}
       <p>Nhấn để nhập mật khẩu</p>
     </div>` : '';
 
@@ -960,17 +988,13 @@ function buildCard(p, i) {
         <span class="card-link" title="${isLocked ? '' : escHtml(p.link)}">${isLocked ? '••••••••' : escHtml(linkPreview)}</span>
         <div class="card-actions" onclick="event.stopPropagation()">
           <button class="btn btn-sm btn-icon" onclick="openViewModal('${p.id}')" title="Xem">👁</button>
-          <button class="btn btn-sm btn-icon" onclick="openEditModal('${p.id}')" title="Sửa">✏</button>
-          <button class="btn btn-sm btn-icon btn-danger" onclick="openDeleteModal('${p.id}')" title="Xóa">🗑</button>
         </div>
       </div>
     </div>
   </div>`;
 }
 
-// ════════════════════════════════════════
-//  ADD / EDIT MODAL
-// ════════════════════════════════════════
+// MODALS
 function openAddModal() {
   editingId = null;
   editGenres = []; editTags = [];
@@ -986,236 +1010,136 @@ function openAddModal() {
   document.getElementById('addModal').classList.remove('hidden');
 }
 
-function openEditModal(id) {
-  const p = prompts.find(x => x.id === id);
-  if (!p) return;
-  editingId = id;
-  editGenres = [...(p.genres||[])];
-  editTags = [...(p.tags||[])];
-  document.getElementById('addModalTitle').textContent = '✏ Chỉnh Sửa';
-  document.getElementById('fName').value = p.name;
-  document.getElementById('fLink').value = p.link;
-  document.getElementById('fDesc').value = p.desc||'';
-  document.getElementById('fPassword').value = p.password||'';
-  document.getElementById('fHint').value = p.hint||'';
-  const hasPw = !!p.password;
-  document.getElementById('fPwEnabled').checked = hasPw;
-  document.getElementById('pwFields').classList.toggle('hidden', !hasPw);
-  renderTagPrev('genre'); renderTagPrev('tag');
-  document.getElementById('addModal').classList.remove('hidden');
-  closeViewModal();
-}
-
-function closeAddModal() { document.getElementById('addModal').classList.add('hidden'); }
-
-function togglePwFields() {
-  const checked = document.getElementById('fPwEnabled').checked;
-  document.getElementById('pwFields').classList.toggle('hidden', !checked);
+function closeAddModal() {
+  document.getElementById('addModal').classList.add('hidden');
 }
 
 function savePrompt() {
   const name = document.getElementById('fName').value.trim();
   const link = document.getElementById('fLink').value.trim();
-  if (!name || !link) { showToast('Vui lòng điền Tên và Link/Text!', 'error'); return; }
-  const pwEnabled = document.getElementById('fPwEnabled').checked;
-  const pw = pwEnabled ? document.getElementById('fPassword').value.trim() : '';
-  const hint = pwEnabled ? document.getElementById('fHint').value.trim() : '';
-  if (pwEnabled && !pw) { showToast('Vui lòng nhập mật khẩu!', 'error'); return; }
+  if (!name || !link) { showToast('Điền tên và link', 'error'); return; }
 
   if (editingId) {
-    const idx = prompts.findIndex(x => x.id === editingId);
-    if (idx !== -1) {
-      prompts[idx] = { ...prompts[idx], name, link, desc: document.getElementById('fDesc').value.trim(), genres: [...editGenres], tags: [...editTags], password: pw, hint };
-    }
-    showToast('Đã cập nhật!', 'success');
+    const p = prompts.find(x => x.id === editingId);
+    p.name = name;
+    p.link = link;
+    p.desc = document.getElementById('fDesc').value;
+    p.genres = editGenres;
+    p.tags = editTags;
+    p.password = document.getElementById('fPwEnabled').checked ? document.getElementById('fPassword').value : '';
+    p.hint = document.getElementById('fHint').value;
   } else {
-    prompts.unshift({ id: genId(), name, link, desc: document.getElementById('fDesc').value.trim(), genres: [...editGenres], tags: [...editTags], password: pw, hint, created: Date.now() });
-    showToast('Đã thêm thành công!', 'success');
+    prompts.push({
+      id: genId(),
+      name,
+      link,
+      desc: document.getElementById('fDesc').value,
+      genres: editGenres,
+      tags: editTags,
+      password: document.getElementById('fPwEnabled').checked ? document.getElementById('fPassword').value : '',
+      hint: document.getElementById('fHint').value,
+      created: Date.now()
+    });
   }
-  save(); closeAddModal(); renderTagsRow(); renderPrompts();
+
+  save();
+  closeAddModal();
+  renderCategoriesGrid();
+  renderPrompts();
+  showToast(editingId ? 'Đã cập nhật' : 'Đã thêm', 'success');
 }
 
-// ════════════════════════════════════════
-//  UNLOCK MODAL
-// ════════════════════════════════════════
+function togglePwFields() {
+  const el = document.getElementById('pwFields');
+  if (document.getElementById('fPwEnabled').checked) el.classList.remove('hidden');
+  else el.classList.add('hidden');
+}
+
+function openViewModal(id) {
+  const p = prompts.find(x => x.id === id);
+  if (!p) return;
+  viewingId = id;
+  document.getElementById('viewTitle').textContent = escHtml(p.name);
+  document.getElementById('viewDesc').textContent = p.desc || 'Không có mô tả';
+  
+  let linkHtml = p.link;
+  if (p.link.startsWith('http')) {
+    linkHtml = `<a href="${escHtml(p.link)}" target="_blank" style="color:var(--gold2)">${escHtml(p.link.slice(0,50))}</a>`;
+  } else {
+    linkHtml = `<div class="prompt-text-display">${escHtml(p.link)}</div>`;
+  }
+  document.getElementById('viewLink').innerHTML = linkHtml;
+
+  let tagsHtml = '';
+  (p.genres||[]).forEach(g => tagsHtml += `<span class="tag-pill genre">${escHtml(g)}</span>`);
+  (p.tags||[]).forEach(t => tagsHtml += `<span class="tag-pill tag">${escHtml(t)}</span>`);
+  document.getElementById('viewTags').innerHTML = tagsHtml;
+
+  document.getElementById('viewModal').classList.remove('hidden');
+}
+
+function closeViewModal() {
+  document.getElementById('viewModal').classList.add('hidden');
+}
+
 function openUnlockModal(id) {
   unlockTargetId = id;
   const p = prompts.find(x => x.id === id);
-  if (!p) return;
-  document.getElementById('unlockBotName').textContent = p.name;
+  document.getElementById('unlockBotName').textContent = escHtml(p.name);
+  
   const hintWrap = document.getElementById('unlockHintWrap');
-  if (p.hint) { hintWrap.textContent = '💡 ' + p.hint; hintWrap.style.display = 'block'; }
-  else { hintWrap.style.display = 'none'; }
+  if (p.hint) {
+    hintWrap.textContent = '💡 ' + escHtml(p.hint);
+    hintWrap.style.display = 'block';
+  } else {
+    hintWrap.style.display = 'none';
+  }
+  
   document.getElementById('unlockInput').value = '';
   document.getElementById('unlockError').classList.remove('show');
   document.getElementById('unlockModal').classList.remove('hidden');
-  setTimeout(() => document.getElementById('unlockInput').focus(), 100);
 }
 
-function closeUnlockModal() { document.getElementById('unlockModal').classList.add('hidden'); unlockTargetId = null; }
+function closeUnlockModal() {
+  document.getElementById('unlockModal').classList.add('hidden');
+}
 
 function tryUnlock() {
+  const pw = document.getElementById('unlockInput').value;
   const p = prompts.find(x => x.id === unlockTargetId);
-  if (!p) return;
-  const val = document.getElementById('unlockInput').value;
-  if (val === p.password) {
-    sessionUnlocked.add(p.id);
+  
+  if (pw === p.password) {
+    sessionUnlocked.add(unlockTargetId);
     closeUnlockModal();
     renderPrompts();
-    showToast('🔓 Đã mở khóa!', 'success');
+    showToast('Đã mở khóa', 'success');
   } else {
     document.getElementById('unlockError').classList.add('show');
-    document.getElementById('unlockInput').select();
   }
 }
 
 function togglePwVis(inputId, btn) {
   const inp = document.getElementById(inputId);
-  if (inp.type === 'password') { inp.type = 'text'; btn.textContent = '🙈'; }
-  else { inp.type = 'password'; btn.textContent = '👁'; }
-}
-
-// ════════════════════════════════════════
-//  VIEW MODAL
-// ════════════════════════════════════════
-function openViewModal(id) {
-  const p = prompts.find(x => x.id === id);
-  if (!p) return;
-  if (p.password && !sessionUnlocked.has(p.id)) { openUnlockModal(id); return; }
-  viewingId = id;
-  document.getElementById('viewTitle').textContent = p.name;
-  document.getElementById('viewDesc').textContent = p.desc || 'Không có mô tả.';
-
-  const linkEl = document.getElementById('viewLink');
-  const isUrl = p.link.startsWith('http');
-  if (isUrl) {
-    linkEl.innerHTML = `
-      <a href="${escHtml(p.link)}" target="_blank" class="btn btn-gold" style="font-size:13px">🔗 Mở Link</a>
-      <button class="btn btn-sm" onclick="copyText('${escHtml(p.link).replace(/'/g,"\\'")}',this)">📋 Copy</button>`;
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    btn.textContent = '🙈';
   } else {
-    linkEl.innerHTML = `
-      <div style="flex:1">
-        <div class="prompt-text-display">${escHtml(p.link)}</div>
-      </div>`;
-    linkEl.innerHTML += `<button class="btn btn-sm" style="align-self:flex-start" onclick="copyText(document.querySelector('.prompt-text-display').textContent, this)">📋 Copy</button>`;
+    inp.type = 'password';
+    btn.textContent = '👁';
   }
-
-  const tagsEl = document.getElementById('viewTags');
-  tagsEl.innerHTML = (p.genres||[]).map(g => `<span class="tag-pill genre">${g}</span>`).join('') +
-    (p.tags||[]).map(t => `<span class="tag-pill tag">${t}</span>`).join('');
-  document.getElementById('viewTagsWrap').style.display = tagsEl.innerHTML ? '' : 'none';
-
-  document.getElementById('viewEditBtn').onclick = () => openEditModal(id);
-  document.getElementById('viewModal').classList.remove('hidden');
 }
 
-function closeViewModal() { document.getElementById('viewModal').classList.add('hidden'); viewingId = null; }
-
-function copyText(text, btn) {
-  navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.innerHTML;
-    btn.innerHTML = '✅ Copied!';
-    btn.style.borderColor = 'var(--teal)';
-    btn.style.color = 'var(--teal)';
-    setTimeout(() => { btn.innerHTML = orig; btn.style.borderColor = ''; btn.style.color = ''; }, 1500);
-  });
+// ADMIN (placeholder)
+function toggleAdminPanel() {
+  showToast('Chức năng admin sẽ được bổ sung', 'info');
 }
 
-// ════════════════════════════════════════
-//  DELETE MODAL
-// ════════════════════════════════════════
-function openDeleteModal(id) {
-  deletingId = id;
-  const p = prompts.find(x => x.id === id);
-  document.getElementById('deletePromptName').textContent = p ? p.name : '';
-  document.getElementById('confirmDeleteBtn').onclick = confirmDelete;
-  document.getElementById('deleteModal').classList.remove('hidden');
-}
-
-function closeDeleteModal() { document.getElementById('deleteModal').classList.add('hidden'); deletingId = null; }
-
-function confirmDelete() {
-  prompts = prompts.filter(x => x.id !== deletingId);
-  sessionUnlocked.delete(deletingId);
-  save(); closeDeleteModal(); renderTagsRow(); renderPrompts();
-  showToast('Đã xóa.', 'success');
-}
-
-// ════════════════════════════════════════
-//  EXPORT / IMPORT
-// ════════════════════════════════════════
-function exportData() {
-  const json = JSON.stringify(prompts, null, 2);
-  const blob = new Blob([json], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'hospital_backup.json'; a.click();
-  URL.revokeObjectURL(url);
-  showToast('Đã export backup!', 'success');
-}
-
-function importData(e) {
-  const file = e.target.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = ev => {
-    try {
-      const data = JSON.parse(ev.target.result);
-      if (!Array.isArray(data)) throw new Error();
-      prompts = data;
-      save(); renderTagsRow(); renderPrompts();
-      showToast(`Đã import ${data.length} mục!`, 'success');
-    } catch { showToast('File JSON không hợp lệ!', 'error'); }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
-}
-
-// ════════════════════════════════════════
-//  TOAST
-// ════════════════════════════════════════
-function showToast(msg, type = 'success') {
-  const t = document.createElement('div');
-  t.className = `toast ${type}`;
-  t.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : '✕'}</span>${escHtml(msg)}`;
-  document.body.appendChild(t);
-  setTimeout(() => {
-    t.classList.add('fade-out');
-    setTimeout(() => t.remove(), 350);
-  }, 2200);
-}
-
-// ════════════════════════════════════════
-//  UTILS
-// ════════════════════════════════════════
-function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-}
-
-// Close modals on background click
-document.querySelectorAll('.modal-bg').forEach(bg => {
-  bg.addEventListener('click', e => {
-    if (e.target === bg) {
-      bg.classList.add('hidden');
-      unlockTargetId = null; viewingId = null; deletingId = null; editingId = null;
-    }
-  });
+// INIT
+window.addEventListener('DOMContentLoaded', () => {
+  load();
+  renderCategoriesGrid();
+  renderPrompts();
 });
-
-// ESC to close
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    ['addModal','unlockModal','viewModal','deleteModal'].forEach(id => {
-      document.getElementById(id).classList.add('hidden');
-    });
-  }
-});
-
-// ════════════════════════════════════════
-//  INIT
-// ════════════════════════════════════════
-load();
-renderTagsRow();
-renderPrompts();
 </script>
 </body>
 </html>
