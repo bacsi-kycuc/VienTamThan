@@ -817,7 +817,7 @@ let adminEmail = null;
 
 // ===== ADMIN AUTH =====
 const ADMIN_USERS = [
-  { email: 'admin@hospital.local', password: 'BenhVienAdmin2024' }
+  { email: 'charmaineminnie8@gmail.com', password: 'BenhVienAdmin2024' }
 ];
 
 function loginAdmin() {
@@ -843,9 +843,9 @@ function loginAdmin() {
   localStorage.setItem(ADMIN_KEY, JSON.stringify({ email, timestamp: Date.now() }));
   
   closeAdminLoginModal();
+  showToast('✓ Đăng nhập admin thành công!', 'success');
   openAdminPanel();
   updateAdminStatus();
-  showToast('✓ Đăng nhập admin thành công!', 'success');
 }
 
 function logoutAdmin() {
@@ -973,12 +973,14 @@ function toggleAdminPanel() {
   if (!isAdmin) {
     document.getElementById('adminLoginModal').classList.remove('hidden');
   } else {
-    closeAdminPanel();
+    openAdminPanel();
   }
 }
 
 function openAdminPanel() {
-  document.getElementById('adminPanelModal').classList.remove('hidden');
+  if (isAdmin) {
+    document.getElementById('adminPanelModal').classList.remove('hidden');
+  }
 }
 
 function closeAdminPanel() {
@@ -1005,171 +1007,229 @@ function togglePwVis(inputId, btn) {
 }
 
 function togglePwFields() {
-  const chk = document.getElementById('fPwEnabled').checked;
-  document.getElementById('pwFields').classList.toggle('hidden', !chk);
+  const el = document.getElementById('pwFields');
+  if (document.getElementById('fPwEnabled').checked) {
+    el.classList.remove('hidden');
+  } else {
+    el.classList.add('hidden');
+  }
 }
 
-// ===== FORM =====
 function clearAdminForm() {
   editingId = null;
-  editGenres = [];
-  editTags = [];
   document.getElementById('fName').value = '';
   document.getElementById('fLink').value = '';
   document.getElementById('fDesc').value = '';
-  document.getElementById('fGenreInput').value = '';
-  document.getElementById('fTagInput').value = '';
-  document.getElementById('fPwEnabled').checked = false;
   document.getElementById('fPassword').value = '';
   document.getElementById('fHint').value = '';
-  document.getElementById('fGenrePrev').innerHTML = '';
-  document.getElementById('fTagPrev').innerHTML = '';
-  togglePwFields();
-  document.getElementById('saveBtnAdmin').textContent = '💾 Lưu Prompt';
-}
-
-function editPrompt(id) {
-  const p = prompts.find(x => x.id === id);
-  if (!p) return;
-  editingId = id;
-  editGenres = [...(p.genres || [])];
-  editTags = [...(p.tags || [])];
-  document.getElementById('fName').value = p.name;
-  document.getElementById('fLink').value = p.link;
-  document.getElementById('fDesc').value = p.desc || '';
-  document.getElementById('fPwEnabled').checked = !!p.password;
-  document.getElementById('fPassword').value = p.password || '';
-  document.getElementById('fHint').value = p.hint || '';
+  document.getElementById('fPwEnabled').checked = false;
+  document.getElementById('fGenreInput').value = '';
+  document.getElementById('fTagInput').value = '';
+  editGenres = [];
+  editTags = [];
   renderTagPrev('genre');
   renderTagPrev('tag');
   togglePwFields();
-  closeViewModal();
-  openAdminPanel();
-  document.getElementById('saveBtnAdmin').textContent = '✏️ Cập Nhật Prompt';
 }
 
+// ===== PROMPTS =====
 function savePrompt() {
-  if (!isAdmin) {
-    showToast('❌ Bạn cần đăng nhập admin!', 'error');
-    return;
-  }
-
   const name = document.getElementById('fName').value.trim();
   const link = document.getElementById('fLink').value.trim();
+  
   if (!name || !link) {
-    showToast('❌ Vui lòng nhập tên và link!', 'error');
+    showToast('❌ Tên và Link không được để trống!', 'error');
     return;
   }
 
   const desc = document.getElementById('fDesc').value.trim();
-  const pw = document.getElementById('fPwEnabled').checked ? document.getElementById('fPassword').value : '';
-  const hint = document.getElementById('fHint').value.trim();
+  const pwEnabled = document.getElementById('fPwEnabled').checked;
+  const password = pwEnabled ? document.getElementById('fPassword').value : '';
+  const hint = pwEnabled ? document.getElementById('fHint').value : '';
+
+  const promptData = {
+    id: editingId || genId(),
+    name,
+    link,
+    desc,
+    password,
+    hint,
+    genres: editGenres,
+    tags: editTags,
+    created: editingId ? undefined : Date.now()
+  };
 
   if (editingId) {
     const idx = prompts.findIndex(p => p.id === editingId);
-    if (idx !== -1) {
-      prompts[idx] = {
-        ...prompts[idx],
-        name, link, desc, password: pw, hint,
-        genres: editGenres, tags: editTags,
-        updatedAt: new Date().toISOString()
-      };
+    if (idx >= 0) {
+      prompts[idx] = { ...prompts[idx], ...promptData, created: prompts[idx].created };
     }
   } else {
-    prompts.push({
-      id: genId(),
-      name, link, desc, password: pw, hint,
-      genres: editGenres, tags: editTags,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    });
+    prompts.unshift(promptData);
   }
 
   save();
-  renderPrompts();
   clearAdminForm();
-  closeAdminPanel();
-  showToast(editingId ? '✓ Cập nhật thành công!' : '✓ Thêm mới thành công!', 'success');
+  renderPrompts();
+  showToast('✓ Prompt đã được lưu!', 'success');
+}
+
+function editPrompt(id) {
+  const prompt = prompts.find(p => p.id === id);
+  if (!prompt) return;
+
+  editingId = id;
+  document.getElementById('fName').value = prompt.name;
+  document.getElementById('fLink').value = prompt.link;
+  document.getElementById('fDesc').value = prompt.desc || '';
+  document.getElementById('fPwEnabled').checked = !!prompt.password;
+  document.getElementById('fPassword').value = prompt.password || '';
+  document.getElementById('fHint').value = prompt.hint || '';
+  editGenres = [...(prompt.genres || [])];
+  editTags = [...(prompt.tags || [])];
+  renderTagPrev('genre');
+  renderTagPrev('tag');
+  togglePwFields();
 }
 
 function deletePrompt(id) {
-  if (!isAdmin) {
-    showToast('❌ Bạn cần đăng nhập admin!', 'error');
-    return;
-  }
   if (confirm('Bạn chắc chắn muốn xóa prompt này?')) {
     prompts = prompts.filter(p => p.id !== id);
     save();
-    renderPrompts();
     closeViewModal();
-    showToast('✓ Xóa thành công!', 'success');
+    renderPrompts();
+    showToast('✓ Prompt đã được xóa!', 'success');
   }
 }
 
-// ===== VIEWING =====
-function openViewModal(id) {
-  const p = prompts.find(x => x.id === id);
-  if (!p) return;
+function renderPrompts() {
+  const grid = document.getElementById('promptsGrid');
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const sort = document.getElementById('sortSelect').value;
+  
+  let filtered = prompts.filter(p => 
+    p.name.toLowerCase().includes(search) || 
+    p.desc.toLowerCase().includes(search)
+  );
+
+  if (sort === 'name') {
+    filtered.sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sort === 'oldest') {
+    filtered.sort((a, b) => (a.created || 0) - (b.created || 0));
+  } else {
+    filtered.sort((a, b) => (b.created || 0) - (a.created || 0));
+  }
+
+  document.getElementById('countBadge').textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1">
+        <div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <h3>Không có prompts nào</h3>
+          <p>Hãy thêm prompt mới để bắt đầu!</p>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="prompt-card" onclick="viewPrompt('${p.id}')">
+      <div class="card-top">
+        <span class="card-name">${escHtml(p.name)}</span>
+        ${p.password ? '<span class="lock-status">🔒 LOCKED</span>' : ''}
+      </div>
+      <p class="card-desc">${escHtml(p.desc || 'Không có mô tả')}</p>
+      <div class="card-tags">
+        ${(p.genres || []).map(g => `<span class="tag-pill genre">${escHtml(g)}</span>`).join('')}
+        ${(p.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function viewPrompt(id) {
+  const prompt = prompts.find(p => p.id === id);
+  if (!prompt) return;
+
   viewingId = id;
+
+  document.getElementById('viewTitle').textContent = prompt.name;
+  document.getElementById('viewDesc').textContent = prompt.desc || 'Không có mô tả';
+
+  const linkEl = document.getElementById('viewLink');
+  const isUrl = prompt.link.startsWith('http://') || prompt.link.startsWith('https://');
   
-  document.getElementById('viewTitle').textContent = p.name;
-  document.getElementById('viewDesc').textContent = p.desc || '(Không có mô tả)';
-  
-  const linkDiv = document.getElementById('viewLink');
-  const isUrl = p.link.startsWith('http://') || p.link.startsWith('https://');
   if (isUrl) {
-    linkDiv.innerHTML = `<a href="${escHtml(p.link)}" target="_blank" style="color:var(--primary-light);text-decoration:underline;flex:1;word-break:break-all">${escHtml(p.link)}</a><button class="btn btn-sm" onclick="copyToClip('${escHtml(p.link)}')">📋</button>`;
+    linkEl.innerHTML = `
+      <a href="${escHtml(prompt.link)}" target="_blank" style="color:var(--primary-light);text-decoration:underline;flex:1;word-break:break-all">
+        ${escHtml(prompt.link)}
+      </a>
+    `;
   } else {
-    linkDiv.innerHTML = `<div class="prompt-text-display" style="flex:1">${escHtml(p.link)}</div><button class="btn btn-sm" onclick="copyToClip('${escHtml(p.link)}')">📋</button>`;
+    if (prompt.password && !sessionUnlocked.has(id)) {
+      linkEl.innerHTML = `<button class="btn btn-gold" onclick="unlockPrompt('${id}')">🔐 Mở khóa để xem</button>`;
+    } else {
+      linkEl.innerHTML = `<div class="prompt-text-display">${prompt.link}</div>`;
+    }
   }
-  
-  const tagsHtml = [
-    ...(p.genres || []).map(t => `<span class="tag-pill genre">${escHtml(t)}</span>`),
-    ...(p.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`)
+
+  const viewTags = document.getElementById('viewTags');
+  viewTags.innerHTML = [
+    ...(prompt.genres || []).map(g => `<span class="tag-pill genre">${escHtml(g)}</span>`),
+    ...(prompt.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`)
   ].join('');
-  document.getElementById('viewTags').innerHTML = tagsHtml || '(Không có tags)';
-  
-  const editBtn = document.getElementById('editBtn');
-  const deleteBtn = document.getElementById('deleteBtn');
-  if (isAdmin) {
-    editBtn.style.display = 'block';
-    deleteBtn.style.display = 'block';
+
+  if (document.getElementById('viewTagsWrap').children.length === 1) {
+    document.getElementById('viewTagsWrap').style.display = 'none';
   } else {
-    editBtn.style.display = 'none';
-    deleteBtn.style.display = 'none';
+    document.getElementById('viewTagsWrap').style.display = 'block';
   }
-  
+
+  document.getElementById('deleteBtn').style.display = isAdmin ? 'block' : 'none';
+  document.getElementById('editBtn').style.display = isAdmin ? 'block' : 'none';
+
   document.getElementById('viewModal').classList.remove('hidden');
 }
 
 function closeViewModal() {
   document.getElementById('viewModal').classList.add('hidden');
+  viewingId = null;
 }
 
-function copyToClip(text) {
-  navigator.clipboard.writeText(text).then(() => {
-    showToast('✓ Đã sao chép!', 'success');
-  }).catch(() => {
-    showToast('❌ Sao chép thất bại!', 'error');
-  });
-}
-
-// ===== PASSWORD UNLOCK =====
-function openUnlockModal(id) {
-  const p = prompts.find(x => x.id === id);
-  if (!p || !p.password) return;
+function unlockPrompt(id) {
   unlockTargetId = id;
-  document.getElementById('unlockBotName').textContent = p.name;
-  const hintWrap = document.getElementById('unlockHintWrap');
-  if (p.hint) {
-    hintWrap.textContent = `💡 Gợi ý: ${p.hint}`;
-    hintWrap.style.display = 'block';
+  const prompt = prompts.find(p => p.id === id);
+  document.getElementById('unlockBotName').textContent = prompt.name;
+  
+  if (prompt.hint) {
+    document.getElementById('unlockHintWrap').textContent = `💡 ${escHtml(prompt.hint)}`;
+    document.getElementById('unlockHintWrap').style.display = 'block';
   } else {
-    hintWrap.style.display = 'none';
+    document.getElementById('unlockHintWrap').style.display = 'none';
   }
+
   document.getElementById('unlockInput').value = '';
   document.getElementById('unlockError').classList.remove('show');
   document.getElementById('unlockModal').classList.remove('hidden');
+}
+
+function tryUnlock() {
+  const prompt = prompts.find(p => p.id === unlockTargetId);
+  if (!prompt) return;
+
+  const pwd = document.getElementById('unlockInput').value;
+  if (pwd === prompt.password) {
+    sessionUnlocked.add(unlockTargetId);
+    document.getElementById('unlockError').classList.remove('show');
+    document.getElementById('unlockModal').classList.add('hidden');
+    viewPrompt(unlockTargetId);
+    showToast('✓ Mở khóa thành công!', 'success');
+  } else {
+    document.getElementById('unlockError').classList.add('show');
+  }
 }
 
 function closeUnlockModal() {
@@ -1177,100 +1237,13 @@ function closeUnlockModal() {
   unlockTargetId = null;
 }
 
-function tryUnlock() {
-  if (!unlockTargetId) return;
-  const p = prompts.find(x => x.id === unlockTargetId);
-  if (!p || !p.password) return;
-  
-  const entered = document.getElementById('unlockInput').value;
-  if (entered === p.password) {
-    sessionUnlocked.add(unlockTargetId);
-    closeUnlockModal();
-    renderPrompts();
-    showToast('✓ Đã mở khóa!', 'success');
-  } else {
-    document.getElementById('unlockError').classList.add('show');
-  }
-}
-
-// ===== RENDERING =====
-function renderPrompts() {
-  const searchText = document.getElementById('searchInput').value.toLowerCase();
-  const sortVal = document.getElementById('sortSelect').value;
-  
-  let filtered = prompts.filter(p => {
-    const matchText = p.name.toLowerCase().includes(searchText) || 
-                      (p.desc || '').toLowerCase().includes(searchText) ||
-                      p.link.toLowerCase().includes(searchText);
-    return matchText;
-  });
-
-  filtered.sort((a, b) => {
-    if (sortVal === 'newest') return new Date(b.createdAt) - new Date(a.createdAt);
-    if (sortVal === 'oldest') return new Date(a.createdAt) - new Date(b.createdAt);
-    if (sortVal === 'name') return a.name.localeCompare(b.name);
-  });
-
-  const grid = document.getElementById('promptsGrid');
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><h3>Không có prompts</h3><p>Hãy thêm prompts mới để bắt đầu!</p></div>';
-  } else {
-    grid.innerHTML = filtered.map(p => {
-      const isLocked = p.password && !sessionUnlocked.has(p.id);
-      const lockStatusHtml = isLocked ? '<span class="lock-status">🔒 Đang Khóa</span>' : '';
-      const cardContent = `
-        <div class="card-top">
-          <div style="flex:1">
-            <div class="card-name">${escHtml(p.name)}</div>
-            ${lockStatusHtml}
-          </div>
-        </div>
-        <div class="card-desc">${escHtml(p.desc || '(Không có mô tả)')}</div>
-        <div class="card-tags">
-          ${(p.genres || []).map(t => `<span class="tag-pill genre">${escHtml(t)}</span>`).join('')}
-          ${(p.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`).join('')}
-        </div>
-      `;
-      
-      if (isLocked) {
-        return `<div class="prompt-card" onclick="openUnlockModal('${p.id}')">${cardContent}</div>`;
-      } else {
-        return `<div class="prompt-card" onclick="openViewModal('${p.id}')">${cardContent}</div>`;
-      }
-    }).join('');
-  }
-
-  document.getElementById('countBadge').textContent = filtered.length;
-}
-
 // ===== INIT =====
-function init() {
+window.addEventListener('DOMContentLoaded', () => {
   load();
+  renderPrompts();
   checkAdminSession();
   updateAdminStatus();
-  renderPrompts();
-  
-  if (prompts.length === 0) {
-    prompts = [
-      {
-        id: genId(),
-        name: 'Cố Lăng Hiên',
-        link: 'https://example.com/prompt1',
-        desc: 'Một prompt tuyệt vời về nhân vật cố lăng hiên',
-        genres: ['Nhân Vật', 'Lịch Sử'],
-        tags: ['Điểm Danh', 'Quan Trọng'],
-        password: 'test123',
-        hint: 'Tên con vật đầu tiên',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      }
-    ];
-    save();
-    renderPrompts();
-  }
-}
-
-window.addEventListener('DOMContentLoaded', init);
+});
 </script>
 </body>
 </html>
