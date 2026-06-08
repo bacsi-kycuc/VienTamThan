@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PromptVault — AI Roleplay Hub</title>
+<title>Bệnh viện Tâm thần Đa khoa Kỹ Thuật Số</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <style>
   :root {
     --bg: #0a0a0f;
@@ -102,15 +103,16 @@
   }
   .logo-text {
     font-family: 'Cinzel Decorative', serif;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 700;
     background: linear-gradient(135deg, var(--gold2), var(--gold3));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
   }
-  .logo-sub { font-size: 11px; color: var(--text3); font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; text-transform: uppercase; }
+  .logo-sub { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; }
   
   .header-actions { display: flex; gap: 10px; align-items: center; }
   
@@ -436,6 +438,17 @@
   .pw-fields { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
   .pw-fields.hidden { display: none; }
 
+  .security-note {
+    background: rgba(74, 155, 142, 0.1);
+    border: 1px solid rgba(74, 155, 142, 0.3);
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--teal);
+    margin-top: 8px;
+    font-style: italic;
+  }
+
   /* ── UNLOCK MODAL ── */
   .unlock-modal .lock-big { font-size: 48px; text-align: center; margin-bottom: 12px; }
   .unlock-modal .hint-text {
@@ -534,7 +547,7 @@
     header { padding: 16px 20px; }
     main { padding: 20px; }
     .form-row { grid-template-columns: 1fr; }
-    .logo-text { font-size: 17px; }
+    .logo-text { font-size: 15px; }
   }
 </style>
 </head>
@@ -549,15 +562,15 @@
   <!-- HEADER -->
   <header>
     <div class="logo-wrap">
-      <div class="logo-icon">📜</div>
+      <div class="logo-icon">🏥</div>
       <div>
-        <div class="logo-text">PromptVault</div>
-        <div class="logo-sub">AI Roleplay Hub</div>
+        <div class="logo-text">Bệnh viện Tâm thần<br>Đa khoa Kỹ Thuật Số</div>
+        <div class="logo-sub">Viện Tâm Thần Cố Thị</div>
       </div>
     </div>
     <div class="header-actions">
       <button class="btn btn-gold" onclick="openAddModal()">
-        <span>＋</span> Thêm Prompt
+        <span>＋</span> Thêm
       </button>
       <button class="btn btn-sm" onclick="exportData()" title="Export JSON">⬇ Export</button>
       <label class="btn btn-sm" style="cursor:pointer" title="Import JSON">⬆ Import<input type="file" accept=".json" style="display:none" onchange="importData(event)"></label>
@@ -569,7 +582,7 @@
     <div class="filter-bar">
       <div class="search-wrap">
         <span class="icon">🔍</span>
-        <input type="text" id="searchInput" placeholder="Tìm kiếm prompt..." oninput="renderPrompts()">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm..." oninput="renderPrompts()">
       </div>
       <select id="sortSelect" onchange="renderPrompts()" style="width:auto;min-width:150px">
         <option value="newest">Mới nhất</option>
@@ -583,7 +596,7 @@
 
     <!-- SECTION HEADER -->
     <div class="section-header">
-      <span class="section-title">Thư Viện Prompt</span>
+      <span class="section-title">Thư Viện</span>
       <span class="count-badge" id="countBadge">0</span>
     </div>
 
@@ -598,29 +611,29 @@
 <div class="modal-bg hidden" id="addModal">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <span class="modal-title" id="addModalTitle">✦ Thêm Prompt Mới</span>
+      <span class="modal-title" id="addModalTitle">✦ Thêm Mới</span>
       <button class="close-btn" onclick="closeAddModal()">✕</button>
     </div>
     <div class="modal-body">
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Tên Bot / Nhân vật *</label>
-          <input type="text" id="fName" placeholder="Ví dụ: Elara the Mage">
+          <label class="form-label">Tên *</label>
+          <input type="text" id="fName" placeholder="Ví dụ: Bác sĩ">
         </div>
         <div class="form-group">
-          <label class="form-label">Link hoặc Text Prompt *</label>
-          <input type="text" id="fLink" placeholder="https://... hoặc paste prompt text">
+          <label class="form-label">Link / Text *</label>
+          <input type="text" id="fLink" placeholder="https://... hoặc paste text">
         </div>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Mô tả ngắn</label>
-        <textarea id="fDesc" placeholder="Tóm tắt nhân vật, bối cảnh, phong cách..."></textarea>
+        <label class="form-label">Mô tả</label>
+        <textarea id="fDesc" placeholder="Mô tả ngắn..."></textarea>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Genre (thể loại)</label>
+          <label class="form-label">Genre</label>
           <div class="tags-input-wrap">
             <input type="text" id="fGenreInput" placeholder="Fantasy, Romance..." onkeydown="handleTagKey(event,'genre')">
             <button class="btn btn-sm" onclick="addTag('genre')">＋</button>
@@ -631,7 +644,7 @@
         <div class="form-group">
           <label class="form-label">Tags</label>
           <div class="tags-input-wrap">
-            <input type="text" id="fTagInput" placeholder="NSFW, Yandere, Isekai..." onkeydown="handleTagKey(event,'tag')">
+            <input type="text" id="fTagInput" placeholder="Tag1, Tag2..." onkeydown="handleTagKey(event,'tag')">
             <button class="btn btn-sm" onclick="addTag('tag')">＋</button>
           </div>
           <div class="tags-preview" id="fTagPrev"></div>
@@ -651,16 +664,17 @@
             <input type="text" id="fPassword" placeholder="Nhập mật khẩu...">
           </div>
           <div class="form-group" style="margin:0">
-            <label class="form-label">Gợi ý (Hint) — hiển thị cho bạn bè</label>
+            <label class="form-label">Gợi ý (Hint) — dành cho bạn bè</label>
             <input type="text" id="fHint" placeholder="Ví dụ: Tên con mèo nhà mình 🐱">
             <div class="form-hint">Hint giúp bạn bè nhớ mật khẩu mà không tiết lộ trực tiếp</div>
           </div>
+          <div class="security-note">🔐 Mật khẩu được mã hóa AES-256. Bạn bè chỉ có thể đoán dựa vào hint, không ai khác có thể xem được!</div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn" onclick="closeAddModal()">Hủy</button>
-      <button class="btn btn-gold" onclick="savePrompt()">💾 Lưu Prompt</button>
+      <button class="btn btn-gold" onclick="savePrompt()">💾 Lưu</button>
     </div>
   </div>
 </div>
@@ -695,7 +709,7 @@
 </div>
 
 <!-- ══════════════════════════════════
-     VIEW PROMPT MODAL
+     VIEW MODAL
 ══════════════════════════════════ -->
 <div class="modal-bg hidden" id="viewModal">
   <div class="modal modal-lg">
@@ -709,7 +723,7 @@
         <p id="viewDesc" style="color:var(--text2);font-style:italic;line-height:1.7"></p>
       </div>
       <div class="form-group">
-        <label class="form-label">Link / Prompt Text</label>
+        <label class="form-label">Link / Text</label>
         <div id="viewLink" style="display:flex;gap:10px;align-items:flex-start"></div>
       </div>
       <div class="form-group" id="viewTagsWrap">
@@ -734,7 +748,7 @@
       <button class="close-btn" onclick="closeDeleteModal()">✕</button>
     </div>
     <div class="modal-body">
-      <p style="color:var(--text2);line-height:1.7">Bạn có chắc muốn xóa prompt <strong id="deletePromptName" style="color:var(--gold3)"></strong>?<br>Hành động này không thể hoàn tác.</p>
+      <p style="color:var(--text2);line-height:1.7">Bạn có chắc muốn xóa <strong id="deletePromptName" style="color:var(--gold3)"></strong>?<br>Hành động này không thể hoàn tác.</p>
     </div>
     <div class="modal-footer">
       <button class="btn" onclick="closeDeleteModal()">Hủy</button>
@@ -745,23 +759,56 @@
 
 <script>
 // ════════════════════════════════════════
-//  DATA STORE
+//  DATA STORE WITH ENCRYPTION
 // ════════════════════════════════════════
-const STORE_KEY = 'promptvault_data';
+const STORE_KEY = 'hospital_vault_data';
+const ENCRYPTION_KEY = 'BenhVienTamThanCo'; // Khóa mã hóa cố định
 let prompts = [];
 let editingId = null;
 let unlockTargetId = null;
 let viewingId = null;
 let deletingId = null;
-let sessionUnlocked = new Set(); // unlocked this session
+let sessionUnlocked = new Set();
 let activeFilters = { genres: new Set(), tags: new Set() };
 
+// ════════════════════════════════════════
+//  ENCRYPTION FUNCTIONS (AES-256)
+// ════════════════════════════════════════
+function encryptPassword(plaintext) {
+  return CryptoJS.AES.encrypt(plaintext, ENCRYPTION_KEY).toString();
+}
+
+function decryptPassword(encrypted) {
+  try {
+    const decrypted = CryptoJS.AES.decrypt(encrypted, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
+    return decrypted;
+  } catch {
+    return '';
+  }
+}
+
 function save() {
-  localStorage.setItem(STORE_KEY, JSON.stringify(prompts));
+  // Mã hóa password trước khi lưu
+  const dataToSave = prompts.map(p => ({
+    ...p,
+    password: p.password ? encryptPassword(p.password) : ''
+  }));
+  localStorage.setItem(STORE_KEY, JSON.stringify(dataToSave));
 }
+
 function load() {
-  try { prompts = JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch { prompts = []; }
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
+    // Giải mã password khi load
+    prompts = stored.map(p => ({
+      ...p,
+      password: p.password ? decryptPassword(p.password) : ''
+    }));
+  } catch {
+    prompts = [];
+  }
 }
+
 function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
 // ════════════════════════════════════════
@@ -773,6 +820,7 @@ let editTags = [];
 function handleTagKey(e, type) {
   if (e.key === 'Enter') { e.preventDefault(); addTag(type); }
 }
+
 function addTag(type) {
   const inp = document.getElementById(type === 'genre' ? 'fGenreInput' : 'fTagInput');
   const val = inp.value.trim();
@@ -782,10 +830,12 @@ function addTag(type) {
   inp.value = '';
   inp.focus();
 }
+
 function removeTag(type, val) {
   if (type === 'genre') { editGenres = editGenres.filter(t => t !== val); renderTagPrev('genre'); }
   else { editTags = editTags.filter(t => t !== val); renderTagPrev('tag'); }
 }
+
 function renderTagPrev(type) {
   const arr = type === 'genre' ? editGenres : editTags;
   const el = document.getElementById(type === 'genre' ? 'fGenrePrev' : 'fTagPrev');
@@ -831,6 +881,7 @@ function toggleFilter(type, val) {
   renderTagsRow();
   renderPrompts();
 }
+
 function clearFilters() {
   activeFilters.genres.clear();
   activeFilters.tags.clear();
@@ -866,9 +917,9 @@ function renderPrompts() {
   const grid = document.getElementById('promptsGrid');
   if (!filtered.length) {
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
-      <div class="empty-icon">📜</div>
-      <h3>${prompts.length ? 'Không tìm thấy kết quả' : 'Chưa có prompt nào'}</h3>
-      <p>${prompts.length ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm' : 'Nhấn "+ Thêm Prompt" để bắt đầu tạo bộ sưu tập của bạn'}</p>
+      <div class="empty-icon">🏥</div>
+      <h3>${prompts.length ? 'Không tìm thấy kết quả' : 'Chưa có gì'}</h3>
+      <p>${prompts.length ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm' : 'Nhấn "+ Thêm" để bắt đầu'}</p>
     </div>`;
     return;
   }
@@ -923,7 +974,7 @@ function buildCard(p, i) {
 function openAddModal() {
   editingId = null;
   editGenres = []; editTags = [];
-  document.getElementById('addModalTitle').textContent = '✦ Thêm Prompt Mới';
+  document.getElementById('addModalTitle').textContent = '✦ Thêm Mới';
   document.getElementById('fName').value = '';
   document.getElementById('fLink').value = '';
   document.getElementById('fDesc').value = '';
@@ -934,13 +985,14 @@ function openAddModal() {
   renderTagPrev('genre'); renderTagPrev('tag');
   document.getElementById('addModal').classList.remove('hidden');
 }
+
 function openEditModal(id) {
   const p = prompts.find(x => x.id === id);
   if (!p) return;
   editingId = id;
   editGenres = [...(p.genres||[])];
   editTags = [...(p.tags||[])];
-  document.getElementById('addModalTitle').textContent = '✏ Chỉnh Sửa Prompt';
+  document.getElementById('addModalTitle').textContent = '✏ Chỉnh Sửa';
   document.getElementById('fName').value = p.name;
   document.getElementById('fLink').value = p.link;
   document.getElementById('fDesc').value = p.desc||'';
@@ -953,6 +1005,7 @@ function openEditModal(id) {
   document.getElementById('addModal').classList.remove('hidden');
   closeViewModal();
 }
+
 function closeAddModal() { document.getElementById('addModal').classList.add('hidden'); }
 
 function togglePwFields() {
@@ -963,7 +1016,7 @@ function togglePwFields() {
 function savePrompt() {
   const name = document.getElementById('fName').value.trim();
   const link = document.getElementById('fLink').value.trim();
-  if (!name || !link) { showToast('Vui lòng điền Tên và Link/Prompt!', 'error'); return; }
+  if (!name || !link) { showToast('Vui lòng điền Tên và Link/Text!', 'error'); return; }
   const pwEnabled = document.getElementById('fPwEnabled').checked;
   const pw = pwEnabled ? document.getElementById('fPassword').value.trim() : '';
   const hint = pwEnabled ? document.getElementById('fHint').value.trim() : '';
@@ -974,10 +1027,10 @@ function savePrompt() {
     if (idx !== -1) {
       prompts[idx] = { ...prompts[idx], name, link, desc: document.getElementById('fDesc').value.trim(), genres: [...editGenres], tags: [...editTags], password: pw, hint };
     }
-    showToast('Đã cập nhật prompt!', 'success');
+    showToast('Đã cập nhật!', 'success');
   } else {
     prompts.unshift({ id: genId(), name, link, desc: document.getElementById('fDesc').value.trim(), genres: [...editGenres], tags: [...editTags], password: pw, hint, created: Date.now() });
-    showToast('Đã thêm prompt mới!', 'success');
+    showToast('Đã thêm thành công!', 'success');
   }
   save(); closeAddModal(); renderTagsRow(); renderPrompts();
 }
@@ -998,6 +1051,7 @@ function openUnlockModal(id) {
   document.getElementById('unlockModal').classList.remove('hidden');
   setTimeout(() => document.getElementById('unlockInput').focus(), 100);
 }
+
 function closeUnlockModal() { document.getElementById('unlockModal').classList.add('hidden'); unlockTargetId = null; }
 
 function tryUnlock() {
@@ -1054,6 +1108,7 @@ function openViewModal(id) {
   document.getElementById('viewEditBtn').onclick = () => openEditModal(id);
   document.getElementById('viewModal').classList.remove('hidden');
 }
+
 function closeViewModal() { document.getElementById('viewModal').classList.add('hidden'); viewingId = null; }
 
 function copyText(text, btn) {
@@ -1076,12 +1131,14 @@ function openDeleteModal(id) {
   document.getElementById('confirmDeleteBtn').onclick = confirmDelete;
   document.getElementById('deleteModal').classList.remove('hidden');
 }
+
 function closeDeleteModal() { document.getElementById('deleteModal').classList.add('hidden'); deletingId = null; }
+
 function confirmDelete() {
   prompts = prompts.filter(x => x.id !== deletingId);
   sessionUnlocked.delete(deletingId);
   save(); closeDeleteModal(); renderTagsRow(); renderPrompts();
-  showToast('Đã xóa prompt.', 'success');
+  showToast('Đã xóa.', 'success');
 }
 
 // ════════════════════════════════════════
@@ -1092,10 +1149,11 @@ function exportData() {
   const blob = new Blob([json], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'promptvault_backup.json'; a.click();
+  a.href = url; a.download = 'hospital_backup.json'; a.click();
   URL.revokeObjectURL(url);
   showToast('Đã export backup!', 'success');
 }
+
 function importData(e) {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
@@ -1103,12 +1161,9 @@ function importData(e) {
     try {
       const data = JSON.parse(ev.target.result);
       if (!Array.isArray(data)) throw new Error();
-      const merged = [...data];
-      const existingIds = new Set(prompts.map(p => p.id));
-      data.forEach(p => { if (!existingIds.has(p.id)) merged.push(p); });
-      prompts = data; // replace
+      prompts = data;
       save(); renderTagsRow(); renderPrompts();
-      showToast(`Đã import ${data.length} prompts!`, 'success');
+      showToast(`Đã import ${data.length} mục!`, 'success');
     } catch { showToast('File JSON không hợp lệ!', 'error'); }
   };
   reader.readAsText(file);
