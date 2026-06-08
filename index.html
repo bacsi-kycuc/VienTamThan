@@ -8,33 +8,36 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <style>
   :root {
-    --bg: #0f1419;
-    --bg2: #151b24;
-    --bg3: #1a2332;
-    --card: #1e2838;
-    --card2: #2a3a4f;
-    --border: #2d3f52;
-    --border2: #3d5066;
-    --primary: #00d4ff;
-    --primary-light: #4dd9ff;
-    --accent: #ff006b;
-    --accent-light: #ff4da6;
-    --success: #00d97e;
-    --warning: #ffa500;
-    --danger: #ff4757;
-    --text: #e8f0f7;
-    --text2: #b0bcc4;
-    --text3: #7a8893;
-    --text-dark: #4a5a6a;
+    --bg: #f0f4f8;
+    --bg2: #e8f0f7;
+    --bg3: #dce7f3;
+    --card: #ffffff;
+    --card2: #f5f9fc;
+    --border: #b8d4e8;
+    --border2: #a0c8e0;
+    --primary: #0066cc;
+    --primary-light: #1a7ee8;
+    --accent: #d63031;
+    --accent-light: #e84a4a;
+    --success: #00a854;
+    --success-light: #1ab394;
+    --warning: #f59e0b;
+    --danger: #dc2626;
+    --text: #1a3a52;
+    --text2: #4a6a8a;
+    --text3: #7a8a9a;
+    --text-dark: #556080;
     --radius: 14px;
-    --glow: 0 0 20px rgba(0,212,255,0.2);
-    --glow-danger: 0 0 20px rgba(255,0,107,0.2);
+    --glow: 0 0 20px rgba(0,102,204,0.15);
+    --glow-danger: 0 0 20px rgba(220,38,38,0.15);
+    --shadow: 0 4px 12px rgba(0,102,204,0.1);
+    --shadow-lg: 0 8px 24px rgba(0,102,204,0.12);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
   body {
-    background: var(--bg);
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
     color: var(--text);
     font-family: 'Fredoka', sans-serif;
     font-size: 16px;
@@ -47,8 +50,8 @@
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(0,212,255,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255,0,107,0.05) 0%, transparent 50%);
+    background: radial-gradient(circle at 20% 50%, rgba(0,102,204,0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(220,38,38,0.03) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
   }
@@ -63,8 +66,8 @@
   .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(120px);
-    opacity: 0.08;
+    filter: blur(100px);
+    opacity: 0.06;
     animation: drift 25s ease-in-out infinite;
   }
   .orb1 { width: 600px; height: 600px; background: var(--primary); top: -200px; left: -100px; animation-delay: 0s; }
@@ -80,41 +83,41 @@
   #app { position: relative; z-index: 1; }
 
   header {
-    padding: 28px 40px;
+    padding: 24px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 2px solid var(--border);
+    border-bottom: 3px solid var(--primary);
     backdrop-filter: blur(20px);
-    background: rgba(15,20,25,0.8);
+    background: rgba(255,255,255,0.9);
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: 0 4px 30px rgba(0,212,255,0.08);
+    box-shadow: var(--shadow);
   }
 
   .logo-wrap { display: flex; align-items: center; gap: 16px; }
   
   .logo-icon {
-    width: 48px; height: 48px;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 28px;
-    box-shadow: 0 0 30px rgba(0,212,255,0.4), inset 0 0 20px rgba(255,255,255,0.1);
+    font-size: 32px;
+    box-shadow: var(--shadow), inset 0 0 20px rgba(255,255,255,0.3);
     animation: pulse 3s ease-in-out infinite;
   }
 
   @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 30px rgba(0,212,255,0.4), inset 0 0 20px rgba(255,255,255,0.1); }
-    50% { box-shadow: 0 0 50px rgba(0,212,255,0.6), inset 0 0 30px rgba(255,255,255,0.15); }
+    0%, 100% { box-shadow: var(--shadow), inset 0 0 20px rgba(255,255,255,0.3); }
+    50% { box-shadow: 0 0 30px rgba(0,102,204,0.3), inset 0 0 30px rgba(255,255,255,0.4); }
   }
 
   .logo-text {
     font-family: 'Playfair Display', serif;
     font-size: 22px;
     font-weight: 900;
-    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -137,8 +140,8 @@
     display: inline-flex; align-items: center; gap: 7px;
     padding: 10px 18px;
     border-radius: 10px;
-    border: 1.5px solid var(--border2);
-    background: rgba(30,40,56,0.6);
+    border: 1.5px solid var(--border);
+    background: var(--card);
     color: var(--text);
     font-family: 'Fredoka', sans-serif;
     font-size: 14px;
@@ -148,36 +151,38 @@
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    box-shadow: var(--shadow);
   }
 
   .btn:hover { 
-    background: var(--card2);
+    background: var(--bg2);
     border-color: var(--primary);
-    color: var(--primary-light);
-    box-shadow: 0 0 20px rgba(0,212,255,0.2);
+    color: var(--primary);
+    box-shadow: var(--glow), var(--shadow-lg);
     transform: translateY(-2px);
   }
 
   .btn-gold {
-    background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
     border-color: var(--primary);
-    color: var(--primary-light);
+    color: white;
+    box-shadow: var(--shadow);
   }
 
   .btn-gold:hover { 
-    background: linear-gradient(135deg, rgba(0,212,255,0.25), rgba(0,212,255,0.15));
-    box-shadow: var(--glow), 0 8px 30px rgba(0,212,255,0.2);
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    box-shadow: var(--glow), var(--shadow-lg);
   }
 
   .btn-danger { 
     border-color: var(--danger); 
-    color: var(--accent-light); 
-    background: rgba(255,71,87,0.1);
+    color: var(--danger); 
+    background: rgba(220,38,38,0.05);
   }
 
   .btn-danger:hover { 
-    background: rgba(255,71,87,0.2); 
-    border-color: var(--accent-light);
+    background: rgba(220,38,38,0.15); 
+    border-color: var(--danger);
     box-shadow: var(--glow-danger);
   }
 
@@ -194,9 +199,9 @@
 
   .genre-btn {
     padding: 8px 16px;
-    border: 1.5px solid var(--border2);
+    border: 1.5px solid var(--border);
     border-radius: 20px;
-    background: rgba(30,40,56,0.5);
+    background: var(--card);
     color: var(--text);
     font-family: 'Fredoka', sans-serif;
     font-size: 13px;
@@ -204,18 +209,20 @@
     cursor: pointer;
     transition: all 0.3s;
     white-space: nowrap;
+    box-shadow: var(--shadow);
   }
 
   .genre-btn:hover {
     border-color: var(--primary);
-    background: rgba(0,212,255,0.15);
-    color: var(--primary-light);
+    background: rgba(0,102,204,0.08);
+    color: var(--primary);
+    box-shadow: var(--glow);
   }
 
   .genre-btn.active {
     border-color: var(--primary);
-    background: linear-gradient(135deg, rgba(0,212,255,0.25), rgba(0,212,255,0.1));
-    color: var(--primary-light);
+    background: linear-gradient(135deg, rgba(0,102,204,0.15), rgba(26,126,232,0.08));
+    color: var(--primary);
     box-shadow: var(--glow);
   }
 
@@ -235,8 +242,8 @@
   }
 
   input[type="text"], input[type="password"], input[type="email"], textarea, select {
-    background: rgba(30,40,56,0.5);
-    border: 1.5px solid var(--border2);
+    background: var(--card);
+    border: 1.5px solid var(--border);
     border-radius: 10px;
     color: var(--text);
     font-family: 'Fredoka', sans-serif;
@@ -245,12 +252,13 @@
     width: 100%;
     transition: all 0.3s;
     outline: none;
+    box-shadow: var(--shadow);
   }
 
   input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
     border-color: var(--primary);
-    background: rgba(30,40,56,0.8);
-    box-shadow: 0 0 0 3px rgba(0,212,255,0.1), inset 0 0 20px rgba(0,212,255,0.05);
+    background: rgba(0,102,204,0.03);
+    box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
   }
 
   .search-wrap input { padding-left: 48px; }
@@ -265,15 +273,15 @@
     font-family: 'Playfair Display', serif;
     font-size: 24px;
     font-weight: 900;
-    color: var(--primary-light);
+    color: var(--primary);
     letter-spacing: -0.5px;
   }
 
   .count-badge {
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    color: var(--primary-light);
-    background: rgba(0,212,255,0.15);
+    color: var(--primary);
+    background: rgba(0,102,204,0.1);
     border: 1px solid var(--primary);
     padding: 4px 12px;
     border-radius: 20px;
@@ -287,7 +295,7 @@
   }
 
   .prompt-card {
-    background: linear-gradient(135deg, rgba(30,40,56,0.4) 0%, rgba(42,58,79,0.2) 100%);
+    background: var(--card);
     border: 2px solid var(--border);
     border-radius: 14px;
     padding: 22px;
@@ -296,6 +304,7 @@
     position: relative;
     overflow: visible;
     animation: fadeUp 0.5s ease both;
+    box-shadow: var(--shadow);
   }
 
   .prompt-card::before {
@@ -304,7 +313,7 @@
     inset: 0;
     border-radius: 14px;
     opacity: 0;
-    background: linear-gradient(135deg, rgba(0,212,255,0.1) 0%, rgba(255,0,107,0.05) 100%);
+    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(220,38,38,0.03) 100%);
     transition: opacity 0.3s;
     pointer-events: none;
   }
@@ -312,8 +321,8 @@
   .prompt-card:hover { 
     border-color: var(--primary);
     transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(0,212,255,0.15), var(--glow);
-    background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(0,212,255,0.04) 100%);
+    box-shadow: var(--glow), var(--shadow-lg);
+    background: rgba(0,102,204,0.02);
   }
 
   .prompt-card:hover::before { opacity: 1; }
@@ -327,7 +336,7 @@
     font-family: 'Playfair Display', serif;
     font-size: 16px;
     font-weight: 700;
-    color: var(--primary-light);
+    color: var(--primary);
     line-height: 1.4;
     flex: 1;
   }
@@ -336,7 +345,7 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--danger);
-    background: rgba(255,71,87,0.15);
+    background: rgba(220,38,38,0.1);
     padding: 3px 8px;
     border-radius: 6px;
     font-weight: 600;
@@ -368,21 +377,21 @@
   }
 
   .tag-pill.genre { 
-    background: rgba(0,212,255,0.15); 
-    border: 1px solid rgba(0,212,255,0.4); 
-    color: var(--primary-light);
+    background: rgba(0,102,204,0.15); 
+    border: 1px solid rgba(0,102,204,0.4); 
+    color: var(--primary);
   }
 
   .tag-pill.tag { 
-    background: rgba(255,0,107,0.15); 
-    border: 1px solid rgba(255,0,107,0.4); 
-    color: var(--accent-light);
+    background: rgba(220,38,38,0.15); 
+    border: 1px solid rgba(220,38,38,0.4); 
+    color: var(--accent);
   }
 
   .modal-bg {
     position: fixed; inset: 0;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(12px);
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(8px);
     z-index: 200;
     display: flex; align-items: center; justify-content: center;
     padding: 20px;
@@ -393,14 +402,14 @@
   .modal-bg.hidden { display: none; }
   
   .modal {
-    background: linear-gradient(135deg, rgba(21,27,36,0.95) 0%, rgba(26,35,50,0.95) 100%);
+    background: var(--card);
     border: 2px solid var(--primary);
     border-radius: 20px;
     width: 100%;
     max-width: 560px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 30px 80px rgba(0,212,255,0.2), var(--glow);
+    box-shadow: 0 30px 80px rgba(0,102,204,0.2), var(--glow);
     animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 
@@ -410,14 +419,14 @@
     padding: 28px;
     border-bottom: 2px solid var(--primary);
     display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, transparent 100%);
+    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, transparent 100%);
   }
 
   .modal-title {
     font-family: 'Playfair Display', serif;
     font-size: 22px;
     font-weight: 900;
-    color: var(--primary-light);
+    color: var(--primary);
   }
 
   .modal-body { padding: 28px; }
@@ -426,12 +435,12 @@
     padding: 20px 28px 28px;
     display: flex; gap: 12px; justify-content: flex-end;
     border-top: 2px solid var(--primary);
-    background: linear-gradient(135deg, rgba(0,212,255,0.04) 0%, transparent 100%);
+    background: linear-gradient(135deg, rgba(0,102,204,0.04) 0%, transparent 100%);
   }
 
   .close-btn {
     width: 36px; height: 36px; border-radius: 10px;
-    background: rgba(30,40,56,0.6); border: 1.5px solid var(--border2);
+    background: var(--bg2); border: 1.5px solid var(--border);
     color: var(--text3); cursor: pointer; font-size: 18px;
     display: flex; align-items: center; justify-content: center;
     transition: all 0.3s;
@@ -439,7 +448,7 @@
   }
 
   .close-btn:hover { 
-    background: rgba(255,71,87,0.15);
+    background: rgba(220,38,38,0.1);
     color: var(--danger); 
     border-color: var(--danger);
   }
@@ -451,7 +460,7 @@
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--primary-light);
+    color: var(--primary);
     font-family: 'JetBrains Mono', monospace;
     margin-bottom: 8px;
     font-weight: 700;
@@ -477,41 +486,90 @@
   .tag-removable .rm:hover { opacity: 1; }
   
   .tag-removable.genre { 
-    background: rgba(0,212,255,0.15); 
-    border: 1px solid rgba(0,212,255,0.3); 
-    color: var(--primary-light);
+    background: rgba(0,102,204,0.15); 
+    border: 1px solid rgba(0,102,204,0.3); 
+    color: var(--primary);
   }
 
   .tag-removable.tag { 
-    background: rgba(255,0,107,0.15); 
-    border: 1px solid rgba(255,0,107,0.3); 
-    color: var(--accent-light);
+    background: rgba(220,38,38,0.15); 
+    border: 1px solid rgba(220,38,38,0.3); 
+    color: var(--accent);
   }
 
   .genre-management {
-    background: rgba(0,212,255,0.08);
+    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
     border: 1.5px solid var(--primary);
     border-radius: 12px;
     padding: 18px;
     margin-bottom: 24px;
+    box-shadow: var(--shadow);
   }
 
-  .genre-section-title { font-size: 14px; color: var(--primary-light); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
+  .genre-section-title { font-size: 14px; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
   
   .genre-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .genre-item { display: flex; align-items: center; gap: 6px; background: rgba(30,40,56,0.6); border: 1px solid var(--border2); padding: 6px 12px; border-radius: 8px; font-size: 13px; color: var(--text2); }
+  .genre-item { 
+    display: flex; align-items: center; gap: 6px; 
+    background: var(--bg2); 
+    border: 1.5px solid var(--primary); 
+    padding: 8px 12px; 
+    border-radius: 8px; 
+    font-size: 13px; 
+    color: var(--text);
+    font-weight: 600;
+    box-shadow: var(--shadow);
+  }
   .genre-item .remove { cursor: pointer; color: var(--danger); font-weight: 700; opacity: 0.7; transition: opacity 0.2s; }
   .genre-item .remove:hover { opacity: 1; }
 
   .genre-input-group { display: flex; gap: 8px; }
   .genre-input-group input { flex: 1; }
 
+  /* Genre Icon Input */
+  .genre-icon-input-group {
+    display: flex; gap: 8px; align-items: center;
+    margin-bottom: 12px;
+  }
+  .genre-icon-input-group input:first-child {
+    max-width: 80px;
+    font-size: 20px;
+    text-align: center;
+  }
+  .genre-icon-input-group input:last-child {
+    flex: 1;
+  }
+
+  /* Genre Dropdown for Prompt Editor */
+  .genre-dropdown-group {
+    display: flex; gap: 8px; align-items: center;
+    margin-top: 10px;
+  }
+  .genre-dropdown {
+    flex: 1;
+    appearance: none;
+    background: var(--card);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    color: var(--text);
+    font-family: 'Fredoka', sans-serif;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    font-weight: 600;
+  }
+  .genre-dropdown:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
+  }
+
   .pw-section {
-    background: rgba(0,212,255,0.08);
+    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
     border: 1.5px solid var(--primary);
     border-radius: 12px;
     padding: 18px;
     margin-top: 18px;
+    box-shadow: var(--shadow);
   }
 
   .pw-toggle {
@@ -526,7 +584,7 @@
   .pw-fields.hidden { display: none; }
 
   .security-note {
-    background: rgba(0,217,126,0.1);
+    background: rgba(0,168,84,0.1);
     border: 1.5px solid var(--success);
     padding: 12px 14px;
     border-radius: 10px;
@@ -541,10 +599,10 @@
   .unlock-modal .hint-text {
     text-align: center;
     font-size: 13px;
-    color: var(--accent-light);
+    color: var(--accent);
     font-family: 'JetBrains Mono', monospace;
-    background: rgba(255,0,107,0.1);
-    border: 1.5px solid var(--accent);
+    background: rgba(220,38,38,0.1);
+    border: 1.5px solid var(--danger);
     padding: 10px 16px;
     border-radius: 10px;
     margin-bottom: 18px;
@@ -565,8 +623,8 @@
   .pw-error.show { display: block; }
 
   .prompt-text-display {
-    background: rgba(30,40,56,0.6);
-    border: 1.5px solid var(--border2);
+    background: var(--bg2);
+    border: 1.5px solid var(--border);
     border-radius: 10px;
     padding: 16px;
     font-family: 'JetBrains Mono', monospace;
@@ -600,14 +658,14 @@
   .toast {
     position: fixed;
     bottom: 30px; right: 30px;
-    background: linear-gradient(135deg, rgba(30,40,56,0.95) 0%, rgba(42,58,79,0.95) 100%);
+    background: var(--card);
     border: 2px solid var(--primary);
     border-radius: 12px;
     padding: 14px 20px;
     font-size: 14px;
     color: var(--text);
     z-index: 999;
-    box-shadow: 0 12px 40px rgba(0,212,255,0.2), var(--glow);
+    box-shadow: var(--glow), var(--shadow-lg);
     animation: slideUp 0.3s ease;
     display: flex; align-items: center; gap: 12px;
     max-width: 320px;
@@ -621,12 +679,12 @@
 
   .admin-status {
     display: flex; align-items: center; gap: 8px;
-    font-size: 13px; color: var(--primary-light);
+    font-size: 13px; color: var(--primary);
     font-weight: 600;
   }
 
   .admin-badge {
-    background: rgba(0,212,255,0.2);
+    background: rgba(0,102,204,0.2);
     border: 1px solid var(--primary);
     padding: 4px 12px;
     border-radius: 6px;
@@ -746,8 +804,9 @@
       <div class="genre-management">
         <div class="genre-section-title">🏷️ Quản lý thể loại</div>
         <div class="genre-list" id="genreListAdmin"></div>
-        <div class="genre-input-group">
-          <input type="text" id="newGenreInput" placeholder="Thêm thể loại mới..." onkeydown="if(event.key==='Enter')addGenre()">
+        <div class="genre-icon-input-group">
+          <input type="text" id="newGenreIcon" placeholder="🏥" maxlength="2" title="Nhập 1-2 ký tự hoặc emoji">
+          <input type="text" id="newGenreInput" placeholder="Tên thể loại..." onkeydown="if(event.key==='Enter')addGenre()">
           <button class="btn btn-sm" onclick="addGenre()">＋ Thêm</button>
         </div>
       </div>
@@ -770,24 +829,28 @@
         <label class="form-label">Mô Tả</label>
         <textarea id="fDesc" placeholder="Mô tả chi tiết..."></textarea>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Thể Loại (Genre)</label>
-          <div class="tags-input-wrap">
-            <input type="text" id="fGenreInput" placeholder="AI, Marketing..." onkeydown="handleTagKey(event,'genre')">
-            <button class="btn btn-sm" onclick="addTag('genre')">＋</button>
-          </div>
-          <div class="tags-preview" id="fGenrePrev"></div>
+      
+      <!-- GENRE SELECTION -->
+      <div class="form-group">
+        <label class="form-label">Thể Loại (Genre)</label>
+        <div class="genre-dropdown-group">
+          <select id="fGenreSelect" class="genre-dropdown" onchange="addGenreFromDropdown()">
+            <option value="">-- Chọn thể loại --</option>
+          </select>
         </div>
-        <div class="form-group">
-          <label class="form-label">Tags</label>
-          <div class="tags-input-wrap">
-            <input type="text" id="fTagInput" placeholder="Tag1, Tag2..." onkeydown="handleTagKey(event,'tag')">
-            <button class="btn btn-sm" onclick="addTag('tag')">＋</button>
-          </div>
-          <div class="tags-preview" id="fTagPrev"></div>
-        </div>
+        <div class="tags-preview" id="fGenrePrev"></div>
       </div>
+
+      <!-- TAGS -->
+      <div class="form-group">
+        <label class="form-label">Tags</label>
+        <div class="tags-input-wrap">
+          <input type="text" id="fTagInput" placeholder="Tag1, Tag2..." onkeydown="handleTagKey(event,'tag')">
+          <button class="btn btn-sm" onclick="addTag('tag')">＋</button>
+        </div>
+        <div class="tags-preview" id="fTagPrev"></div>
+      </div>
+
       <div class="pw-section">
         <label class="pw-toggle">
           <input type="checkbox" id="fPwEnabled" onchange="togglePwFields()">
@@ -1002,368 +1065,403 @@ function save() {
   localStorage.setItem(STORE_KEY, JSON.stringify(dataToSave));
 }
 
+function load() {
+  try {
+    const data = localStorage.getItem(STORE_KEY);
+    if (data) {
+      prompts = JSON.parse(data).map(p => ({
+        ...p,
+        password: p.password ? decryptPassword(p.password) : ''
+      }));
+    }
+  } catch (e) {
+    console.error('Load error:', e);
+  }
+}
+
 function saveGenres() {
   localStorage.setItem(GENRES_KEY, JSON.stringify(genres));
 }
 
-function load() {
+function loadGenres() {
   try {
-    const stored = JSON.parse(localStorage.getItem(STORE_KEY) || '[]');
-    prompts = stored.map(p => ({
-      ...p,
-      password: p.password ? decryptPassword(p.password) : ''
-    }));
-  } catch {
-    prompts = [];
-  }
-  
-  try {
-    genres = JSON.parse(localStorage.getItem(GENRES_KEY) || '[]');
-  } catch {
-    genres = [];
+    const data = localStorage.getItem(GENRES_KEY);
+    if (data) {
+      genres = JSON.parse(data);
+    } else {
+      genres = [];
+    }
+  } catch (e) {
+    console.error('Load genres error:', e);
   }
 }
-
-function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 
 // ===== GENRE MANAGEMENT =====
-function renderGenreList() {
-  const container = document.getElementById('genreListAdmin');
-  if (genres.length === 0) {
-    container.innerHTML = '<p style="color:var(--text3);font-size:12px">Chưa có thể loại nào</p>';
+function addGenre() {
+  const iconInput = document.getElementById('newGenreIcon');
+  const nameInput = document.getElementById('newGenreInput');
+  const icon = iconInput.value.trim() || '🏷️';
+  const name = nameInput.value.trim();
+
+  if (!name) {
+    showToast('❌ Vui lòng nhập tên thể loại!', 'error');
     return;
   }
-  container.innerHTML = genres.map(g => `
-    <div class="genre-item">
-      <span>${escHtml(g)}</span>
-      <span class="remove" onclick="removeGenre('${escHtml(g)}')">✕</span>
-    </div>
-  `).join('');
-}
 
-function addGenre() {
-  const input = document.getElementById('newGenreInput');
-  const val = input.value.trim();
-  if (!val) return;
-  if (genres.includes(val)) {
+  if (genres.find(g => g.name.toLowerCase() === name.toLowerCase())) {
     showToast('❌ Thể loại này đã tồn tại!', 'error');
     return;
   }
-  genres.push(val);
+
+  genres.push({ name, icon });
   saveGenres();
-  renderGenreList();
-  renderGenreFilters();
-  input.value = '';
-  input.focus();
-  showToast('✓ Thêm thể loại thành công!', 'success');
+  iconInput.value = '';
+  nameInput.value = '';
+  renderGenreManagement();
+  updateGenreDropdown();
+  showToast(`✓ Thêm thể loại "${name}" thành công!`, 'success');
 }
 
-function removeGenre(genre) {
-  genres = genres.filter(g => g !== genre);
-  saveGenres();
-  renderGenreList();
-  renderGenreFilters();
-  showToast('✓ Xóa thể loại thành công!', 'success');
+function removeGenre(name) {
+  if (confirm(`Xóa thể loại "${name}"?`)) {
+    genres = genres.filter(g => g.name !== name);
+    saveGenres();
+    renderGenreManagement();
+    updateGenreDropdown();
+    showToast('✓ Đã xóa thể loại!', 'success');
+  }
 }
 
-function renderGenreFilters() {
-  const container = document.getElementById('genreFiltersContainer');
-  const bar = document.getElementById('genreFilterBar');
-  
-  if (genres.length === 0) {
-    bar.style.display = 'none';
+function renderGenreManagement() {
+  const container = document.getElementById('genreListAdmin');
+  container.innerHTML = genres.map(g => 
+    `<div class="genre-item">
+      <span>${g.icon} ${escHtml(g.name)}</span>
+      <span class="remove" onclick="removeGenre('${escHtml(g.name)}')">✕</span>
+    </div>`
+  ).join('');
+}
+
+function updateGenreDropdown() {
+  const select = document.getElementById('fGenreSelect');
+  const currentValue = select.value;
+  select.innerHTML = '<option value="">-- Chọn thể loại --</option>' +
+    genres.map(g => `<option value="${escHtml(g.name)}">${g.icon} ${escHtml(g.name)}</option>`).join('');
+  select.value = currentValue;
+}
+
+function addGenreFromDropdown() {
+  const select = document.getElementById('fGenreSelect');
+  const genreName = select.value;
+  if (!genreName) return;
+
+  if (editGenres.find(g => g === genreName)) {
+    showToast('❌ Thể loại này đã được thêm!', 'error');
+    select.value = '';
     return;
   }
-  
-  bar.style.display = 'flex';
-  container.innerHTML = genres.map(g => `
-    <button class="genre-btn ${selectedGenre === g ? 'active' : ''}" onclick="filterByGenre('${escHtml(g)}')">
-      ${escHtml(g)}
-    </button>
-  `).join('');
+
+  editGenres.push(genreName);
+  select.value = '';
+  renderEditGenreTags();
 }
 
-function filterByGenre(genre) {
-  if (selectedGenre === genre) {
-    selectedGenre = null;
-  } else {
-    selectedGenre = genre;
-  }
-  renderGenreFilters();
-  renderPrompts();
-}
-
-// ===== TAGS =====
-function handleTagKey(e, type) {
-  if (e.key === 'Enter') { e.preventDefault(); addTag(type); }
-}
-
+// ===== TAG MANAGEMENT =====
 function addTag(type) {
-  const inp = document.getElementById(type === 'genre' ? 'fGenreInput' : 'fTagInput');
-  const val = inp.value.trim();
-  if (!val) return;
-  const arr = type === 'genre' ? editGenres : editTags;
-  if (!arr.includes(val)) { arr.push(val); renderTagPrev(type); }
-  inp.value = '';
-  inp.focus();
-}
+  const input = document.getElementById(`f${type.charAt(0).toUpperCase() + type.slice(1)}Input`);
+  const tag = input.value.trim();
 
-function removeTag(type, val) {
-  if (type === 'genre') { editGenres = editGenres.filter(t => t !== val); renderTagPrev('genre'); }
-  else { editTags = editTags.filter(t => t !== val); renderTagPrev('tag'); }
-}
-
-function renderTagPrev(type) {
-  const arr = type === 'genre' ? editGenres : editTags;
-  const prev = document.getElementById(type === 'genre' ? 'fGenrePrev' : 'fTagPrev');
-  prev.innerHTML = arr.map(t => `<span class="tag-removable ${type}"><span>${escHtml(t)}</span><span class="rm" onclick="removeTag('${type}','${escHtml(t)}')">✕</span></span>`).join('');
-}
-
-// ===== MODALS =====
-function toggleAdminPanel() {
-  if (!isAdmin) {
-    document.getElementById('adminLoginModal').classList.remove('hidden');
-  } else {
-    openAdminPanel();
+  if (!tag) {
+    showToast(`❌ Vui lòng nhập ${type === 'genre' ? 'thể loại' : 'tag'}!`, 'error');
+    return;
   }
+
+  const arr = type === 'genre' ? editGenres : editTags;
+  if (arr.find(t => t.toLowerCase() === tag.toLowerCase())) {
+    showToast(`❌ ${type === 'genre' ? 'Thể loại' : 'Tag'} này đã tồn tại!`, 'error');
+    return;
+  }
+
+  arr.push(tag);
+  input.value = '';
+  type === 'genre' ? renderEditGenreTags() : renderEditTagTags();
+}
+
+function handleTagKey(e, type) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    addTag(type);
+  }
+}
+
+function removeTag(tag, type) {
+  const arr = type === 'genre' ? editGenres : editTags;
+  const idx = arr.indexOf(tag);
+  if (idx >= 0) {
+    arr.splice(idx, 1);
+    type === 'genre' ? renderEditGenreTags() : renderEditTagTags();
+  }
+}
+
+function renderEditGenreTags() {
+  const container = document.getElementById('fGenrePrev');
+  container.innerHTML = editGenres.map(tag => {
+    const g = genres.find(gen => gen.name === tag);
+    const icon = g ? g.icon : '🏷️';
+    return `<div class="tag-removable genre">
+      <span>${icon} ${escHtml(tag)}</span>
+      <span class="rm" onclick="removeTag('${escHtml(tag)}','genre')">✕</span>
+    </div>`;
+  }).join('');
+}
+
+function renderEditTagTags() {
+  const container = document.getElementById('fTagPrev');
+  container.innerHTML = editTags.map(tag =>
+    `<div class="tag-removable tag">
+      <span>${escHtml(tag)}</span>
+      <span class="rm" onclick="removeTag('${escHtml(tag)}','tag')">✕</span>
+    </div>`
+  ).join('');
+}
+
+function togglePwFields() {
+  const enabled = document.getElementById('fPwEnabled').checked;
+  const fields = document.getElementById('pwFields');
+  fields.classList.toggle('hidden', !enabled);
+}
+
+// ===== ADMIN UI =====
+function toggleAdminPanel() {
+  if (isAdmin) {
+    openAdminPanel();
+  } else {
+    openAdminLoginModal();
+  }
+}
+
+function openAdminLoginModal() {
+  document.getElementById('adminLoginModal').classList.remove('hidden');
+  document.getElementById('adminEmailInput').value = '';
+  document.getElementById('adminPasswordInput').value = '';
+  document.getElementById('adminLoginError').textContent = '';
+}
+
+function closeAdminLoginModal() {
+  document.getElementById('adminLoginModal').classList.add('hidden');
 }
 
 function openAdminPanel() {
-  if (isAdmin) {
-    clearAdminForm();
-    renderGenreList();
-    document.getElementById('adminPanelModal').classList.remove('hidden');
-  }
+  renderGenreManagement();
+  updateGenreDropdown();
+  clearAdminForm();
+  document.getElementById('adminPanelModal').classList.remove('hidden');
 }
 
 function closeAdminPanel() {
   document.getElementById('adminPanelModal').classList.add('hidden');
 }
 
-function closeAdminLoginModal() {
-  document.getElementById('adminLoginModal').classList.add('hidden');
-  document.getElementById('adminEmailInput').value = '';
-  document.getElementById('adminPasswordInput').value = '';
-  document.getElementById('adminLoginError').textContent = '';
-}
-
-function togglePwVis(inputId, btn) {
-  const inp = document.getElementById(inputId);
-  if (inp.type === 'password') {
-    inp.type = 'text';
-    btn.textContent = '🙈';
-  } else {
-    inp.type = 'password';
-    btn.textContent = '👁';
-  }
-}
-
-function togglePwFields() {
-  const el = document.getElementById('pwFields');
-  if (document.getElementById('fPwEnabled').checked) {
-    el.classList.remove('hidden');
-  } else {
-    el.classList.add('hidden');
-  }
-}
-
 function clearAdminForm() {
-  editingId = null;
   document.getElementById('fName').value = '';
   document.getElementById('fLink').value = '';
   document.getElementById('fDesc').value = '';
   document.getElementById('fPassword').value = '';
   document.getElementById('fHint').value = '';
   document.getElementById('fPwEnabled').checked = false;
-  document.getElementById('fGenreInput').value = '';
+  document.getElementById('fGenreSelect').value = '';
   document.getElementById('fTagInput').value = '';
   editGenres = [];
   editTags = [];
-  renderTagPrev('genre');
-  renderTagPrev('tag');
+  editingId = null;
   togglePwFields();
+  renderEditGenreTags();
+  renderEditTagTags();
 }
 
-// ===== PROMPTS =====
 function savePrompt() {
   const name = document.getElementById('fName').value.trim();
   const link = document.getElementById('fLink').value.trim();
-  
-  if (!name || !link) {
-    showToast('❌ Tên và Link không được để trống!', 'error');
-    return;
-  }
-
   const desc = document.getElementById('fDesc').value.trim();
   const pwEnabled = document.getElementById('fPwEnabled').checked;
   const password = pwEnabled ? document.getElementById('fPassword').value : '';
-  const hint = pwEnabled ? document.getElementById('fHint').value : '';
+  const hint = pwEnabled ? document.getElementById('fHint').value.trim() : '';
 
-  const promptData = {
-    id: editingId || genId(),
+  if (!name || !link) {
+    showToast('❌ Vui lòng nhập tên và link/text!', 'error');
+    return;
+  }
+
+  if (pwEnabled && !password) {
+    showToast('❌ Vui lòng nhập mật khẩu!', 'error');
+    return;
+  }
+
+  const newPrompt = {
+    id: editingId || Date.now().toString(),
     name,
     link,
     desc,
-    password,
-    hint,
     genres: editGenres,
     tags: editTags,
-    created: editingId ? undefined : Date.now()
+    password,
+    hint,
+    createdAt: editingId ? (prompts.find(p => p.id === editingId)?.createdAt || Date.now()) : Date.now()
   };
 
   if (editingId) {
     const idx = prompts.findIndex(p => p.id === editingId);
-    if (idx >= 0) {
-      prompts[idx] = { ...prompts[idx], ...promptData, created: prompts[idx].created };
-    }
+    if (idx >= 0) prompts[idx] = newPrompt;
+    showToast('✓ Cập nhật prompt thành công!', 'success');
   } else {
-    prompts.unshift(promptData);
+    prompts.push(newPrompt);
+    showToast('✓ Thêm prompt thành công!', 'success');
   }
 
   save();
   clearAdminForm();
   renderPrompts();
-  showToast('✓ Prompt đã được lưu!', 'success');
 }
 
 function editPrompt(id) {
-  const prompt = prompts.find(p => p.id === id);
-  if (!prompt) return;
+  const p = prompts.find(x => x.id === id);
+  if (!p) return;
 
   editingId = id;
-  document.getElementById('fName').value = prompt.name;
-  document.getElementById('fLink').value = prompt.link;
-  document.getElementById('fDesc').value = prompt.desc || '';
-  document.getElementById('fPwEnabled').checked = !!prompt.password;
-  document.getElementById('fPassword').value = prompt.password || '';
-  document.getElementById('fHint').value = prompt.hint || '';
-  editGenres = [...(prompt.genres || [])];
-  editTags = [...(prompt.tags || [])];
-  renderTagPrev('genre');
-  renderTagPrev('tag');
+  document.getElementById('fName').value = p.name;
+  document.getElementById('fLink').value = p.link;
+  document.getElementById('fDesc').value = p.desc || '';
+  document.getElementById('fPwEnabled').checked = !!p.password;
+  document.getElementById('fPassword').value = p.password || '';
+  document.getElementById('fHint').value = p.hint || '';
+  editGenres = [...(p.genres || [])];
+  editTags = [...(p.tags || [])];
   togglePwFields();
-  
-  closeViewModal();
+  renderEditGenreTags();
+  renderEditTagTags();
   openAdminPanel();
+  setTimeout(() => document.querySelector('.modal-body').scrollTop = 0, 100);
 }
 
 function deletePrompt(id) {
-  if (confirm('Bạn chắc chắn muốn xóa prompt này?')) {
+  if (confirm('Xóa prompt này?')) {
     prompts = prompts.filter(p => p.id !== id);
     save();
-    closeViewModal();
     renderPrompts();
-    showToast('✓ Prompt đã được xóa!', 'success');
+    closeViewModal();
+    showToast('✓ Đã xóa prompt!', 'success');
   }
 }
 
+// ===== PASSWORD =====
+function tryUnlock() {
+  const input = document.getElementById('unlockInput').value;
+  const p = prompts.find(x => x.id === unlockTargetId);
+  if (!p) return;
+
+  if (input === p.password) {
+    sessionUnlocked.add(unlockTargetId);
+    closeUnlockModal();
+    viewPrompt(unlockTargetId);
+    showToast('✓ Mở khóa thành công!', 'success');
+  } else {
+    document.getElementById('unlockError').classList.add('show');
+    setTimeout(() => document.getElementById('unlockError').classList.remove('show'), 2000);
+  }
+}
+
+function togglePwVis(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const isPassword = input.type === 'password';
+  input.type = isPassword ? 'text' : 'password';
+  btn.textContent = isPassword ? '🙈' : '👁';
+}
+
+// ===== PROMPT DISPLAY =====
 function renderPrompts() {
-  const grid = document.getElementById('promptsGrid');
   const search = document.getElementById('searchInput').value.toLowerCase();
   const sort = document.getElementById('sortSelect').value;
-  
-  let filtered = prompts.filter(p => {
-    const matchSearch = p.name.toLowerCase().includes(search) || p.desc.toLowerCase().includes(search);
-    const matchGenre = !selectedGenre || (p.genres && p.genres.includes(selectedGenre));
-    return matchSearch && matchGenre;
-  });
+  let filtered = prompts;
 
-  if (sort === 'name') {
-    filtered.sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sort === 'oldest') {
-    filtered.sort((a, b) => (a.created || 0) - (b.created || 0));
-  } else {
-    filtered.sort((a, b) => (b.created || 0) - (a.created || 0));
+  if (selectedGenre) {
+    filtered = filtered.filter(p => (p.genres || []).includes(selectedGenre));
   }
 
+  if (search) {
+    filtered = filtered.filter(p =>
+      p.name.toLowerCase().includes(search) ||
+      p.desc?.toLowerCase().includes(search) ||
+      (p.tags || []).some(t => t.toLowerCase().includes(search))
+    );
+  }
+
+  filtered.sort((a, b) => {
+    if (sort === 'name') return a.name.localeCompare(b.name);
+    if (sort === 'newest') return b.createdAt - a.createdAt;
+    return a.createdAt - b.createdAt;
+  });
+
+  const grid = document.getElementById('promptsGrid');
   document.getElementById('countBadge').textContent = filtered.length;
 
   if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div style="grid-column:1/-1">
-        <div class="empty-state">
-          <div class="empty-icon">📭</div>
-          <h3>Không có prompts nào</h3>
-          <p>Hãy thêm prompt mới để bắt đầu!</p>
-        </div>
-      </div>
-    `;
+    grid.innerHTML = `<div style="grid-column:1/-1" class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>Không tìm thấy prompts</h3>
+      <p>Hãy thêm prompt hoặc thử lại với từ khóa khác</p>
+    </div>`;
     return;
   }
 
-  grid.innerHTML = filtered.map(p => `
-    <div class="prompt-card" onclick="viewPrompt('${p.id}')">
+  grid.innerHTML = filtered.map(p => {
+    const locked = p.password && !sessionUnlocked.has(p.id);
+    return `<div class="prompt-card" onclick="${locked ? `openUnlockModal('${p.id}')` : `viewPrompt('${p.id}')`}">
       <div class="card-top">
-        <span class="card-name">${escHtml(p.name)}</span>
-        ${p.password ? '<span class="lock-status">🔒 LOCKED</span>' : ''}
+        <div class="card-name">${escHtml(p.name)}</div>
+        ${locked ? '<div class="lock-status">🔒 LOCKED</div>' : ''}
       </div>
-      <p class="card-desc">${escHtml(p.desc || 'Không có mô tả')}</p>
+      <div class="card-desc">${escHtml(p.desc || 'Không có mô tả')}</div>
       <div class="card-tags">
-        ${(p.genres || []).map(g => `<span class="tag-pill genre">${escHtml(g)}</span>`).join('')}
+        ${(p.genres || []).map(g => {
+          const genre = genres.find(gen => gen.name === g);
+          const icon = genre ? genre.icon : '🏷️';
+          return `<span class="tag-pill genre">${icon} ${escHtml(g)}</span>`;
+        }).join('')}
         ${(p.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`).join('')}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
-function viewPrompt(id) {
-  const prompt = prompts.find(p => p.id === id);
-  if (!prompt) return;
-
-  viewingId = id;
-
-  document.getElementById('viewTitle').textContent = prompt.name;
-  document.getElementById('viewDesc').textContent = prompt.desc || 'Không có mô tả';
-
-  const linkEl = document.getElementById('viewLink');
-  const isUrl = prompt.link.startsWith('http://') || prompt.link.startsWith('https://');
+function renderGenreFilter() {
+  const hasGenres = genres.length > 0;
+  document.getElementById('genreFilterBar').style.display = hasGenres ? 'flex' : 'none';
   
-  if (isUrl) {
-    linkEl.innerHTML = `
-      <a href="${escHtml(prompt.link)}" target="_blank" style="color:var(--primary-light);text-decoration:underline;flex:1;word-break:break-all">
-        ${escHtml(prompt.link)}
-      </a>
-    `;
-  } else {
-    if (prompt.password && !sessionUnlocked.has(id)) {
-      linkEl.innerHTML = `<button class="btn btn-gold" onclick="unlockPrompt('${id}')">🔐 Mở khóa để xem</button>`;
-    } else {
-      linkEl.innerHTML = `<div class="prompt-text-display">${prompt.link}</div>`;
-    }
-  }
-
-  const viewTags = document.getElementById('viewTags');
-  viewTags.innerHTML = [
-    ...(prompt.genres || []).map(g => `<span class="tag-pill genre">${escHtml(g)}</span>`),
-    ...(prompt.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`)
-  ].join('');
-
-  if (document.getElementById('viewTagsWrap').children.length === 1) {
-    document.getElementById('viewTagsWrap').style.display = 'none';
-  } else {
-    document.getElementById('viewTagsWrap').style.display = 'block';
-  }
-
-  document.getElementById('deleteBtn').style.display = isAdmin ? 'block' : 'none';
-  document.getElementById('editBtn').style.display = isAdmin ? 'block' : 'none';
-
-  document.getElementById('viewModal').classList.remove('hidden');
+  const container = document.getElementById('genreFiltersContainer');
+  container.innerHTML = genres.map(g =>
+    `<button class="genre-btn ${selectedGenre === g.name ? 'active' : ''}" onclick="filterByGenre('${escHtml(g.name)}')">
+      ${g.icon} ${escHtml(g.name)}
+    </button>`
+  ).join('');
 }
 
-function closeViewModal() {
-  document.getElementById('viewModal').classList.add('hidden');
-  viewingId = null;
+function filterByGenre(name) {
+  selectedGenre = selectedGenre === name ? null : name;
+  renderGenreFilter();
+  renderPrompts();
 }
 
-function unlockPrompt(id) {
+function openUnlockModal(id) {
   unlockTargetId = id;
-  const prompt = prompts.find(p => p.id === id);
-  document.getElementById('unlockBotName').textContent = prompt.name;
-  if (prompt.hint) {
-    document.getElementById('unlockHintWrap').textContent = `💡 ${escHtml(prompt.hint)}`;
-    document.getElementById('unlockHintWrap').style.display = 'block';
+  const p = prompts.find(x => x.id === id);
+  document.getElementById('unlockBotName').textContent = `${escHtml(p.name)}`;
+  
+  const hintWrap = document.getElementById('unlockHintWrap');
+  if (p.hint) {
+    hintWrap.textContent = `💡 Gợi ý: ${escHtml(p.hint)}`;
+    hintWrap.style.display = 'block';
   } else {
-    document.getElementById('unlockHintWrap').style.display = 'none';
+    hintWrap.style.display = 'none';
   }
 
   document.getElementById('unlockInput').value = '';
@@ -1371,35 +1469,52 @@ function unlockPrompt(id) {
   document.getElementById('unlockModal').classList.remove('hidden');
 }
 
-function tryUnlock() {
-  const prompt = prompts.find(p => p.id === unlockTargetId);
-  if (!prompt) return;
-
-  const pwd = document.getElementById('unlockInput').value;
-  if (pwd === prompt.password) {
-    sessionUnlocked.add(unlockTargetId);
-    document.getElementById('unlockError').classList.remove('show');
-    document.getElementById('unlockModal').classList.add('hidden');
-    viewPrompt(unlockTargetId);
-    showToast('✓ Mở khóa thành công!', 'success');
-  } else {
-    document.getElementById('unlockError').classList.add('show');
-  }
-}
-
 function closeUnlockModal() {
   document.getElementById('unlockModal').classList.add('hidden');
-  unlockTargetId = null;
+}
+
+function viewPrompt(id) {
+  viewingId = id;
+  const p = prompts.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('viewTitle').textContent = escHtml(p.name);
+  document.getElementById('viewDesc').textContent = p.desc || 'Không có mô tả';
+
+  const linkDiv = document.getElementById('viewLink');
+  if (p.link.startsWith('http')) {
+    linkDiv.innerHTML = `<a href="${escHtml(p.link)}" target="_blank" rel="noopener" style="color:var(--primary);text-decoration:none;word-break:break-all;flex:1">🔗 ${escHtml(p.link)}</a><button class="btn btn-sm" onclick="navigator.clipboard.writeText('${escHtml(p.link)}');showToast('✓ Copied!')">📋 Copy</button>`;
+  } else {
+    linkDiv.innerHTML = `<div class="prompt-text-display" style="flex:1">${escHtml(p.link)}</div><button class="btn btn-sm" onclick="navigator.clipboard.writeText(\`${escHtml(p.link)}\`);showToast('✓ Copied!')">📋 Copy</button>`;
+  }
+
+  const tagsDiv = document.getElementById('viewTags');
+  tagsDiv.innerHTML = (p.genres || []).map(g => {
+    const genre = genres.find(gen => gen.name === g);
+    const icon = genre ? genre.icon : '🏷️';
+    return `<span class="tag-pill genre">${icon} ${escHtml(g)}</span>`;
+  }).join('') + (p.tags || []).map(t => `<span class="tag-pill tag">${escHtml(t)}</span>`).join('');
+
+  document.getElementById('deleteBtn').style.display = isAdmin ? 'block' : 'none';
+  document.getElementById('editBtn').style.display = isAdmin ? 'block' : 'none';
+  document.getElementById('viewModal').classList.remove('hidden');
+}
+
+function closeViewModal() {
+  document.getElementById('viewModal').classList.add('hidden');
 }
 
 // ===== INIT =====
-window.addEventListener('DOMContentLoaded', () => {
-  load();
+function init() {
   checkAdminSession();
   updateAdminStatus();
-  renderGenreFilters();
+  loadGenres();
+  load();
+  renderGenreFilter();
   renderPrompts();
-});
+}
+
+window.addEventListener('load', init);
 </script>
 </body>
 </html>
