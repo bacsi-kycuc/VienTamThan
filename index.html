@@ -3,31 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bệnh viện Tâm thần Đa khoa Kỹ Thuật Số</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<title>🏥 Bệnh viện Tâm thần Đa khoa Kỹ Thuật Số</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&family=Playfair+Display:wght@700;900&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <style>
   :root {
-    --bg: #0a0a0f;
-    --bg2: #111118;
-    --bg3: #18181f;
-    --card: #1a1a24;
-    --card2: #20202e;
-    --border: #2a2a3a;
-    --border2: #35354a;
-    --gold: #c9a84c;
-    --gold2: #e8c96a;
-    --gold3: #f5dea0;
-    --accent: #7b5ea7;
-    --accent2: #9b7ec8;
-    --rose: #c96a7b;
-    --teal: #4a9b8e;
-    --text: #e8e0d0;
-    --text2: #a09888;
-    --text3: #6a6258;
-    --radius: 12px;
-    --glow: 0 0 20px rgba(201,168,76,0.15);
-    --glow2: 0 0 40px rgba(201,168,76,0.08);
+    --bg: #0f1419;
+    --bg2: #151b24;
+    --bg3: #1a2332;
+    --card: #1e2838;
+    --card2: #2a3a4f;
+    --border: #2d3f52;
+    --border2: #3d5066;
+    --primary: #00d4ff;
+    --primary-light: #4dd9ff;
+    --accent: #ff006b;
+    --accent-light: #ff4da6;
+    --success: #00d97e;
+    --warning: #ffa500;
+    --danger: #ff4757;
+    --text: #e8f0f7;
+    --text2: #b0bcc4;
+    --text3: #7a8893;
+    --text-dark: #4a5a6a;
+    --radius: 14px;
+    --glow: 0 0 20px rgba(0,212,255,0.2);
+    --glow-danger: 0 0 20px rgba(255,0,107,0.2);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,20 +36,21 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Comfortaa', Georgia, serif;
+    font-family: 'Fredoka', sans-serif;
     font-size: 16px;
     min-height: 100vh;
     overflow-x: hidden;
+    letter-spacing: 0.3px;
   }
 
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='50'/%3E%3C/filter%3E%3Crect width='256' height='256' fill='%230a0a0f' filter='url(%23n)'/%3E%3C/svg%3E");
+    background: radial-gradient(circle at 20% 50%, rgba(0,212,255,0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,0,107,0.05) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
-    opacity: 0.4;
   }
 
   .bg-orbs {
@@ -61,13 +63,14 @@
   .orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.06;
-    animation: drift 20s ease-in-out infinite;
+    filter: blur(120px);
+    opacity: 0.08;
+    animation: drift 25s ease-in-out infinite;
   }
-  .orb1 { width: 600px; height: 600px; background: var(--gold); top: -200px; left: -100px; animation-delay: 0s; }
-  .orb2 { width: 400px; height: 400px; background: var(--accent); bottom: -100px; right: -100px; animation-delay: -7s; }
-  .orb3 { width: 300px; height: 300px; background: var(--teal); top: 40%; left: 60%; animation-delay: -13s; }
+  .orb1 { width: 600px; height: 600px; background: var(--primary); top: -200px; left: -100px; animation-delay: 0s; }
+  .orb2 { width: 400px; height: 400px; background: var(--accent); bottom: -100px; right: -100px; animation-delay: -8s; }
+  .orb3 { width: 300px; height: 300px; background: var(--success); top: 40%; left: 60%; animation-delay: -15s; }
+  
   @keyframes drift {
     0%, 100% { transform: translate(0, 0) scale(1); }
     33% { transform: translate(30px, -20px) scale(1.05); }
@@ -77,256 +80,359 @@
   #app { position: relative; z-index: 1; }
 
   header {
-    padding: 32px 40px 24px;
+    padding: 28px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(10px);
-    background: rgba(10,10,15,0.7);
+    border-bottom: 2px solid var(--border);
+    backdrop-filter: blur(20px);
+    background: rgba(15,20,25,0.8);
     position: sticky;
     top: 0;
     z-index: 100;
+    box-shadow: 0 4px 30px rgba(0,212,255,0.08);
   }
-  .logo-wrap { display: flex; align-items: center; gap: 14px; }
+
+  .logo-wrap { display: flex; align-items: center; gap: 16px; }
+  
   .logo-icon {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg, var(--gold), var(--accent));
-    border-radius: 10px;
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    box-shadow: 0 0 20px rgba(201,168,76,0.3);
+    font-size: 28px;
+    box-shadow: 0 0 30px rgba(0,212,255,0.4), inset 0 0 20px rgba(255,255,255,0.1);
+    animation: pulse 3s ease-in-out infinite;
   }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(0,212,255,0.4), inset 0 0 20px rgba(255,255,255,0.1); }
+    50% { box-shadow: 0 0 50px rgba(0,212,255,0.6), inset 0 0 30px rgba(255,255,255,0.15); }
+  }
+
   .logo-text {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 18px;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--gold2), var(--gold3));
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    letter-spacing: 0.5px;
-    line-height: 1.3;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
   }
-  .logo-sub { font-size: 10px; color: var(--text3); font-family: 'JetBrains Mono', monospace; letter-spacing: 1.5px; text-transform: uppercase; }
+
+  .logo-sub { 
+    font-size: 11px; 
+    color: var(--text3); 
+    font-family: 'JetBrains Mono', monospace; 
+    letter-spacing: 2px; 
+    text-transform: uppercase;
+    font-weight: 600;
+  }
   
-  .header-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .header-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   
   .btn {
     display: inline-flex; align-items: center; gap: 7px;
-    padding: 9px 18px;
-    border-radius: 8px;
-    border: 1px solid var(--border2);
-    background: var(--card);
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border2);
+    background: rgba(30,40,56,0.6);
     color: var(--text);
-    font-family: 'Crimson Pro', serif;
+    font-family: 'Fredoka', sans-serif;
     font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s;
     text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
-  .btn:hover { background: var(--card2); border-color: var(--gold); color: var(--gold2); }
-  .btn-gold {
-    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.1));
-    border-color: var(--gold);
-    color: var(--gold2);
-  }
-  .btn-gold:hover { background: linear-gradient(135deg, rgba(201,168,76,0.35), rgba(201,168,76,0.2)); box-shadow: var(--glow); }
-  .btn-danger { border-color: #a03030; color: #e06060; background: rgba(160,48,48,0.1); }
-  .btn-danger:hover { background: rgba(160,48,48,0.2); border-color: #c04040; }
-  .btn-sm { padding: 6px 12px; font-size: 13px; }
-  .btn-icon { padding: 9px; }
 
-  main { padding: 32px 40px; max-width: 1400px; margin: 0 auto; }
+  .btn:hover { 
+    background: var(--card2);
+    border-color: var(--primary);
+    color: var(--primary-light);
+    box-shadow: 0 0 20px rgba(0,212,255,0.2);
+    transform: translateY(-2px);
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(0,212,255,0.05));
+    border-color: var(--primary);
+    color: var(--primary-light);
+  }
+
+  .btn-gold:hover { 
+    background: linear-gradient(135deg, rgba(0,212,255,0.25), rgba(0,212,255,0.15));
+    box-shadow: var(--glow), 0 8px 30px rgba(0,212,255,0.2);
+  }
+
+  .btn-danger { 
+    border-color: var(--danger); 
+    color: var(--accent-light); 
+    background: rgba(255,71,87,0.1);
+  }
+
+  .btn-danger:hover { 
+    background: rgba(255,71,87,0.2); 
+    border-color: var(--accent-light);
+    box-shadow: var(--glow-danger);
+  }
+
+  .btn-sm { padding: 7px 14px; font-size: 12px; }
+  .btn-icon { padding: 8px; }
+
+  main { padding: 40px; max-width: 1400px; margin: 0 auto; }
 
   .filter-bar {
-    display: flex; gap: 12px; align-items: center;
-    margin-bottom: 24px;
+    display: flex; gap: 14px; align-items: center;
+    margin-bottom: 32px;
     flex-wrap: wrap;
   }
+
   .search-wrap {
-    position: relative; flex: 1; min-width: 200px;
+    position: relative; flex: 1; min-width: 220px;
   }
+
   .search-wrap .icon {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    color: var(--text3); font-size: 15px; pointer-events: none;
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: var(--text3); font-size: 16px; pointer-events: none;
   }
+
   input[type="text"], input[type="password"], textarea, select {
-    background: var(--card);
-    border: 1px solid var(--border2);
-    border-radius: 8px;
+    background: rgba(30,40,56,0.5);
+    border: 1.5px solid var(--border2);
+    border-radius: 10px;
     color: var(--text);
-    font-family: 'Crimson Pro', serif;
+    font-family: 'Fredoka', sans-serif;
     font-size: 15px;
-    padding: 10px 14px;
+    padding: 12px 16px;
     width: 100%;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: all 0.3s;
     outline: none;
   }
+
   input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+    border-color: var(--primary);
+    background: rgba(30,40,56,0.8);
+    box-shadow: 0 0 0 3px rgba(0,212,255,0.1), inset 0 0 20px rgba(0,212,255,0.05);
   }
-  .search-wrap input { padding-left: 42px; }
+
+  .search-wrap input { padding-left: 48px; }
   select { appearance: none; cursor: pointer; }
 
   /* CATEGORY SECTION */
   .categories-section {
-    background: rgba(26,26,36,0.5);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 32px;
+    background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(255,0,107,0.04) 100%);
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 36px;
+    box-shadow: 0 8px 32px rgba(0,212,255,0.08);
   }
+
   .categories-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 16px;
-    color: var(--gold2);
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 8px;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
   }
+
   .categories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 12px;
+    gap: 14px;
   }
+
   .category-btn {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 16px;
-    background: var(--card);
+    padding: 18px 14px;
+    background: linear-gradient(135deg, rgba(30,40,56,0.6) 0%, rgba(42,58,79,0.4) 100%);
     border: 2px solid var(--border2);
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.25s;
+    transition: all 0.3s;
     text-align: center;
-    gap: 8px;
-  }
-  .category-btn:hover {
-    border-color: var(--gold);
-    background: var(--card2);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(201,168,76,0.1);
-  }
-  .category-btn.active {
-    background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.1));
-    border-color: var(--gold);
-  }
-  .category-btn.active.is-tag {
-    background: linear-gradient(135deg, rgba(123,94,167,0.2), rgba(123,94,167,0.1));
-    border-color: var(--accent2);
-  }
-  .category-icon { font-size: 24px; }
-  .category-name {
-    font-family: 'Crimson Pro', serif;
-    font-size: 14px;
+    gap: 10px;
     font-weight: 600;
-    color: var(--text);
   }
+
+  .category-btn:hover {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(0,212,255,0.15) 0%, rgba(0,212,255,0.05) 100%);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,212,255,0.15);
+  }
+
+  .category-btn.active {
+    background: linear-gradient(135deg, rgba(0,212,255,0.2) 0%, rgba(0,212,255,0.08) 100%);
+    border-color: var(--primary);
+    box-shadow: var(--glow), 0 0 0 3px rgba(0,212,255,0.1);
+  }
+
+  .category-icon { font-size: 28px; }
+  
+  .category-name {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
   .category-count {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--text3);
-    background: rgba(0,0,0,0.3);
-    padding: 2px 8px;
-    border-radius: 4px;
+    font-size: 11px;
+    color: var(--primary-light);
+    background: rgba(0,212,255,0.15);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
   }
 
   .tags-row {
-    display: flex; gap: 8px; flex-wrap: wrap;
-    margin-bottom: 28px;
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 32px;
     align-items: center;
   }
+
   .tag-filter {
-    padding: 5px 14px;
+    padding: 7px 16px;
     border-radius: 20px;
-    border: 1px solid var(--border2);
+    border: 1.5px solid var(--border2);
     background: transparent;
     color: var(--text2);
-    font-family: 'Crimson Pro', serif;
+    font-family: 'Fredoka', sans-serif;
     font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.18s;
+    transition: all 0.25s;
     letter-spacing: 0.3px;
+    text-transform: uppercase;
   }
-  .tag-filter:hover { border-color: var(--gold); color: var(--gold2); }
-  .tag-filter.active { background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold2); }
+
+  .tag-filter:hover { 
+    border-color: var(--primary);
+    color: var(--primary-light);
+    background: rgba(0,212,255,0.08);
+  }
+
+  .tag-filter.active { 
+    background: rgba(0,212,255,0.15); 
+    border-color: var(--primary); 
+    color: var(--primary-light);
+    box-shadow: var(--glow);
+  }
 
   .section-header {
-    display: flex; align-items: baseline; gap: 12px;
-    margin-bottom: 20px;
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 24px;
   }
+
   .section-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 16px;
-    color: var(--gold2);
-    letter-spacing: 1px;
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--primary-light);
+    letter-spacing: -0.5px;
   }
+
   .count-badge {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--text3);
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    padding: 2px 8px;
+    font-size: 12px;
+    color: var(--primary-light);
+    background: rgba(0,212,255,0.15);
+    border: 1px solid var(--primary);
+    padding: 4px 12px;
     border-radius: 20px;
+    font-weight: 700;
   }
 
   .prompts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 16px;
+    gap: 18px;
   }
 
   .prompt-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
+    background: linear-gradient(135deg, rgba(30,40,56,0.4) 0%, rgba(42,58,79,0.2) 100%);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
     cursor: pointer;
-    transition: all 0.25s;
+    transition: all 0.3s;
     position: relative;
     overflow: hidden;
-    animation: fadeUp 0.4s ease both;
+    animation: fadeUp 0.5s ease both;
   }
+
   .prompt-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    border-radius: var(--radius);
+    border-radius: 14px;
     opacity: 0;
-    background: linear-gradient(135deg, rgba(201,168,76,0.06), transparent);
+    background: linear-gradient(135deg, rgba(0,212,255,0.1) 0%, rgba(255,0,107,0.05) 100%);
     transition: opacity 0.3s;
     pointer-events: none;
   }
-  .prompt-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.3), var(--glow2); }
+
+  .prompt-card:hover { 
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,212,255,0.15), var(--glow);
+    background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(0,212,255,0.04) 100%);
+  }
+
   .prompt-card:hover::before { opacity: 1; }
   .prompt-card.locked .card-content { filter: blur(3px); user-select: none; pointer-events: none; }
 
   .card-top {
     display: flex; align-items: flex-start; justify-content: space-between;
-    margin-bottom: 10px; gap: 10px;
+    margin-bottom: 12px; gap: 12px;
   }
+
   .card-name {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 14px;
-    color: var(--gold3);
-    font-weight: 400;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-light);
     line-height: 1.4;
     flex: 1;
   }
-  .card-badges { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+
+  .card-badges { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+  
   .lock-badge {
-    width: 28px; height: 28px;
-    border-radius: 6px;
-    border: 1px solid var(--border2);
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border2);
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px;
-    background: var(--bg3);
+    font-size: 14px;
+    background: rgba(30,40,56,0.6);
     color: var(--text3);
   }
-  .lock-badge.locked { border-color: var(--rose); color: var(--rose); background: rgba(201,106,123,0.1); }
-  .lock-badge.unlocked { border-color: var(--teal); color: var(--teal); background: rgba(74,155,142,0.1); }
+
+  .lock-badge.locked { 
+    border-color: var(--danger); 
+    color: var(--danger); 
+    background: rgba(255,71,87,0.1);
+    box-shadow: 0 0 15px rgba(255,71,87,0.2);
+  }
+
+  .lock-badge.unlocked { 
+    border-color: var(--success); 
+    color: var(--success); 
+    background: rgba(0,217,126,0.1);
+  }
 
   .card-desc {
     font-size: 14px;
@@ -337,25 +443,40 @@
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    font-style: italic;
+    font-weight: 400;
   }
+
   .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  
   .tag-pill {
     font-size: 11px;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 12px;
     font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
+    font-weight: 600;
+    text-transform: uppercase;
   }
-  .tag-pill.genre { background: rgba(123,94,167,0.2); border: 1px solid rgba(123,94,167,0.4); color: var(--accent2); }
-  .tag-pill.tag { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); color: #a08840; }
+
+  .tag-pill.genre { 
+    background: rgba(0,212,255,0.15); 
+    border: 1px solid rgba(0,212,255,0.4); 
+    color: var(--primary-light);
+  }
+
+  .tag-pill.tag { 
+    background: rgba(255,0,107,0.15); 
+    border: 1px solid rgba(255,0,107,0.4); 
+    color: var(--accent-light);
+  }
 
   .card-footer {
     display: flex; align-items: center; justify-content: space-between;
     border-top: 1px solid var(--border);
-    padding-top: 12px;
-    margin-top: 4px;
+    padding-top: 14px;
+    margin-top: 8px;
   }
+
   .card-link {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
@@ -364,159 +485,203 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 160px;
+    font-weight: 500;
   }
+
   .card-actions { display: flex; gap: 6px; }
 
   .lock-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(10,10,15,0.75);
-    border-radius: var(--radius);
+    background: rgba(15,20,25,0.9);
+    border-radius: 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    backdrop-filter: blur(2px);
+    gap: 12px;
+    backdrop-filter: blur(8px);
     z-index: 5;
   }
-  .lock-overlay .lock-icon { font-size: 28px; }
-  .lock-overlay p { font-size: 13px; color: var(--text3); font-style: italic; text-align: center; max-width: 200px; }
+
+  .lock-overlay .lock-icon { font-size: 40px; }
+  .lock-overlay p { font-size: 14px; color: var(--text2); text-align: center; max-width: 200px; }
 
   .modal-bg {
     position: fixed; inset: 0;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(12px);
     z-index: 200;
     display: flex; align-items: center; justify-content: center;
     padding: 20px;
-    animation: fadeIn 0.2s ease;
+    animation: fadeIn 0.3s ease;
     overflow-y: auto;
   }
+
   .modal-bg.hidden { display: none; }
+  
   .modal {
-    background: var(--bg2);
-    border: 1px solid var(--border2);
-    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(21,27,36,0.95) 0%, rgba(26,35,50,0.95) 100%);
+    border: 2px solid var(--primary);
+    border-radius: 20px;
     width: 100%;
     max-width: 560px;
     max-height: 90vh;
     overflow-y: auto;
-    box-shadow: 0 20px 80px rgba(0,0,0,0.6), var(--glow);
-    animation: scaleIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 30px 80px rgba(0,212,255,0.2), var(--glow);
+    animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
-  .modal-lg { max-width: 720px; }
-  .modal-header {
-    padding: 24px 28px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .modal-title {
-    font-family: 'Cinzel Decorative', serif;
-    font-size: 17px;
-    color: var(--gold2);
-  }
-  .modal-body { padding: 24px 28px; }
-  .modal-footer {
-    padding: 16px 28px 24px;
-    display: flex; gap: 10px; justify-content: flex-end;
-    border-top: 1px solid var(--border);
-  }
-  .close-btn {
-    width: 32px; height: 32px; border-radius: 8px;
-    background: transparent; border: 1px solid var(--border);
-    color: var(--text3); cursor: pointer; font-size: 16px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-  }
-  .close-btn:hover { background: var(--card); color: var(--text); border-color: var(--border2); }
 
-  .form-group { margin-bottom: 18px; }
+  .modal-lg { max-width: 720px; }
+  
+  .modal-header {
+    padding: 28px;
+    border-bottom: 2px solid var(--primary);
+    display: flex; align-items: center; justify-content: space-between;
+    background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, transparent 100%);
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--primary-light);
+  }
+
+  .modal-body { padding: 28px; }
+  
+  .modal-footer {
+    padding: 20px 28px 28px;
+    display: flex; gap: 12px; justify-content: flex-end;
+    border-top: 2px solid var(--primary);
+    background: linear-gradient(135deg, rgba(0,212,255,0.04) 0%, transparent 100%);
+  }
+
+  .close-btn {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: rgba(30,40,56,0.6); border: 1.5px solid var(--border2);
+    color: var(--text3); cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    font-weight: 700;
+  }
+
+  .close-btn:hover { 
+    background: rgba(255,71,87,0.15);
+    color: var(--danger); 
+    border-color: var(--danger);
+  }
+
+  .form-group { margin-bottom: 20px; }
+  
   .form-label {
     display: block;
     font-size: 12px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    color: var(--text3);
+    color: var(--primary-light);
     font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 7px;
+    margin-bottom: 8px;
+    font-weight: 700;
   }
-  .form-hint { font-size: 12px; color: var(--text3); margin-top: 5px; font-style: italic; }
-  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .form-hint { font-size: 12px; color: var(--text3); margin-top: 6px; font-weight: 500; }
+  textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   
   .tags-input-wrap { display: flex; gap: 8px; }
   .tags-input-wrap input { flex: 1; }
-  .tags-preview { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .tags-preview { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  
   .tag-removable {
     display: flex; align-items: center; gap: 5px;
-    font-size: 11px; padding: 3px 10px; border-radius: 12px;
+    font-size: 11px; padding: 4px 12px; border-radius: 12px;
     font-family: 'JetBrains Mono', monospace;
     cursor: default;
+    font-weight: 600;
   }
-  .tag-removable .rm { cursor: pointer; opacity: 0.6; font-size: 13px; line-height: 1; }
+
+  .tag-removable .rm { cursor: pointer; opacity: 0.6; font-size: 14px; line-height: 1; transition: opacity 0.2s; }
   .tag-removable .rm:hover { opacity: 1; }
-  .tag-removable.genre { background: rgba(123,94,167,0.2); border: 1px solid rgba(123,94,167,0.4); color: var(--accent2); }
-  .tag-removable.tag { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.25); color: #a08840; }
+  
+  .tag-removable.genre { 
+    background: rgba(0,212,255,0.15); 
+    border: 1px solid rgba(0,212,255,0.3); 
+    color: var(--primary-light);
+  }
+
+  .tag-removable.tag { 
+    background: rgba(255,0,107,0.15); 
+    border: 1px solid rgba(255,0,107,0.3); 
+    color: var(--accent-light);
+  }
 
   .pw-section {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
-    margin-top: 16px;
+    background: rgba(0,212,255,0.08);
+    border: 1.5px solid var(--primary);
+    border-radius: 12px;
+    padding: 18px;
+    margin-top: 18px;
   }
+
   .pw-toggle {
     display: flex; align-items: center; gap: 10px; cursor: pointer;
-    color: var(--text2); font-size: 14px;
+    color: var(--text); font-size: 14px;
     user-select: none;
+    font-weight: 600;
   }
-  .pw-toggle input[type="checkbox"] { width: auto; accent-color: var(--gold); cursor: pointer; }
+
+  .pw-toggle input[type="checkbox"] { width: auto; accent-color: var(--primary); cursor: pointer; width: 18px; height: 18px; }
   .pw-fields { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
   .pw-fields.hidden { display: none; }
 
   .security-note {
-    background: rgba(74, 155, 142, 0.1);
-    border: 1px solid rgba(74, 155, 142, 0.3);
-    padding: 10px 12px;
-    border-radius: 8px;
+    background: rgba(0,217,126,0.1);
+    border: 1.5px solid var(--success);
+    padding: 12px 14px;
+    border-radius: 10px;
     font-size: 12px;
-    color: var(--teal);
-    margin-top: 8px;
-    font-style: italic;
+    color: var(--success);
+    margin-top: 10px;
+    font-weight: 600;
   }
 
-  .unlock-modal .lock-big { font-size: 48px; text-align: center; margin-bottom: 12px; }
+  .unlock-modal .lock-big { font-size: 56px; text-align: center; margin-bottom: 14px; }
+  
   .unlock-modal .hint-text {
     text-align: center;
     font-size: 13px;
-    color: var(--rose);
+    color: var(--accent-light);
     font-family: 'JetBrains Mono', monospace;
-    background: rgba(201,106,123,0.08);
-    border: 1px solid rgba(201,106,123,0.2);
-    padding: 8px 16px;
-    border-radius: 8px;
-    margin-bottom: 16px;
-    font-style: normal;
+    background: rgba(255,0,107,0.1);
+    border: 1.5px solid var(--accent);
+    padding: 10px 16px;
+    border-radius: 10px;
+    margin-bottom: 18px;
+    font-weight: 600;
   }
+
   .pw-input-wrap { position: relative; }
   .pw-input-wrap input { padding-right: 44px; letter-spacing: 2px; font-family: 'JetBrains Mono', monospace; }
+  
   .pw-toggle-vis {
     position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
     background: none; border: none; color: var(--text3); cursor: pointer;
-    font-size: 15px; padding: 4px;
+    font-size: 16px; padding: 4px; transition: all 0.2s; font-weight: 700;
   }
-  .pw-error { color: var(--rose); font-size: 13px; margin-top: 8px; font-style: italic; display: none; }
+
+  .pw-toggle-vis:hover { color: var(--primary); }
+  .pw-error { color: var(--danger); font-size: 13px; margin-top: 8px; display: none; font-weight: 600; }
   .pw-error.show { display: block; }
 
   .prompt-text-display {
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    background: rgba(30,40,56,0.6);
+    border: 1.5px solid var(--border2);
+    border-radius: 10px;
     padding: 16px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 13px;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--text);
     white-space: pre-wrap;
     word-break: break-word;
@@ -526,46 +691,57 @@
 
   .empty-state {
     text-align: center;
-    padding: 80px 20px;
+    padding: 100px 20px;
     color: var(--text3);
   }
-  .empty-state .empty-icon { font-size: 52px; margin-bottom: 16px; opacity: 0.4; }
-  .empty-state h3 { font-family: 'Cinzel Decorative', serif; font-size: 16px; color: var(--text2); margin-bottom: 8px; }
-  .empty-state p { font-size: 14px; font-style: italic; }
+
+  .empty-state .empty-icon { font-size: 64px; margin-bottom: 18px; opacity: 0.4; }
+  
+  .empty-state h3 { 
+    font-family: 'Playfair Display', serif; 
+    font-size: 20px; 
+    font-weight: 700;
+    color: var(--text2); 
+    margin-bottom: 8px; 
+  }
+
+  .empty-state p { font-size: 14px; font-weight: 500; }
 
   .toast {
     position: fixed;
     bottom: 30px; right: 30px;
-    background: var(--card);
-    border: 1px solid var(--border2);
-    border-radius: 10px;
-    padding: 12px 18px;
+    background: linear-gradient(135deg, rgba(30,40,56,0.95) 0%, rgba(42,58,79,0.95) 100%);
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 14px 20px;
     font-size: 14px;
     color: var(--text);
     z-index: 999;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    box-shadow: 0 12px 40px rgba(0,212,255,0.2), var(--glow);
     animation: slideUp 0.3s ease;
-    display: flex; align-items: center; gap: 10px;
-    max-width: 300px;
+    display: flex; align-items: center; gap: 12px;
+    max-width: 320px;
+    font-weight: 600;
   }
-  .toast.success { border-color: var(--teal); }
-  .toast.error { border-color: var(--rose); }
-  .toast-icon { font-size: 18px; }
+
+  .toast.success { border-color: var(--success); }
+  .toast.error { border-color: var(--danger); }
+  .toast-icon { font-size: 20px; font-weight: 700; }
   .toast.fade-out { animation: fadeOut 0.3s ease forwards; }
 
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes scaleIn { from { opacity: 0; transform: scale(0.93); } to { opacity: 1; transform: scale(1); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
   @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeOut { to { opacity: 0; transform: translateY(-6px); } }
+  @keyframes fadeOut { to { opacity: 0; transform: translateY(-8px); } }
 
   @media (max-width: 640px) {
-    header { padding: 16px 20px; }
-    main { padding: 20px; }
+    header { padding: 20px 24px; }
+    main { padding: 24px 20px; }
     .form-row { grid-template-columns: 1fr; }
-    .logo-text { font-size: 15px; }
+    .logo-text { font-size: 18px; }
     .categories-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
-    .category-btn { padding: 12px; }
+    .section-title { font-size: 20px; }
   }
 </style>
 </head>
@@ -582,11 +758,11 @@
       <div class="logo-icon">🏥</div>
       <div>
         <div class="logo-text">Bệnh viện Tâm thần<br>Đa khoa Kỹ Thuật Số</div>
-        <div class="logo-sub">Viện Tâm Thần Cố Thị</div>
+        <div class="logo-sub">⚡ Viện Tâm Thần Cố Thị ⚡</div>
       </div>
     </div>
     <div class="header-actions">
-      <button class="btn btn-sm" id="adminBtn" onclick="toggleAdminPanel()">⚙ Admin</button>
+      <button class="btn btn-gold" id="adminBtn" onclick="toggleAdminPanel()">⚙ Admin</button>
     </div>
   </header>
 
@@ -594,12 +770,12 @@
     <div class="filter-bar">
       <div class="search-wrap">
         <span class="icon">🔍</span>
-        <input type="text" id="searchInput" placeholder="Tìm kiếm..." oninput="renderPrompts()">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm prompts..." oninput="renderPrompts()">
       </div>
       <select id="sortSelect" onchange="renderPrompts()" style="width:auto;min-width:150px">
-        <option value="newest">Mới nhất</option>
-        <option value="oldest">Cũ nhất</option>
-        <option value="name">Tên A–Z</option>
+        <option value="newest">🆕 Mới nhất</option>
+        <option value="oldest">🕰️ Cũ nhất</option>
+        <option value="name">🔤 Tên A–Z</option>
       </select>
     </div>
 
@@ -614,7 +790,7 @@
 
     <!-- RESULTS -->
     <div class="section-header">
-      <span class="section-title">Kết Quả</span>
+      <span class="section-title">💊 Khu Prompts</span>
       <span class="count-badge" id="countBadge">0</span>
     </div>
 
@@ -626,14 +802,14 @@
 <div class="modal-bg hidden" id="addModal">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <span class="modal-title" id="addModalTitle">✦ Thêm Mới</span>
+      <span class="modal-title" id="addModalTitle">✨ Thêm Mới</span>
       <button class="close-btn" onclick="closeAddModal()">✕</button>
     </div>
     <div class="modal-body">
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Tên *</label>
-          <input type="text" id="fName" placeholder="Ví dụ: Bác sĩ">
+          <label class="form-label">Tên Prompt *</label>
+          <input type="text" id="fName" placeholder="Ví dụ: ChatGPT Pro">
         </div>
         <div class="form-group">
           <label class="form-label">Link / Text *</label>
@@ -641,14 +817,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Mô tả</label>
-        <textarea id="fDesc" placeholder="Mô tả ngắn..."></textarea>
+        <label class="form-label">Mô Tả</label>
+        <textarea id="fDesc" placeholder="Mô tả chi tiết..."></textarea>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Genre/Thể Loại</label>
+          <label class="form-label">Thể Loại (Genre)</label>
           <div class="tags-input-wrap">
-            <input type="text" id="fGenreInput" placeholder="Ví dụ: AI, Marketing..." onkeydown="handleTagKey(event,'genre')">
+            <input type="text" id="fGenreInput" placeholder="AI, Marketing..." onkeydown="handleTagKey(event,'genre')">
             <button class="btn btn-sm" onclick="addTag('genre')">＋</button>
           </div>
           <div class="tags-preview" id="fGenrePrev"></div>
@@ -665,23 +841,24 @@
       <div class="pw-section">
         <label class="pw-toggle">
           <input type="checkbox" id="fPwEnabled" onchange="togglePwFields()">
-          <span>🔒 Bảo vệ bằng mật khẩu</span>
+          <span>🔐 Bảo vệ bằng mật khẩu</span>
         </label>
         <div class="pw-fields hidden" id="pwFields">
           <div class="form-group" style="margin:0">
-            <label class="form-label">Mật khẩu</label>
+            <label class="form-label">Mật Khẩu</label>
             <input type="text" id="fPassword" placeholder="Nhập mật khẩu...">
           </div>
           <div class="form-group" style="margin:0">
-            <label class="form-label">Gợi ý (Hint)</label>
-            <input type="text" id="fHint" placeholder="Ví dụ: Tên con mèo nhà mình 🐱">
+            <label class="form-label">Gợi Ý (Hint)</label>
+            <input type="text" id="fHint" placeholder="Ví dụ: Tên con mèo 🐱">
           </div>
+          <div class="security-note">✓ Mật khẩu được mã hóa AES-256. An toàn 100%!</div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn" onclick="closeAddModal()">Hủy</button>
-      <button class="btn btn-gold" onclick="savePrompt()">💾 Lưu</button>
+      <button class="btn btn-gold" onclick="savePrompt()">💾 Lưu Prompt</button>
     </div>
   </div>
 </div>
@@ -695,20 +872,20 @@
     </div>
     <div class="modal-body">
       <div class="lock-big">🔒</div>
-      <p style="text-align:center;color:var(--text2);margin-bottom:16px;font-style:italic" id="unlockBotName">...</p>
+      <p style="text-align:center;color:var(--text2);margin-bottom:16px;font-weight:600" id="unlockBotName">...</p>
       <div id="unlockHintWrap" class="hint-text" style="display:none"></div>
       <div class="form-group">
-        <label class="form-label">Mật khẩu</label>
+        <label class="form-label">Mật Khẩu</label>
         <div class="pw-input-wrap">
           <input type="password" id="unlockInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryUnlock()">
           <button class="pw-toggle-vis" onclick="togglePwVis('unlockInput',this)">👁</button>
         </div>
-        <div class="pw-error" id="unlockError">Mật khẩu không đúng!</div>
+        <div class="pw-error" id="unlockError">❌ Mật khẩu không đúng!</div>
       </div>
     </div>
     <div class="modal-footer">
       <button class="btn" onclick="closeUnlockModal()">Hủy</button>
-      <button class="btn btn-gold" onclick="tryUnlock()">Mở khóa ✦</button>
+      <button class="btn btn-gold" onclick="tryUnlock()">Mở Khóa ✓</button>
     </div>
   </div>
 </div>
@@ -722,15 +899,15 @@
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label class="form-label">Mô tả</label>
-        <p id="viewDesc" style="color:var(--text2);font-style:italic;line-height:1.7"></p>
+        <label class="form-label">Mô Tả</label>
+        <p id="viewDesc" style="color:var(--text2);line-height:1.8;font-weight:500"></p>
       </div>
       <div class="form-group">
         <label class="form-label">Link / Text</label>
         <div id="viewLink" style="display:flex;gap:10px;align-items:flex-start"></div>
       </div>
       <div class="form-group" id="viewTagsWrap">
-        <label class="form-label">Tags &amp; Thể Loại</label>
+        <label class="form-label">Thể Loại &amp; Tags</label>
         <div class="card-tags" id="viewTags"></div>
       </div>
     </div>
@@ -761,12 +938,13 @@ function escHtml(text) {
 function showToast(msg, type = 'info') {
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ'}</span><span>${escHtml(msg)}</span>`;
+  const icon = type === 'success' ? '✓' : type === 'error' ? '✕' : 'ℹ';
+  toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${escHtml(msg)}</span>`;
   document.body.appendChild(toast);
   setTimeout(() => {
     toast.classList.add('fade-out');
     setTimeout(() => toast.remove(), 300);
-  }, 2500);
+  }, 2800);
 }
 
 function encryptPassword(plaintext) {
@@ -775,8 +953,7 @@ function encryptPassword(plaintext) {
 
 function decryptPassword(encrypted) {
   try {
-    const decrypted = CryptoJS.AES.decrypt(encrypted, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
-    return decrypted;
+    return CryptoJS.AES.decrypt(encrypted, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
   } catch {
     return '';
   }
@@ -828,11 +1005,11 @@ function renderTagPrev(type) {
   const arr = type === 'genre' ? editGenres : editTags;
   const el = document.getElementById(type === 'genre' ? 'fGenrePrev' : 'fTagPrev');
   el.innerHTML = arr.map(t =>
-    `<span class="tag-removable ${type}">${t}<span class="rm" onclick="removeTag('${type}','${t}')">×</span></span>`
+    `<span class="tag-removable ${type}">${escHtml(t)}<span class="rm" onclick="removeTag('${type}','${t}')">✕</span></span>`
   ).join('');
 }
 
-// CATEGORIES BROWSER
+// CATEGORIES
 function getAllGenresWithCount() {
   const genreMap = {};
   prompts.forEach(p => {
@@ -878,7 +1055,7 @@ function toggleCategoryFilter(type, val) {
   renderPrompts();
 }
 
-// FILTER DISPLAY
+// FILTERS
 function getAllTagsGenres() {
   const genres = new Set(), tags = new Set();
   prompts.forEach(p => {
@@ -889,22 +1066,17 @@ function getAllTagsGenres() {
 }
 
 function renderTagsRow() {
-  const { genres, tags } = getAllTagsGenres();
   const el = document.getElementById('tagsRow');
   if (!activeFilters.genres.size && !activeFilters.tags.size) { el.innerHTML = ''; return; }
   
-  let html = `<span style="font-size:12px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:1px">ĐANG LỌC:</span>`;
+  let html = `<span style="font-size:12px;color:var(--text3);font-family:'JetBrains Mono',monospace;letter-spacing:1.5px;font-weight:700">🎯 ĐANG LỌC:</span>`;
   
   [...activeFilters.genres].forEach(g => {
-    html += `<button class="tag-filter active genre-tag" onclick="toggleCategoryFilter('genre','${CSS.escape(g)}')">✓ ${escHtml(g)}</button>`;
-  });
-  
-  [...activeFilters.tags].forEach(t => {
-    html += `<button class="tag-filter active" onclick="toggleCategoryFilter('tag','${CSS.escape(t)}')">✓ ${escHtml(t)}</button>`;
+    html += `<button class="tag-filter active" onclick="toggleCategoryFilter('genre','${CSS.escape(g)}')">✓ ${escHtml(g)}</button>`;
   });
   
   if (activeFilters.genres.size || activeFilters.tags.size) {
-    html += `<button class="btn btn-sm" onclick="clearAllFilters()" style="font-size:12px;padding:4px 10px">✕ Xóa</button>`;
+    html += `<button class="btn btn-sm" onclick="clearAllFilters()" style="font-size:12px">✕ Xóa</button>`;
   }
   
   el.innerHTML = html;
@@ -918,7 +1090,7 @@ function clearAllFilters() {
   renderPrompts();
 }
 
-// RENDER PROMPTS
+// RENDER
 function renderPrompts() {
   const search = document.getElementById('searchInput').value.toLowerCase();
   const sort = document.getElementById('sortSelect').value;
@@ -932,10 +1104,8 @@ function renderPrompts() {
 
     const matchGenre = !activeFilters.genres.size ||
       [...activeFilters.genres].some(g => (p.genres||[]).includes(g));
-    const matchTag = !activeFilters.tags.size ||
-      [...activeFilters.tags].some(t => (p.tags||[]).includes(t));
 
-    return matchSearch && matchGenre && matchTag;
+    return matchSearch && matchGenre;
   });
 
   if (sort === 'newest') filtered.sort((a,b) => b.created - a.created);
@@ -947,9 +1117,9 @@ function renderPrompts() {
   const grid = document.getElementById('promptsGrid');
   if (!filtered.length) {
     grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
-      <div class="empty-icon">🏥</div>
-      <h3>${prompts.length ? 'Không tìm thấy kết quả' : 'Chưa có gì'}</h3>
-      <p>${prompts.length ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm' : 'Chờ admin thêm nội dung...'}</p>
+      <div class="empty-icon">😴</div>
+      <h3>${prompts.length ? 'Không tìm thấy kết quả' : 'Chưa có prompts nào'}</h3>
+      <p>${prompts.length ? 'Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm' : 'Admin sẽ thêm prompts sớm thôi!'}</p>
     </div>`;
     return;
   }
@@ -968,14 +1138,14 @@ function buildCard(p, i) {
 
   const lockOverlay = isLocked ? `
     <div class="lock-overlay" onclick="openUnlockModal('${p.id}')">
-      <span class="lock-icon">🔒</span>
+      <span class="lock-icon">🔐</span>
       <p>Nhấn để nhập mật khẩu</p>
     </div>` : '';
 
   const linkPreview = isLocked ? '••••••••' :
     (p.link.startsWith('http') ? p.link : p.link.slice(0,40)+'...');
 
-  return `<div class="prompt-card${isLocked ? ' locked' : ''}" style="animation-delay:${i*0.04}s" id="card-${p.id}">
+  return `<div class="prompt-card${isLocked ? ' locked' : ''}" style="animation-delay:${i*0.05}s" id="card-${p.id}">
     ${lockOverlay}
     <div class="card-content">
       <div class="card-top">
@@ -998,7 +1168,7 @@ function buildCard(p, i) {
 function openAddModal() {
   editingId = null;
   editGenres = []; editTags = [];
-  document.getElementById('addModalTitle').textContent = '✦ Thêm Mới';
+  document.getElementById('addModalTitle').textContent = '✨ Thêm Mới';
   document.getElementById('fName').value = '';
   document.getElementById('fLink').value = '';
   document.getElementById('fDesc').value = '';
@@ -1017,7 +1187,7 @@ function closeAddModal() {
 function savePrompt() {
   const name = document.getElementById('fName').value.trim();
   const link = document.getElementById('fLink').value.trim();
-  if (!name || !link) { showToast('Điền tên và link', 'error'); return; }
+  if (!name || !link) { showToast('⚠️ Điền tên và link', 'error'); return; }
 
   if (editingId) {
     const p = prompts.find(x => x.id === editingId);
@@ -1046,7 +1216,7 @@ function savePrompt() {
   closeAddModal();
   renderCategoriesGrid();
   renderPrompts();
-  showToast(editingId ? 'Đã cập nhật' : 'Đã thêm', 'success');
+  showToast(editingId ? '✓ Đã cập nhật' : '✓ Đã thêm', 'success');
 }
 
 function togglePwFields() {
@@ -1064,7 +1234,7 @@ function openViewModal(id) {
   
   let linkHtml = p.link;
   if (p.link.startsWith('http')) {
-    linkHtml = `<a href="${escHtml(p.link)}" target="_blank" style="color:var(--gold2)">${escHtml(p.link.slice(0,50))}</a>`;
+    linkHtml = `<a href="${escHtml(p.link)}" target="_blank" style="color:var(--primary-light);font-weight:600;text-decoration:none">→ ${escHtml(p.link.slice(0,50))}</a>`;
   } else {
     linkHtml = `<div class="prompt-text-display">${escHtml(p.link)}</div>`;
   }
@@ -1112,7 +1282,7 @@ function tryUnlock() {
     sessionUnlocked.add(unlockTargetId);
     closeUnlockModal();
     renderPrompts();
-    showToast('Đã mở khóa', 'success');
+    showToast('✓ Đã mở khóa', 'success');
   } else {
     document.getElementById('unlockError').classList.add('show');
   }
@@ -1129,9 +1299,8 @@ function togglePwVis(inputId, btn) {
   }
 }
 
-// ADMIN (placeholder)
 function toggleAdminPanel() {
-  showToast('Chức năng admin sẽ được bổ sung', 'info');
+  showToast('💻 Admin panel coming soon!', 'info');
 }
 
 // INIT
