@@ -417,6 +417,7 @@
     color: var(--text3); 
     font-size: 16px; 
     pointer-events: none;
+    z-index: 1;
   }
 
   .search-wrap input {
@@ -430,6 +431,8 @@
     font-size: 15px;
     transition: all 0.3s;
     box-shadow: var(--shadow);
+    position: relative;
+    z-index: 2;
   }
 
   .search-wrap input:focus {
@@ -998,276 +1001,146 @@
     font-family: 'Playfair Display', serif; 
     font-size: 20px; 
     font-weight: 700;
-    color: var(--text2); 
-    margin-bottom: 8px; 
+    margin-bottom: 12px;
   }
 
-  .empty-state p { font-size: 14px; font-weight: 500; }
-
-  .toast {
-    position: fixed;
-    bottom: 30px; right: 30px;
-    background: var(--card);
-    border: 2px solid var(--primary);
-    border-radius: 12px;
-    padding: 14px 20px;
-    font-size: 14px;
-    color: var(--text);
-    z-index: 999;
-    box-shadow: var(--glow), var(--shadow-lg);
-    animation: slideUp 0.3s ease;
-    display: flex; align-items: center; gap: 12px;
-    max-width: 320px;
-    font-weight: 600;
-  }
-
-  .toast.success { border-color: var(--success); }
-  .toast.error { border-color: var(--danger); }
-  .toast-icon { font-size: 20px; font-weight: 700; }
-  .toast.fade-out { animation: fadeOut 0.3s ease forwards; }
-
-  .admin-status {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 13px; color: var(--primary);
-    font-weight: 600;
-  }
-
-  .admin-badge {
-    background: rgba(0,102,204,0.2);
-    border: 1px solid var(--primary);
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 11px;
-  }
-
-  .admin-toolbar {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-  }
-
-  .settings-btn {
-    width: 36px;
-    height: 36px;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-  }
-
-  .tabs-container {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 16px;
-  }
-
-  .tab-btn {
-    padding: 8px 16px;
-    border: none;
-    background: transparent;
-    color: var(--text3);
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: all 0.3s;
-  }
-
-  .tab-btn.active {
-    color: var(--primary);
-    border-bottom-color: var(--primary);
-  }
-
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-
-  .settings-section {
-    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
-    border: 1.5px solid var(--primary);
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-  }
-
-  .coming-soon {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text3);
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  .admin-only { display: none; }
-  .admin-only.show { display: block; }
+  .empty-state p { font-size: 14px; color: var(--text2); }
 
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeOut { to { opacity: 0; transform: translateY(-8px); } }
 
-  @media (max-width: 640px) {
-    header { padding: 16px 20px; }
-    main { padding: 24px 20px; }
-    .form-row { grid-template-columns: 1fr; }
-    .logo-text { font-size: 18px; }
-    .section-title { font-size: 20px; }
-    .genre-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-    .genre-card { padding: 20px 16px; }
-    .genre-icon { font-size: 36px; }
-    .genre-name { font-size: 16px; }
-    .welcome-title { font-size: 32px; }
-    .welcome-category-buttons { flex-direction: column; }
-    .welcome-btn { width: 100%; }
+  .admin-controls.hidden { display: none !important; }
+
+  .settings-container {
+    background: var(--card);
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .settings-section {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .settings-section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .settings-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 16px;
+  }
+
+  .logout-btn-container {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 2px solid var(--danger);
+  }
+
+  .logout-btn {
+    width: 100%;
+    padding: 12px 24px;
+    background: var(--danger);
+    border: 1.5px solid var(--danger);
+    border-radius: 10px;
+    color: white;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .logout-btn:hover {
+    background: rgba(220,38,38,0.9);
+    box-shadow: var(--glow-danger), var(--shadow-lg);
+    transform: translateY(-2px);
   }
 </style>
 </head>
 <body>
+
 <div class="bg-orbs">
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
 </div>
 
-<!-- WELCOME PAGE -->
-<div class="welcome-container" id="welcomePage">
+<div class="welcome-container" id="welcomeContainer">
   <div class="welcome-admin-login">
-    <button class="welcome-admin-btn" onclick="showAdminLoginFromWelcome()">👑 Admin</button>
+    <button class="welcome-admin-btn" onclick="openAdminLoginModal()">🔐 Admin</button>
   </div>
-
   <div class="welcome-header">
     <div class="welcome-logo">
       <div class="welcome-logo-icon">🏥</div>
       <div class="welcome-logo-text">
-        <div class="main">Cố Thị</div>
-        <div class="sub">Viện Tâm Thần</div>
+        <div class="main">Viện Tâm Thần</div>
+        <div class="sub">Digital Sanctuary</div>
       </div>
     </div>
+    <h1 class="welcome-title">Khám phá Thế Giới Tâm Lý Số</h1>
   </div>
-
-  <h1 class="welcome-title">Chào mừng các bệnh nhân đến với viện tâm thần Cố Thị</h1>
-
   <div class="welcome-category-buttons">
-    <button class="welcome-btn" onclick="selectCategory('hospital')">
-      <span class="welcome-btn-icon">📋</span>
-      <span>Menu lựa bệnh ăn</span>
-    </button>
-    <button class="welcome-btn" onclick="selectCategory('rehab')">
-      <span class="welcome-btn-icon">🔺</span>
-      <span>Chương trình cai nghiện</span>
+    <button class="welcome-btn" onclick="goToCategory('general')">
+      <span class="welcome-btn-icon">🧠</span>
+      <span>Bắt Đầu</span>
     </button>
   </div>
-
-  <div class="welcome-social-buttons" id="welcomeSocialButtons">
-    <button class="welcome-social-btn social-discord" onclick="openSocialLink('discord')">
-      <span>💬</span>
-      <span>Tham gia Discord</span>
-    </button>
-    <button class="welcome-social-btn social-facebook" onclick="openSocialLink('facebook')">
-      <span>f</span>
-      <span>Kết nối Facebook</span>
-    </button>
+  <div class="welcome-social-buttons">
+    <button class="welcome-social-btn social-discord">💜 Discord</button>
+    <button class="welcome-social-btn social-facebook">👍 Facebook</button>
   </div>
 </div>
 
-<div id="app" style="display:none">
+<div id="app" class="hidden">
   <header>
     <div class="logo-wrap">
       <div class="logo-icon">🏥</div>
       <div>
-        <div class="logo-text">Bệnh viện Tâm thần<br>Đa khoa Kỹ Thuật Số</div>
-        <div class="logo-sub">⚡ Viện Tâm Thần Cố Thị ⚡</div>
+        <div class="logo-text">Viện Tâm Thần</div>
+        <div class="logo-sub">Digital Sanctuary</div>
       </div>
     </div>
-
     <div class="header-actions">
-      <div id="adminStatusInfo" class="admin-status" style="display:none">
-        <span id="adminEmail"></span>
-        <span class="admin-badge">👑 ADMIN</span>
-        <div class="admin-toolbar">
-          <button class="btn btn-sm settings-btn" id="adminSettingsBtn" onclick="showAdminSettings()" title="Cài đặt">⚙</button>
-        </div>
-      </div>
-      <button class="btn btn-gold admin-only" id="adminBtn" onclick="toggleAdminPanel()">⚙ Admin</button>
+      <button class="btn btn-gold" id="settingsBtn" onclick="openSettings()" style="display: none;">⚙️ Cài đặt</button>
+      <button class="btn" id="backBtn" onclick="goBack()" style="display: none;">← Quay lại</button>
     </div>
   </header>
 
   <main>
-    <div id="mainView">
-      <div class="category-tabs" id="categoryTabs">
-        <button class="category-tab active" onclick="switchCategory('hospital')" data-category="hospital">
-          📋 Bệnh Viện
-        </button>
-        <button class="category-tab" onclick="switchCategory('rehab')" data-category="rehab">
-          🔺 Chương trình cai nghiện
-        </button>
-      </div>
-
-      <div class="section-header">
-        <span class="section-title" id="categoryTitle">🏥 SƠ ĐỒ PHÒNG BAN VIỆN TÂM THẦN CÔ THỊ</span>
-        <span class="count-badge" id="countBadge">0</span>
-      </div>
-
-      <div class="search-bar-section">
-        <div class="search-wrap">
-          <span class="icon">🔍</span>
-          <input type="text" id="globalSearch" placeholder="Tìm kiếm bệnh án nhân vật..." oninput="handleGlobalSearch()">
-        </div>
-      </div>
-
-      <div class="genre-grid" id="genreGrid"></div>
-    </div>
-
-    <div id="detailView" style="display:none">
-      <button class="btn btn-back" onclick="backToGenreView()">← Quay Lại</button>
-      <div class="section-header">
-        <span class="section-title" id="detailTitle">...</span>
-        <span class="count-badge" id="detailCountBadge">0</span>
-      </div>
-
-      <div class="filter-bar">
-        <div class="search-wrap" style="flex:1; min-width:220px">
-          <span class="icon">🔍</span>
-          <input type="text" id="searchInput" placeholder="Tìm kiếm bệnh án nhân vật..." oninput="renderDetailView()">
-        </div>
-        <select id="sortSelect" onchange="renderDetailView()" style="width:auto;min-width:150px">
-          <option value="newest">🆕 Mới nhất</option>
-          <option value="oldest">🕰️ Cũ nhất</option>
-          <option value="name">🔤 Tên A–Z</option>
-        </select>
-      </div>
-
-      <div class="tags-filter-bar" id="tagsFilterBar"></div>
-
-      <div class="prompts-grid" id="promptsGrid"></div>
-    </div>
+    <div id="mainContent"></div>
   </main>
 </div>
 
-<div class="modal-bg hidden" id="adminLoginModal">
+<!-- ADMIN LOGIN MODAL -->
+<div id="adminLoginModal" class="modal-bg hidden">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">👑 Đăng Nhập Admin</span>
+      <h2 class="modal-title">🔐 Đăng Nhập Quản Trị</h2>
       <button class="close-btn" onclick="closeAdminLoginModal()">✕</button>
     </div>
     <div class="modal-body">
       <div class="form-group">
-        <label class="form-label">Email Admin</label>
-        <input type="email" id="adminEmailInput" placeholder="your@email.com">
-        <div class="form-hint">📧 Xác nhận bằng email của bạn</div>
+        <label class="form-label">Tài khoản Admin</label>
+        <input type="text" id="adminUsername" placeholder="Nhập tài khoản">
       </div>
       <div class="form-group">
-        <label class="form-label">Mật Khẩu Master</label>
+        <label class="form-label">Mật khẩu</label>
         <div class="pw-input-wrap">
-          <input type="password" id="adminPasswordInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginAdmin()">
-          <button class="pw-toggle-vis" onclick="togglePwVis('adminPasswordInput',this)">👁</button>
+          <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
+          <button class="pw-toggle-vis" onclick="toggleAdminPasswordVisibility()">👁</button>
         </div>
-        <div class="pw-error" id="adminLoginError"></div>
       </div>
     </div>
     <div class="modal-footer">
@@ -1277,759 +1150,432 @@
   </div>
 </div>
 
-<div class="modal-bg hidden" id="adminPanelModal">
+<!-- SETTINGS MODAL (For Logged-in Admin) -->
+<div id="settingsModal" class="modal-bg hidden">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <span class="modal-title">⚙ Bảng Điều Khiển Admin</span>
-      <button class="close-btn" onclick="closeAdminPanel()">✕</button>
+      <h2 class="modal-title">⚙️ Cài Đặt Quản Trị</h2>
+      <button class="close-btn" onclick="closeSettings()">✕</button>
     </div>
     <div class="modal-body">
-      <div class="genre-management">
-        <div class="genre-section-title">🏷️ Quản lý thể loại</div>
-        <div class="genre-list" id="genreListAdmin"></div>
-        <div class="genre-icon-input-group">
-          <input type="text" id="newGenreIcon" placeholder="🏥" maxlength="2" title="Nhập 1-2 ký tự hoặc emoji">
-          <input type="text" id="newGenreInput" placeholder="Tên thể loại..." onkeydown="if(event.key==='Enter')addGenre()">
-          <button class="btn btn-sm" onclick="addGenre()">＋ Thêm</button>
+      <div class="settings-container">
+        <div class="settings-section">
+          <div class="settings-title">📝 Quản Lý Thể Loại</div>
+          <button class="btn btn-gold" onclick="openGenreManagement()">Chỉnh sửa thể loại</button>
         </div>
-      </div>
 
-      <div class="section-header" style="margin-bottom:16px">
-        <span class="section-title" style="font-size:18px">✨ Thêm / Chỉnh Sửa Bệnh Án</span>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">Tên Bệnh Án *</label>
-          <input type="text" id="fName" placeholder="Ví dụ: ChatGPT Pro">
+        <div class="settings-section">
+          <div class="settings-title">🎯 Quản Lý Prompt</div>
+          <button class="btn btn-gold" onclick="openPromptManagement()">Thêm / Chỉnh sửa prompt</button>
         </div>
-        <div class="form-group">
-          <label class="form-label">Link / Text *</label>
-          <input type="text" id="fLink" placeholder="https://... hoặc paste text">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Mô Tả</label>
-        <textarea id="fDesc" placeholder="Mô tả chi tiết..."></textarea>
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">Thể Loại (Genre)</label>
-        <div class="genre-dropdown-group">
-          <select id="fGenreSelect" class="genre-dropdown" onchange="addGenreFromDropdown()">
-            <option value="">-- Chọn thể loại --</option>
-          </select>
-        </div>
-        <div class="tags-preview" id="fGenrePrev"></div>
-      </div>
 
-      <div class="form-group">
-        <label class="form-label">Tags</label>
-        <div class="tags-input-wrap">
-          <input type="text" id="fTagInput" placeholder="Tag1, Tag2..." onkeydown="handleTagKey(event,'tag')">
-          <button class="btn btn-sm" onclick="addTag('tag')">＋</button>
+        <div class="logout-btn-container">
+          <button class="logout-btn" onclick="logoutAdmin()">🚪 Đăng Xuất</button>
         </div>
-        <div class="tags-preview" id="fTagPrev"></div>
-      </div>
-
-      <div class="category-selection">
-        <div class="category-selection-title">🎯 Lựa chọn Khu vực</div>
-        <div class="category-checkboxes">
-          <div class="category-checkbox">
-            <input type="checkbox" id="fCategoryHospital" checked>
-            <label for="fCategoryHospital">📋 Bệnh Viện</label>
-          </div>
-          <div class="category-checkbox">
-            <input type="checkbox" id="fCategoryRehab">
-            <label for="fCategoryRehab">🔺 Chương trình cai nghiện</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="pw-section">
-        <label class="pw-toggle">
-          <input type="checkbox" id="fPwEnabled" onchange="togglePwFields()">
-          <span>🔐 Bảo vệ bằng mật khẩu</span>
-        </label>
-        <div class="pw-fields hidden" id="pwFields">
-          <div class="form-group" style="margin:0">
-            <label class="form-label">Mật Khẩu</label>
-            <input type="text" id="fPassword" placeholder="Nhập mật khẩu...">
-          </div>
-          <div class="form-group" style="margin:0">
-            <label class="form-label">Gợi Ý (Hint)</label>
-            <input type="text" id="fHint" placeholder="Ví dụ: Tên con mèo 🐱">
-          </div>
-          <div class="security-note">✓ Mật khẩu được mã hóa AES-256. An toàn 100%!</div>
-        </div>
-      </div>
-
-      <div style="display: flex; gap: 12px; margin-top: 24px;">
-        <button class="btn" onclick="clearForm()" style="flex:1">🗑 Xóa</button>
-        <button class="btn btn-gold" onclick="savePrompt()" style="flex:1">💾 Lưu Bệnh Án</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="modal-bg hidden" id="settingsModal">
+<!-- GENRE MANAGEMENT MODAL -->
+<div id="genreModal" class="modal-bg hidden">
   <div class="modal modal-lg">
     <div class="modal-header">
-      <span class="modal-title">⚙ Cài Đặt Admin</span>
-      <button class="close-btn" onclick="closeSettingsModal()">✕</button>
+      <h2 class="modal-title">📝 Quản Lý Thể Loại</h2>
+      <button class="close-btn" onclick="closeGenreManagement()">✕</button>
     </div>
     <div class="modal-body">
-      <div class="tabs-container">
-        <button class="tab-btn active" onclick="switchTab('social')">🔗 Liên Kết Xã Hội</button>
-        <button class="tab-btn" onclick="switchTab('other')">📋 Khác</button>
+      <div class="genre-management">
+        <div class="genre-section-title">Danh sách thể loại hiện tại</div>
+        <div class="genre-list" id="genreList"></div>
+        <div class="genre-input-group" style="margin-top: 14px;">
+          <div class="genre-icon-input-group">
+            <input type="text" id="newGenreIcon" placeholder="Icon (emoji)" maxlength="2" value="">
+            <input type="text" id="newGenreName" placeholder="Tên thể loại">
+          </div>
+        </div>
+        <button class="btn btn-gold" style="width: 100%; margin-top: 12px;" onclick="addGenre()">+ Thêm thể loại</button>
       </div>
+    </div>
+  </div>
+</div>
 
-      <div id="social" class="tab-content active">
-        <div class="settings-section">
-          <div class="genre-section-title">🔗 Quản Lý Liên Kết Xã Hội</div>
-          
-          <div class="form-group">
-            <label class="form-label">💬 Link Discord</label>
-            <input type="text" id="discordLink" placeholder="https://discord.gg/...">
-            <div class="form-hint">Nhập URL của server Discord hoặc invite link</div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">f Link Facebook</label>
-            <input type="text" id="facebookLink" placeholder="https://facebook.com/...">
-            <div class="form-hint">Nhập URL trang Facebook của bạn</div>
-          </div>
-
-          <button class="btn btn-gold" onclick="saveSettings()" style="width:100%;margin-bottom:16px">💾 Lưu Cài Đặt</button>
-          
-          <div class="genre-section-title" style="margin-top:24px">🚪 Quản Lý Tài Khoản</div>
-          <button class="btn btn-danger" onclick="confirmLogout()" style="width:100%">🚪 Đăng Xuất Admin</button>
+<!-- PROMPT MANAGEMENT MODAL -->
+<div id="promptModal" class="modal-bg hidden">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <h2 class="modal-title">🎯 Quản Lý Prompt</h2>
+      <button class="close-btn" onclick="closePromptManagement()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Tên Prompt</label>
+        <input type="text" id="promptName" placeholder="Nhập tên prompt">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mô Tả</label>
+        <input type="text" id="promptDesc" placeholder="Nhập mô tả ngắn">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nội Dung Prompt</label>
+        <textarea id="promptContent" placeholder="Nhập nội dung prompt chi tiết"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Thể Loại</label>
+        <select id="promptCategory">
+          <option value="">-- Chọn thể loại --</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Thẻ Tag (cách nhau bằng dấu phẩy)</label>
+        <input type="text" id="promptTags" placeholder="Ví dụ: AI, Học tập, Sáng tạo">
+      </div>
+      <div class="category-selection">
+        <div class="category-selection-title">Độ Khó</div>
+        <div class="category-checkboxes">
+          <label class="category-checkbox">
+            <input type="radio" name="difficulty" value="easy"> Dễ
+          </label>
+          <label class="category-checkbox">
+            <input type="radio" name="difficulty" value="medium"> Trung Bình
+          </label>
+          <label class="category-checkbox">
+            <input type="radio" name="difficulty" value="hard"> Khó
+          </label>
         </div>
       </div>
-
-      <div id="other" class="tab-content">
-        <div class="settings-section">
-          <div class="coming-soon">🚀 Coming soon!</div>
+      <div class="pw-section">
+        <label class="pw-toggle">
+          <input type="checkbox" id="promptPassworded" onchange="togglePasswordField()"> 
+          <span>Bảo vệ bằng mật khẩu</span>
+        </label>
+        <div class="pw-fields hidden" id="pwFieldsPrompt">
+          <input type="password" id="promptPassword" placeholder="Nhập mật khẩu bảo vệ">
+          <div class="security-note">🔒 Mật khẩu sẽ được mã hóa</div>
         </div>
       </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closePromptManagement()">Hủy</button>
+      <button class="btn btn-gold" onclick="savePrompt()">Lưu Prompt</button>
+    </div>
+  </div>
+</div>
+
+<!-- UNLOCK PROMPT MODAL -->
+<div id="unlockModal" class="modal-bg hidden">
+  <div class="modal unlock-modal">
+    <div class="modal-header">
+      <h2 class="modal-title">🔐 Mở Khóa Prompt</h2>
+      <button class="close-btn" onclick="closeUnlockModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="lock-big">🔒</div>
+      <div class="hint-text">Prompt này được bảo vệ bằng mật khẩu</div>
+      <div class="form-group">
+        <label class="form-label">Nhập Mật Khẩu</label>
+        <div class="pw-input-wrap">
+          <input type="password" id="unlockPassword" placeholder="Mật khẩu">
+          <button class="pw-toggle-vis" onclick="toggleUnlockPasswordVisibility()">👁</button>
+        </div>
+        <div class="pw-error" id="unlockError">Mật khẩu không đúng</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeUnlockModal()">Hủy</button>
+      <button class="btn btn-gold" onclick="unlockPrompt()">Mở Khóa</button>
     </div>
   </div>
 </div>
 
 <script>
-  // Constants
-  const SESSION_EXPIRY_HOURS = 24;
-  const SESSION_EXPIRY_MS = SESSION_EXPIRY_HOURS * 60 * 60 * 1000;
+// ============ STATE MANAGEMENT ============
+let adminLoggedIn = false;
+let genres = [
+  { icon: '🧠', name: 'Tâm Lý Chung' },
+  { icon: '😰', name: 'Căng Thẳng' },
+  { icon: '😴', name: 'Giấc Ngủ' }
+];
+let prompts = [];
+let currentPrompt = null;
 
-  // Data management
-  let genresData = {};
-  let promptsData = {};
-  let currentGenre = null;
-  let currentCategory = 'hospital';
-  let admin = null;
-  let selectedGenres = [];
-  let selectedTags = [];
-  let selectedCategories = { hospital: true, rehab: false };
-  let settings = { discord: '', facebook: '' };
+// ============ ADMIN AUTHENTICATION ============
+function openAdminLoginModal() {
+  document.getElementById('adminLoginModal').classList.remove('hidden');
+}
 
-  // Initialize
-  function init() {
-    loadData();
-    checkSessionExpiry();
-    renderWelcome();
+function closeAdminLoginModal() {
+  document.getElementById('adminLoginModal').classList.add('hidden');
+  document.getElementById('adminUsername').value = '';
+  document.getElementById('adminPassword').value = '';
+}
+
+function toggleAdminPasswordVisibility() {
+  const input = document.getElementById('adminPassword');
+  const btn = event.target;
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁';
   }
+}
 
-  // Session management
-  function checkSessionExpiry() {
-    const adminData = localStorage.getItem('adminSession');
-    if (adminData) {
-      const { timestamp } = JSON.parse(adminData);
-      if (Date.now() - timestamp > SESSION_EXPIRY_MS) {
-        localStorage.removeItem('adminSession');
-        admin = null;
-      } else {
-        const stored = JSON.parse(localStorage.getItem('hospitalData') || '{}');
-        admin = stored.admin;
-      }
-    }
+function loginAdmin() {
+  const username = document.getElementById('adminUsername').value;
+  const password = document.getElementById('adminPassword').value;
+  
+  // Simple validation (in production, use real authentication)
+  if (username === 'admin' && password === 'admin123') {
+    adminLoggedIn = true;
+    alert('✅ Đăng nhập thành công!');
+    closeAdminLoginModal();
+    showMainApp();
+  } else {
+    alert('❌ Tài khoản hoặc mật khẩu không đúng!');
   }
+}
 
-  function saveAdminSession() {
-    localStorage.setItem('adminSession', JSON.stringify({ timestamp: Date.now() }));
-  }
+function logoutAdmin() {
+  adminLoggedIn = false;
+  document.getElementById('settingsModal').classList.add('hidden');
+  document.getElementById('welcomeContainer').classList.remove('hidden');
+  document.getElementById('app').classList.add('hidden');
+}
 
-  function confirmLogout() {
-    if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
-      logoutAdmin();
-    }
-  }
+// ============ UI CONTROL ============
+function showMainApp() {
+  document.getElementById('welcomeContainer').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  document.getElementById('settingsBtn').style.display = adminLoggedIn ? 'inline-flex' : 'none';
+  goToCategory('general');
+}
 
-  function logoutAdmin() {
-    admin = null;
-    localStorage.removeItem('adminSession');
-    document.getElementById('adminStatusInfo').style.display = 'none';
-    document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('show'));
-    showToast('✓ Đã đăng xuất!', 'success');
-    closeSettingsModal();
-    closeAdminPanel();
-  }
-
-  // Welcome page
-  function selectCategory(category) {
-    currentCategory = category;
-    document.getElementById('welcomePage').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    renderMainView();
-  }
-
-  function showAdminLoginFromWelcome() {
-    showAdminLoginModal();
-  }
-
-  function openSocialLink(platform) {
-    const link = platform === 'discord' ? settings.discord : settings.facebook;
-    if (link) {
-      window.open(link, '_blank');
-    } else {
-      showToast(`❌ Link ${platform} chưa được cài đặt`, 'error');
-    }
-  }
-
-  // Category switching
-  function switchCategory(category) {
-    currentCategory = category;
-    document.querySelectorAll('.category-tab').forEach(tab => {
-      tab.classList.toggle('active', tab.dataset.category === category);
-    });
-    renderMainView();
-  }
-
-  // Load and Save Data
-  function loadData() {
-    const stored = localStorage.getItem('hospitalData');
-    if (stored) {
-      const data = JSON.parse(stored);
-      genresData = data.genres || {};
-      promptsData = data.prompts || {};
-      admin = data.admin || null;
-      settings = data.settings || { discord: '', facebook: '' };
-    } else {
-      initDefaultData();
-    }
-    updateCategoryTabs();
-    updateWelcomeSocialButtons();
-  }
-
-  function saveData() {
-    localStorage.setItem('hospitalData', JSON.stringify({
-      genres: genresData,
-      prompts: promptsData,
-      admin: admin,
-      settings: settings
-    }));
-  }
-
-  function initDefaultData() {
-    genresData = {
-      'reception': { icon: '🏥', name: 'Tường tiếp đón', category: 'hospital' },
-      'cardio': { icon: '❤️', name: 'Phòng tim mạch', category: 'hospital' },
-      'ortho': { icon: '🦴', name: 'Phòng chỉnh hình', category: 'hospital' },
-      'neuro': { icon: '🧠', name: 'Phòng thần kinh', category: 'hospital' },
-      'program1': { icon: '📚', name: 'Chương trình 1', category: 'rehab' },
-      'program2': { icon: '🎯', name: 'Chương trình 2', category: 'rehab' }
-    };
-    promptsData = {};
-    settings = { discord: '', facebook: '' };
-    saveData();
-  }
-
-  function updateWelcomeSocialButtons() {
-    const discordBtn = document.querySelector('.social-discord');
-    const facebookBtn = document.querySelector('.social-facebook');
-    
-    if (discordBtn && settings.discord) {
-      discordBtn.onclick = () => window.open(settings.discord, '_blank');
-    }
-    if (facebookBtn && settings.facebook) {
-      facebookBtn.onclick = () => window.open(settings.facebook, '_blank');
-    }
-  }
-
-  // Render functions
-  function renderWelcome() {
-    document.getElementById('welcomePage').style.display = 'flex';
-    document.getElementById('app').style.display = 'none';
-  }
-
-  function updateCategoryTabs() {
-    const tabs = document.getElementById('categoryTabs');
-    if (tabs) {
-      const hospitalCount = Object.values(genresData).filter(g => g.category === 'hospital').length;
-      const rehabCount = Object.values(genresData).filter(g => g.category === 'rehab').length;
-      
-      tabs.innerHTML = `
-        <button class="category-tab active" onclick="switchCategory('hospital')" data-category="hospital">
-          📋 Bệnh Viện (${hospitalCount})
-        </button>
-        <button class="category-tab" onclick="switchCategory('rehab')" data-category="rehab">
-          🔺 Chương trình cai nghiện (${rehabCount})
-        </button>
-      `;
-      const firstTab = tabs.querySelector('.category-tab');
-      if (firstTab) firstTab.classList.add('active');
-    }
-  }
-
-  function renderMainView() {
-    const genreGrid = document.getElementById('genreGrid');
-    const filteredGenres = Object.entries(genresData).filter(([_, g]) => g.category === currentCategory);
-    
-    document.getElementById('categoryTitle').textContent = 
-      currentCategory === 'hospital' ? '🏥 SƠ ĐỒ PHÒNG BAN VIỆN TÂM THẦN' : '🔺 CHƯƠNG TRÌNH CẠI NGHIỆN';
-
-    genreGrid.innerHTML = filteredGenres.map(([id, genre]) => `
-      <div class="genre-card" onclick="selectGenre('${id}', '${genre.name}')">
-        <div class="genre-icon">${genre.icon}</div>
-        <div class="genre-name">${genre.name}</div>
-        <div class="genre-count">${Object.values(promptsData).filter(p => p.genre === id && p.categories.includes(currentCategory)).length} items</div>
+function goToCategory(category) {
+  const content = document.getElementById('mainContent');
+  content.innerHTML = `
+    <div class="search-bar-section">
+      <div class="search-wrap">
+        <span class="icon">🔍</span>
+        <input type="text" placeholder="🔎 Tìm kiếm bệnh án nhân vật..." id="searchInput" onkeyup="filterPrompts()">
       </div>
-    `).join('');
+    </div>
+    <div class="prompts-grid" id="promptsGrid"></div>
+  `;
+  renderPrompts();
+}
 
-    document.getElementById('countBadge').textContent = filteredGenres.length;
-  }
-
-  function selectGenre(genreId, genreName) {
-    currentGenre = genreId;
-    document.getElementById('mainView').style.display = 'none';
-    document.getElementById('detailView').style.display = 'block';
-    document.getElementById('detailTitle').textContent = genresData[genreId].icon + ' ' + genreName;
-    renderDetailView();
-  }
-
-  function backToGenreView() {
-    currentGenre = null;
-    document.getElementById('mainView').style.display = 'block';
-    document.getElementById('detailView').style.display = 'none';
-  }
-
-  function renderDetailView() {
-    const searchText = (document.getElementById('searchInput')?.value || '').toLowerCase();
-    const prompts = Object.entries(promptsData)
-      .filter(([_, p]) => {
-        const matchGenre = p.genre === currentGenre;
-        const matchSearch = p.name.toLowerCase().includes(searchText) || p.desc.toLowerCase().includes(searchText);
-        const matchCategory = p.categories.includes(currentCategory);
-        return matchGenre && matchSearch && matchCategory;
-      })
-      .map(([id, p]) => ({ id, ...p }));
-
-    const sortBy = document.getElementById('sortSelect')?.value || 'newest';
-    prompts.sort((a, b) => {
-      if (sortBy === 'newest') return (b.created || 0) - (a.created || 0);
-      if (sortBy === 'oldest') return (a.created || 0) - (b.created || 0);
-      return a.name.localeCompare(b.name);
-    });
-
-    const promptsGrid = document.getElementById('promptsGrid');
-    promptsGrid.innerHTML = prompts.length ? prompts.map(p => `
-      <div class="prompt-card" onclick="viewPrompt('${p.id}')">
-        <div class="card-top">
-          <div class="card-name">${p.name}</div>
-          ${p.password ? '<div class="lock-status">🔐 KHÓA</div>' : ''}
-        </div>
-        <div class="card-desc">${p.desc}</div>
-        <div class="card-tags">
-          <span class="tag-pill genre">${p.genre}</span>
-          ${p.tags.map(t => `<span class="tag-pill tag">${t}</span>`).join('')}
-        </div>
-      </div>
-    `).join('') : '<div class="empty-state"><div class="empty-icon">📭</div><h3>Không có items</h3></div>';
-
-    document.getElementById('detailCountBadge').textContent = prompts.length;
-  }
-
-  function viewPrompt(promptId) {
-    const prompt = promptsData[promptId];
-    if (!prompt) return;
-
-    if (prompt.password) {
-      showUnlockModal(promptId);
-    } else {
-      openPromptLink(prompt);
-    }
-  }
-
-  function openPromptLink(prompt) {
-    if (prompt.link.startsWith('http')) {
-      window.open(prompt.link, '_blank');
-    } else {
-      showPromptTextModal(prompt);
-    }
-  }
-
-  function showUnlockModal(promptId) {
-    const prompt = promptsData[promptId];
-    const modal = document.createElement('div');
-    modal.className = 'modal-bg';
-    modal.innerHTML = `
-      <div class="modal unlock-modal">
-        <div class="modal-header">
-          <span class="modal-title">🔐 Nhập Mật Khẩu</span>
-          <button class="close-btn" onclick="this.closest('.modal-bg').remove()">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="lock-big">🔒</div>
-          <div class="hint-text">${prompt.hint}</div>
-          <div class="form-group">
-            <label class="form-label">Mật Khẩu</label>
-            <div class="pw-input-wrap">
-              <input type="password" id="unlockPw" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPassword('${promptId}')">
-              <button class="pw-toggle-vis" onclick="togglePwVis('unlockPw', this)">👁</button>
-            </div>
-            <div class="pw-error" id="pwError"></div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn" onclick="this.closest('.modal-bg').remove()">Hủy</button>
-          <button class="btn btn-gold" onclick="checkPassword('${promptId}')">Mở Khóa</button>
-        </div>
+function renderPrompts() {
+  const grid = document.getElementById('promptsGrid');
+  if (prompts.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column: 1/-1; padding: 60px 20px;">
+        <div class="empty-icon">📭</div>
+        <h3>Chưa có Prompt nào</h3>
+        <p>Admin sẽ thêm các prompt mới sớm thôi!</p>
       </div>
     `;
-    document.body.appendChild(modal);
-    modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+    return;
   }
 
-  function checkPassword(promptId) {
-    const inputPw = document.getElementById('unlockPw').value;
-    const prompt = promptsData[promptId];
-    
-    if (CryptoJS.SHA256(inputPw).toString() === prompt.password) {
-      document.querySelector('.modal-bg').remove();
-      showToast('✓ Đúng mật khẩu!', 'success');
-      openPromptLink(prompt);
-    } else {
-      document.getElementById('pwError').classList.add('show');
-      document.getElementById('pwError').textContent = '❌ Mật khẩu sai!';
-    }
-  }
-
-  function showPromptTextModal(prompt) {
-    const modal = document.createElement('div');
-    modal.className = 'modal-bg';
-    modal.innerHTML = `
-      <div class="modal">
-        <div class="modal-header">
-          <span class="modal-title">${prompt.name}</span>
-          <button class="close-btn" onclick="this.closest('.modal-bg').remove()">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="prompt-text-display">${prompt.link}</div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-gold" onclick="navigator.clipboard.writeText(\`${prompt.link}\`); showToast('✓ Đã sao chép!', 'success')">📋 Sao Chép</button>
-        </div>
+  grid.innerHTML = prompts.map(prompt => `
+    <div class="prompt-card" onclick="viewPrompt(${prompts.indexOf(prompt)})">
+      <div class="card-top">
+        <div class="card-name">${prompt.name}</div>
+        ${prompt.password ? '<div class="lock-status">🔒 LOCKED</div>' : ''}
       </div>
-    `;
-    document.body.appendChild(modal);
-    modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
-  }
-
-  // Admin functions
-  function showAdminLoginModal() {
-    document.getElementById('adminLoginModal').classList.remove('hidden');
-  }
-
-  function closeAdminLoginModal() {
-    document.getElementById('adminLoginModal').classList.add('hidden');
-    document.getElementById('adminEmailInput').value = '';
-    document.getElementById('adminPasswordInput').value = '';
-    document.getElementById('adminLoginError').textContent = '';
-  }
-
-  function loginAdmin() {
-    const email = document.getElementById('adminEmailInput').value;
-    const password = document.getElementById('adminPasswordInput').value;
-    const errorDiv = document.getElementById('adminLoginError');
-
-    if (!email || !password) {
-      errorDiv.classList.add('show');
-      errorDiv.textContent = '❌ Vui lòng nhập email và mật khẩu!';
-      return;
-    }
-
-    if (!admin) {
-      admin = { email, password: CryptoJS.SHA256(password).toString() };
-      saveData();
-      saveAdminSession();
-      errorDiv.classList.remove('show');
-      closeAdminLoginModal();
-      updateAdminUI();
-      showToast('✓ Đã tạo tài khoản Admin!', 'success');
-    } else {
-      if (admin.email === email && admin.password === CryptoJS.SHA256(password).toString()) {
-        errorDiv.classList.remove('show');
-        saveAdminSession();
-        closeAdminLoginModal();
-        updateAdminUI();
-        showToast('✓ Đăng nhập thành công!', 'success');
-      } else {
-        errorDiv.classList.add('show');
-        errorDiv.textContent = '❌ Email hoặc mật khẩu sai!';
-      }
-    }
-  }
-
-  function updateAdminUI() {
-    document.getElementById('adminStatusInfo').style.display = 'flex';
-    document.getElementById('adminEmail').textContent = admin.email;
-    document.querySelectorAll('.admin-only').forEach(el => el.classList.add('show'));
-  }
-
-  function toggleAdminPanel() {
-    if (!admin) {
-      showAdminLoginModal();
-      return;
-    }
-    document.getElementById('adminPanelModal').classList.remove('hidden');
-    renderAdminPanel();
-  }
-
-  function closeAdminPanel() {
-    document.getElementById('adminPanelModal').classList.add('hidden');
-    clearForm();
-  }
-
-  function showAdminSettings() {
-    document.getElementById('settingsModal').classList.remove('hidden');
-    document.getElementById('discordLink').value = settings.discord;
-    document.getElementById('facebookLink').value = settings.facebook;
-  }
-
-  function closeSettingsModal() {
-    document.getElementById('settingsModal').classList.add('hidden');
-  }
-
-  function switchTab(tabName) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    
-    document.getElementById(tabName).classList.add('active');
-    event.target.classList.add('active');
-  }
-
-  function saveSettings() {
-    settings.discord = document.getElementById('discordLink').value;
-    settings.facebook = document.getElementById('facebookLink').value;
-    saveData();
-    updateWelcomeSocialButtons();
-    showToast('✓ Đã lưu cài đặt!', 'success');
-  }
-
-  function renderAdminPanel() {
-    renderGenreList();
-    renderGenreSelect();
-    clearForm();
-  }
-
-  function renderGenreList() {
-    const list = document.getElementById('genreListAdmin');
-    list.innerHTML = Object.entries(genresData).map(([id, g]) => `
-      <div class="genre-item">
-        <span>${g.icon} ${g.name}</span>
-        <span class="remove" onclick="removeGenre('${id}')">✕</span>
+      <div class="card-desc">${prompt.description}</div>
+      <div class="card-tags">
+        <span class="tag-pill genre">${prompt.category}</span>
+        ${prompt.tags.split(',').map(tag => `<span class="tag-pill tag">${tag.trim()}</span>`).join('')}
       </div>
-    `).join('');
+    </div>
+  `).join('');
+}
+
+function filterPrompts() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const cards = document.querySelectorAll('.prompt-card');
+  cards.forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.style.display = text.includes(search) ? 'block' : 'none';
+  });
+}
+
+// ============ SETTINGS MANAGEMENT ============
+function openSettings() {
+  if (!adminLoggedIn) {
+    alert('❌ Bạn cần đăng nhập với tài khoản Admin!');
+    return;
+  }
+  document.getElementById('settingsModal').classList.remove('hidden');
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.add('hidden');
+}
+
+// ============ GENRE MANAGEMENT ============
+function openGenreManagement() {
+  document.getElementById('genreModal').classList.remove('hidden');
+  renderGenres();
+}
+
+function closeGenreManagement() {
+  document.getElementById('genreModal').classList.add('hidden');
+}
+
+function renderGenres() {
+  const list = document.getElementById('genreList');
+  list.innerHTML = genres.map((genre, idx) => `
+    <div class="genre-item">
+      <span>${genre.icon} ${genre.name}</span>
+      <span class="remove" onclick="removeGenre(${idx})">✕</span>
+    </div>
+  `).join('');
+}
+
+function addGenre() {
+  const icon = document.getElementById('newGenreIcon').value.trim();
+  const name = document.getElementById('newGenreName').value.trim();
+  
+  if (!icon || !name) {
+    alert('⚠️ Vui lòng nhập đầy đủ icon và tên thể loại!');
+    return;
+  }
+  
+  genres.push({ icon, name });
+  document.getElementById('newGenreIcon').value = '';
+  document.getElementById('newGenreName').value = '';
+  renderGenres();
+  alert('✅ Thêm thể loại thành công!');
+}
+
+function removeGenre(idx) {
+  genres.splice(idx, 1);
+  renderGenres();
+}
+
+// ============ PROMPT MANAGEMENT ============
+function openPromptManagement() {
+  document.getElementById('promptModal').classList.remove('hidden');
+  updateCategorySelect();
+  document.getElementById('promptName').value = '';
+  document.getElementById('promptDesc').value = '';
+  document.getElementById('promptContent').value = '';
+  document.getElementById('promptTags').value = '';
+  document.getElementById('promptPassword').value = '';
+  document.getElementById('promptPassworded').checked = false;
+  document.getElementById('pwFieldsPrompt').classList.add('hidden');
+}
+
+function closePromptManagement() {
+  document.getElementById('promptModal').classList.add('hidden');
+}
+
+function updateCategorySelect() {
+  const select = document.getElementById('promptCategory');
+  select.innerHTML = '<option value="">-- Chọn thể loại --</option>' + 
+    genres.map(g => `<option value="${g.name}">${g.icon} ${g.name}</option>`).join('');
+}
+
+function togglePasswordField() {
+  const checked = document.getElementById('promptPassworded').checked;
+  document.getElementById('pwFieldsPrompt').classList.toggle('hidden', !checked);
+}
+
+function savePrompt() {
+  const name = document.getElementById('promptName').value.trim();
+  const description = document.getElementById('promptDesc').value.trim();
+  const content = document.getElementById('promptContent').value.trim();
+  const category = document.getElementById('promptCategory').value;
+  const tags = document.getElementById('promptTags').value.trim();
+  const passworded = document.getElementById('promptPassworded').checked;
+  const password = document.getElementById('promptPassword').value;
+
+  if (!name || !description || !content || !category) {
+    alert('⚠️ Vui lòng điền tất cả thông tin bắt buộc!');
+    return;
   }
 
-  function renderGenreSelect() {
-    const select = document.getElementById('fGenreSelect');
-    select.innerHTML = '<option value="">-- Chọn thể loại --</option>' +
-      Object.entries(genresData).map(([id, g]) => `<option value="${id}">${g.icon} ${g.name}</option>`).join('');
-  }
-
-  function addGenre() {
-    const icon = document.getElementById('newGenreIcon').value || '📌';
-    const name = document.getElementById('newGenreInput').value.trim();
-    
-    if (!name) {
-      showToast('❌ Vui lòng nhập tên thể loại!', 'error');
+  let encryptedPassword = null;
+  if (passworded) {
+    if (!password) {
+      alert('⚠️ Vui lòng nhập mật khẩu bảo vệ!');
       return;
     }
-
-    const id = name.toLowerCase().replace(/\s+/g, '_');
-    genresData[id] = { icon, name, category: currentCategory };
-    saveData();
-    
-    document.getElementById('newGenreIcon').value = '';
-    document.getElementById('newGenreInput').value = '';
-    renderGenreList();
-    renderGenreSelect();
-    renderMainView();
-    updateCategoryTabs();
-    showToast('✓ Đã thêm thể loại!', 'success');
+    encryptedPassword = CryptoJS.SHA256(password).toString();
   }
 
-  function removeGenre(genreId) {
-    if (confirm('Bạn chắc chắn muốn xóa thể loại này?')) {
-      Object.keys(promptsData).forEach(pid => {
-        if (promptsData[pid].genre === genreId) delete promptsData[pid];
-      });
-      delete genresData[genreId];
-      saveData();
-      renderGenreList();
-      renderGenreSelect();
-      renderMainView();
-      updateCategoryTabs();
-      showToast('✓ Đã xóa thể loại!', 'success');
-    }
+  prompts.push({
+    name,
+    description,
+    content,
+    category,
+    tags: tags || 'General',
+    password: encryptedPassword,
+    difficulty: document.querySelector('input[name="difficulty"]:checked')?.value || 'medium'
+  });
+
+  alert('✅ Lưu prompt thành công!');
+  closePromptManagement();
+  renderPrompts();
+}
+
+// ============ PROMPT VIEWING ============
+function viewPrompt(idx) {
+  currentPrompt = prompts[idx];
+  
+  if (currentPrompt.password) {
+    document.getElementById('unlockModal').classList.remove('hidden');
+  } else {
+    showPromptContent();
   }
+}
 
-  function addGenreFromDropdown() {
-    const select = document.getElementById('fGenreSelect');
-    const genreId = select.value;
-    if (genreId && !selectedGenres.includes(genreId)) {
-      selectedGenres.push(genreId);
-      renderGenrePreview();
-    }
-    select.value = '';
+function unlockPrompt() {
+  const password = document.getElementById('unlockPassword').value;
+  const hash = CryptoJS.SHA256(password).toString();
+  
+  if (hash === currentPrompt.password) {
+    document.getElementById('unlockModal').classList.add('hidden');
+    document.getElementById('unlockPassword').value = '';
+    document.getElementById('unlockError').classList.remove('show');
+    showPromptContent();
+  } else {
+    document.getElementById('unlockError').classList.add('show');
   }
+}
 
-  function removeGenreFromForm(genreId) {
-    selectedGenres = selectedGenres.filter(g => g !== genreId);
-    renderGenrePreview();
+function toggleUnlockPasswordVisibility() {
+  const input = document.getElementById('unlockPassword');
+  const btn = event.target;
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁';
   }
+}
 
-  function renderGenrePreview() {
-    const preview = document.getElementById('fGenrePrev');
-    preview.innerHTML = selectedGenres.map(gid => `
-      <div class="tag-removable genre">
-        <span>${genresData[gid].icon} ${genresData[gid].name}</span>
-        <span class="rm" onclick="removeGenreFromForm('${gid}')">✕</span>
-      </div>
-    `).join('');
-  }
+function closeUnlockModal() {
+  document.getElementById('unlockModal').classList.add('hidden');
+  document.getElementById('unlockPassword').value = '';
+  document.getElementById('unlockError').classList.remove('show');
+}
 
-  function addTag(type) {
-    const input = document.getElementById('fTagInput');
-    const tags = input.value.split(',').map(t => t.trim()).filter(t => t);
-    selectedTags = [...new Set([...selectedTags, ...tags])];
-    input.value = '';
-    renderTagPreview();
-  }
+function showPromptContent() {
+  alert(`📖 ${currentPrompt.name}\n\n${currentPrompt.content}`);
+}
 
-  function removeTag(tag) {
-    selectedTags = selectedTags.filter(t => t !== tag);
-    renderTagPreview();
-  }
-
-  function renderTagPreview() {
-    const preview = document.getElementById('fTagPrev');
-    preview.innerHTML = selectedTags.map(tag => `
-      <div class="tag-removable tag">
-        <span>${tag}</span>
-        <span class="rm" onclick="removeTag('${tag}')">✕</span>
-      </div>
-    `).join('');
-  }
-
-  function handleTagKey(e, type) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addTag(type);
-    }
-  }
-
-  function togglePwFields() {
-    const checked = document.getElementById('fPwEnabled').checked;
-    document.getElementById('pwFields').classList.toggle('hidden', !checked);
-  }
-
-  function savePrompt() {
-    const name = document.getElementById('fName').value.trim();
-    const link = document.getElementById('fLink').value.trim();
-    
-    if (!name || !link) {
-      showToast('❌ Vui lòng nhập tên và link/text!', 'error');
-      return;
-    }
-
-    if (selectedGenres.length === 0) {
-      showToast('❌ Vui lòng chọn ít nhất một thể loại!', 'error');
-      return;
-    }
-
-    const categories = [];
-    if (document.getElementById('fCategoryHospital').checked) categories.push('hospital');
-    if (document.getElementById('fCategoryRehab').checked) categories.push('rehab');
-    
-    if (categories.length === 0) {
-      showToast('❌ Vui lòng chọn ít nhất một khu vực!', 'error');
-      return;
-    }
-
-    const pwEnabled = document.getElementById('fPwEnabled').checked;
-    const id = Date.now().toString();
-
-    promptsData[id] = {
-      name,
-      link,
-      desc: document.getElementById('fDesc').value,
-      genre: selectedGenres[0],
-      tags: selectedTags,
-      password: pwEnabled ? CryptoJS.SHA256(document.getElementById('fPassword').value).toString() : null,
-      hint: pwEnabled ? document.getElementById('fHint').value : null,
-      categories: categories,
-      created: Date.now()
-    };
-
-    saveData();
-    clearForm();
-    showToast('✓ Đã lưu bệnh án!', 'success');
-  }
-
-  function clearForm() {
-    document.getElementById('fName').value = '';
-    document.getElementById('fLink').value = '';
-    document.getElementById('fDesc').value = '';
-    document.getElementById('fPwEnabled').checked = false;
-    document.getElementById('fPassword').value = '';
-    document.getElementById('fHint').value = '';
-    document.getElementById('fCategoryHospital').checked = true;
-    document.getElementById('fCategoryRehab').checked = false;
-    selectedGenres = [];
-    selectedTags = [];
-    renderGenrePreview();
-    renderTagPreview();
-    togglePwFields();
-  }
-
-  function handleGlobalSearch() {
-    // Implement global search if needed
-  }
-
-  function togglePwVis(inputId, btn) {
-    const input = document.getElementById(inputId);
-    if (input.type === 'password') {
-      input.type = 'text';
-      btn.textContent = '🙈';
-    } else {
-      input.type = 'password';
-      btn.textContent = '👁';
-    }
-  }
-
-  function showToast(message, type = 'info') {
-    const toast = document.createElement('div');
-    toast.className = `toast ${type}`;
-    toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : '❌'}</span><span>${message}</span>`;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.classList.add('fade-out');
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
-  }
-
-  // Initialize on load
-  window.addEventListener('load', init);
+function goBack() {
+  document.getElementById('welcomeContainer').classList.remove('hidden');
+  document.getElementById('app').classList.add('hidden');
+  adminLoggedIn = false;
+}
 </script>
+
 </body>
 </html>
