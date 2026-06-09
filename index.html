@@ -261,7 +261,7 @@
   .card-action-btn:hover { background: var(--bg3); }
 
   /* MODALS */
-  .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.2); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 5000; opacity: 0; pointer-events: none; transition: var(--transition); }
+  .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.2); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition); }
   .modal.show { opacity: 1; pointer-events: auto; }
   .modal-content { background: var(--card); border-radius: var(--radius); padding: 30px; width: 100%; max-width: 520px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); position: relative; transform: scale(0.95); }
   .modal.show .modal-content { transform: scale(1); }
@@ -381,6 +381,62 @@
     max-width: 400px;
   }
 
+  /* CUSTOM ICON INPUT */
+  .custom-icon-input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  .custom-icon-input-group input {
+    flex: 1;
+  }
+  .icon-preview {
+    font-size: 2rem;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  /* DIAGNOSIS RECORDS LIST */
+  .diagnosis-records-list {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg2);
+  }
+  .diagnosis-record-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border);
+    background: white;
+  }
+  .diagnosis-record-item:last-child {
+    border-bottom: none;
+  }
+  .diagnosis-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+  }
+  .diagnosis-remove-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: var(--transition);
+  }
+  .diagnosis-remove-btn:hover {
+    background: #d91e48;
+  }
+
   /* SCROLLBAR STYLES */
   .icon-picker-grid::-webkit-scrollbar {
     width: 6px;
@@ -394,6 +450,21 @@
     border-radius: 3px;
   }
   .icon-picker-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--border);
+  }
+
+  .diagnosis-records-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  .diagnosis-records-list::-webkit-scrollbar-track {
+    background: var(--bg2);
+    border-radius: 3px;
+  }
+  .diagnosis-records-list::-webkit-scrollbar-thumb {
+    background: var(--border2);
+    border-radius: 3px;
+  }
+  .diagnosis-records-list::-webkit-scrollbar-thumb:hover {
     background: var(--border);
   }
 </style>
@@ -444,16 +515,16 @@
 
       <div class="user-actions">
         <span id="adminBadge" style="display:none; background: #fef3c7; color: #d97706; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-right: 5px;">👑 ADMIN</span>
-        <button class="btn btn-outline" id="configLinksBtn" style="display:none; margin-right:5px; background:#f3e8ff; border-color:#c084fc; color:#6d28d9;" onclick="openModal('linksConfigModal')">⚙️ Cài đặt</button>
+        <button class="btn btn-outline" id="configLinksBtn" style="display:none; margin-right:5px; background:#f3e8ff; border-color:#c084fc; color:#6d28d9;" onclick="openModal('settingsModal')">⚙️ Cài đặt</button>
         <button class="btn btn-primary" id="adminPanelBtn" style="display:none;" onclick="openPromptModal()">+ Thêm Prompt</button>
-        <button class="btn btn-outline" id="logoutBtn" style="display:none;" onclick="logout()">Đăng xuất</button>
+        <button class="btn btn-outline" id="logoutBtn" style="display:none;" onclick="confirmLogout()">Đăng xuất</button>
         <button class="btn btn-key" id="loginBtn" onclick="openModal('loginModal')">🔑 Admin</button>
       </div>
     </header>
 
     <div class="main-layout">
       <div class="sidebar">
-        <h2>🏷️ Danh Mục</h2>
+        <h2 id="sidebarTitle">🏷️ Danh Mục - Khu Bệnh Viện</h2>
         <div class="genre-list" id="genreList">
           <div class="genre-item active" onclick="filterByGenre('')">Tất Cả</div>
         </div>
@@ -506,15 +577,6 @@
       <div class="hint-box">💡 Tạo một prompt chi tiết với icon, thẻ tag, và tùy chọn mật khẩu.</div>
       
       <div class="form-group">
-        <label>Chọn Icon *</label>
-        <div class="icon-picker-grid" id="iconPicker">
-          <!-- Icons sẽ được render ở đây -->
-        </div>
-        <div style="margin-top: 8px; font-size: 1.2rem;" id="selectedIconDisplay">📝</div>
-        <div class="error-msg" id="iconError"></div>
-      </div>
-
-      <div class="form-group">
         <label>Khu Vực *</label>
         <div class="radio-group-zone">
           <label class="radio-label">
@@ -533,9 +595,21 @@
       </div>
 
       <div class="form-group">
-        <label>Thể Loại / Danh Mục *</label>
-        <input type="text" id="promptGenre" placeholder="Tạo hoặc chọn thể loại...">
+        <label>Chọn / Tạo Bệnh Án *</label>
+        <select id="promptGenre" onchange="handleGenreSelect()">
+          <option value="">-- Chọn bệnh án --</option>
+        </select>
+        <input type="text" id="customGenreInput" placeholder="Hoặc nhập tên bệnh án mới..." style="margin-top: 8px; display: none;">
         <div class="error-msg" id="genreError"></div>
+      </div>
+
+      <div class="form-group">
+        <label>Chọn Icon cho Prompt *</label>
+        <div class="custom-icon-input-group">
+          <input type="text" id="customIconInput" placeholder="Nhập emoji hoặc icon (VD: 🏥, 💊, 🧠)..." maxlength="2">
+          <div class="icon-preview" id="iconPreview">📝</div>
+        </div>
+        <div class="error-msg" id="iconError"></div>
       </div>
 
       <div class="form-group">
@@ -583,27 +657,63 @@
     </div>
   </div>
 
-  <!-- LINKS CONFIG MODAL -->
-  <div class="modal" id="linksConfigModal">
+  <!-- SETTINGS MODAL -->
+  <div class="modal" id="settingsModal">
     <div class="modal-content">
       <div class="modal-header">
-        <span>🔗 Cài Đặt Liên Kết Xã Hội</span>
-        <span class="close-modal" onclick="closeModal('linksConfigModal')">✕</span>
+        <span>⚙️ Cài Đặt</span>
+        <span class="close-modal" onclick="closeModal('settingsModal')">✕</span>
       </div>
-      <div class="admin-panel-hint">⚙️ Cập nhật liên kết Discord và Facebook để hiển thị ở trang chủ.</div>
-      <div class="form-group">
-        <label>💬 Liên Kết Discord</label>
-        <input type="url" id="discordLink" placeholder="https://discord.gg/...">
-        <div class="error-msg" id="discordError"></div>
+
+      <!-- TAB LINKS -->
+      <div style="display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px;">
+        <button class="settings-tab active" onclick="switchSettingsTab('links')" style="background: none; border: none; padding: 0; cursor: pointer; font-weight: 600; color: var(--primary); border-bottom: 3px solid var(--primary); padding-bottom: 5px; margin-bottom: -12px;">🔗 Liên Kết</button>
+        <button class="settings-tab" onclick="switchSettingsTab('diagnosis')" style="background: none; border: none; padding: 0; cursor: pointer; font-weight: 600; color: var(--text-muted); border-bottom: 3px solid transparent; padding-bottom: 5px; margin-bottom: -12px;">🏥 Bệnh Án</button>
       </div>
-      <div class="form-group">
-        <label>👍 Liên Kết Facebook</label>
-        <input type="url" id="facebookLink" placeholder="https://facebook.com/...">
-        <div class="error-msg" id="facebookError"></div>
+
+      <!-- LINKS TAB -->
+      <div id="linksTab" class="settings-tab-content">
+        <div class="admin-panel-hint">⚙️ Cập nhật liên kết Discord và Facebook để hiển thị ở trang chủ.</div>
+        <div class="form-group">
+          <label>💬 Liên Kết Discord</label>
+          <input type="url" id="discordLink" placeholder="https://discord.gg/...">
+          <div class="error-msg" id="discordError"></div>
+        </div>
+        <div class="form-group">
+          <label>👍 Liên Kết Facebook</label>
+          <input type="url" id="facebookLink" placeholder="https://facebook.com/...">
+          <div class="error-msg" id="facebookError"></div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-submit" onclick="saveLinks()">💾 Lưu Liên Kết</button>
+          <button class="btn-cancel" onclick="closeModal('settingsModal')">Hủy</button>
+        </div>
       </div>
-      <div class="modal-actions">
-        <button class="btn-submit" onclick="saveLinks()">💾 Lưu Liên Kết</button>
-        <button class="btn-cancel" onclick="closeModal('linksConfigModal')">Hủy</button>
+
+      <!-- DIAGNOSIS TAB -->
+      <div id="diagnosisTab" class="settings-tab-content" style="display: none;">
+        <div class="admin-panel-hint">🏥 Tạo các bệnh án sẽ được sử dụng khi thêm prompt.</div>
+        <div class="form-group">
+          <label>Tên Bệnh Án Mới *</label>
+          <input type="text" id="newDiagnosisName" placeholder="Ví dụ: Hội chứng trầm cảm...">
+          <div class="error-msg" id="diagnosisNameError"></div>
+        </div>
+        <div class="form-group">
+          <label>Icon Cho Bệnh Án *</label>
+          <div class="custom-icon-input-group">
+            <input type="text" id="diagnosisIconInput" placeholder="Nhập emoji (VD: 🧠, 💭)..." maxlength="2">
+            <div class="icon-preview" id="diagnosisIconPreview">📋</div>
+          </div>
+          <div class="error-msg" id="diagnosisIconError"></div>
+        </div>
+        <button class="btn-submit" onclick="addDiagnosisRecord()" style="width: 100%; margin-bottom: 15px;">➕ Thêm Bệnh Án</button>
+
+        <div class="form-group">
+          <label>Danh Sách Bệnh Án Hiện Tại</label>
+          <div class="diagnosis-records-list" id="diagnosisList">
+            <!-- Diagnosis records will be rendered here -->
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -627,6 +737,21 @@
     </div>
   </div>
 
+  <!-- LOGOUT CONFIRMATION MODAL -->
+  <div class="modal" id="logoutConfirmModal">
+    <div class="modal-content" style="max-width: 400px;">
+      <div class="modal-header">
+        <span>⚠️ Xác Nhận Đăng Xuất</span>
+        <span class="close-modal" onclick="closeModal('logoutConfirmModal')">✕</span>
+      </div>
+      <p style="margin-bottom: 20px; color: var(--text-muted); line-height: 1.6;">Bạn có chắc chắn muốn đăng xuất khỏi tài khoản Admin không? Bạn sẽ cần đăng nhập lại để thực hiện các thay đổi.</p>
+      <div class="modal-actions">
+        <button class="btn-submit" onclick="logout()">✓ Đăng Xuất</button>
+        <button class="btn-cancel" onclick="closeModal('logoutConfirmModal')">Hủy</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // ============ STATE MANAGEMENT ============
     let currentZone = 'hospital';
@@ -634,18 +759,18 @@
     const ADMIN_ID = 'charmaineminnie8';
     const ADMIN_PASSWORD = 'hauyennhi';
     let prompts = [];
-    let allGenres = new Set();
-    let selectedIcon = '📝';
+    let diagnosisRecords = { hospital: [], 'cai-nghien': [] };
     let currentTags = [];
+    let selectedIcon = '📝';
     let pendingPromptData = null;
-    const availableIcons = ['📝', '🏥', '💊', '🧠', '💭', '🎯', '📋', '⚕️', '🩺', '💪', '🌟', '❤️', '🆘', '📚', '🎓', '🔬', '👨‍⚕️', '👩‍⚕️', '🧬', '💉'];
+    let currentGenreFilter = '';
 
     // ============ INITIALIZATION ============
     window.addEventListener('load', () => {
       loadFromLocalStorage();
       loadSocialLinks();
       renderGenreList();
-      renderIconPicker();
+      renderDiagnosisList();
       filterPrompts();
     });
 
@@ -655,6 +780,7 @@
       document.getElementById('welcomeScreen').classList.add('hidden');
       document.getElementById('app').classList.add('active');
       updateZoneUI();
+      renderGenreList();
       filterPrompts();
     }
 
@@ -666,6 +792,7 @@
         currentZone = 'hospital';
       }
       updateZoneUI();
+      renderGenreList();
       filterPrompts();
     }
 
@@ -673,15 +800,18 @@
       const slider = document.getElementById('zoneSlider');
       const btnHospital = document.getElementById('btnSliderHospital');
       const btnCaiNghien = document.getElementById('btnSliderCaiNghien');
+      const sidebarTitle = document.getElementById('sidebarTitle');
 
       if (currentZone === 'hospital') {
         slider.classList.remove('active-cai-nghien');
         btnHospital.classList.add('active');
         btnCaiNghien.classList.remove('active');
+        sidebarTitle.textContent = '🏷️ Danh Mục - Khu Bệnh Viện';
       } else {
         slider.classList.add('active-cai-nghien');
         btnHospital.classList.remove('active');
         btnCaiNghien.classList.add('active');
+        sidebarTitle.textContent = '🏷️ Danh Mục - Trại Cai Nghiện';
       }
     }
 
@@ -689,15 +819,27 @@
     function openModal(modalId) {
       document.getElementById(modalId).classList.add('show');
       
-      // Load links vào form nếu là linksConfigModal
-      if (modalId === 'linksConfigModal') {
+      if (modalId === 'settingsModal') {
         document.getElementById('discordLink').value = localStorage.getItem('discordLink') || '';
         document.getElementById('facebookLink').value = localStorage.getItem('facebookLink') || '';
+        renderDiagnosisList();
       }
     }
 
     function closeModal(modalId) {
       document.getElementById(modalId).classList.remove('show');
+    }
+
+    function switchSettingsTab(tab) {
+      document.querySelectorAll('.settings-tab-content').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.settings-tab').forEach(el => {
+        el.style.color = 'var(--text-muted)';
+        el.style.borderBottom = '3px solid transparent';
+      });
+      
+      document.getElementById(tab + 'Tab').style.display = 'block';
+      event.target.style.color = 'var(--primary)';
+      event.target.style.borderBottom = '3px solid var(--primary)';
     }
 
     // Close modal khi click outside
@@ -746,6 +888,10 @@
       }
     }
 
+    function confirmLogout() {
+      openModal('logoutConfirmModal');
+    }
+
     function logout() {
       isAdminLoggedIn = false;
       localStorage.removeItem('adminLoggedIn');
@@ -754,6 +900,7 @@
       document.getElementById('adminPanelBtn').style.display = 'none';
       document.getElementById('logoutBtn').style.display = 'none';
       document.getElementById('loginBtn').style.display = 'inline-flex';
+      closeModal('logoutConfirmModal');
       filterPrompts();
     }
 
@@ -771,20 +918,27 @@
       showAdminPanel();
     }
 
-    // ============ ICON PICKER ============
-    function renderIconPicker() {
-      const picker = document.getElementById('iconPicker');
-      picker.innerHTML = availableIcons.map(icon => 
-        `<div class="icon-option ${icon === selectedIcon ? 'selected' : ''}" onclick="selectIcon('${icon}')">${icon}</div>`
-      ).join('');
-    }
+    // ============ CUSTOM ICON INPUT ============
+    document.addEventListener('DOMContentLoaded', () => {
+      const iconInput = document.getElementById('customIconInput');
+      if (iconInput) {
+        iconInput.addEventListener('input', (e) => {
+          if (e.target.value) {
+            selectedIcon = e.target.value;
+            document.getElementById('iconPreview').textContent = e.target.value;
+          }
+        });
+      }
 
-    function selectIcon(icon) {
-      selectedIcon = icon;
-      document.getElementById('selectedIconDisplay').textContent = icon;
-      document.querySelectorAll('.icon-option').forEach(opt => opt.classList.remove('selected'));
-      event.target.classList.add('selected');
-    }
+      const diagnosisIconInput = document.getElementById('diagnosisIconInput');
+      if (diagnosisIconInput) {
+        diagnosisIconInput.addEventListener('input', (e) => {
+          if (e.target.value) {
+            document.getElementById('diagnosisIconPreview').textContent = e.target.value;
+          }
+        });
+      }
+    });
 
     // ============ TAG MANAGEMENT ============
     function handleTagInput(e) {
@@ -838,6 +992,92 @@
       }
     }
 
+    // ============ DIAGNOSIS RECORDS ============
+    function addDiagnosisRecord() {
+      const name = document.getElementById('newDiagnosisName').value.trim();
+      const icon = document.getElementById('diagnosisIconInput').value.trim();
+      const nameError = document.getElementById('diagnosisNameError');
+      const iconError = document.getElementById('diagnosisIconError');
+
+      nameError.classList.remove('show');
+      iconError.classList.remove('show');
+
+      if (!name) {
+        nameError.textContent = '❌ Vui lòng nhập tên bệnh án!';
+        nameError.classList.add('show');
+        return;
+      }
+
+      if (!icon) {
+        iconError.textContent = '❌ Vui lòng nhập icon!';
+        iconError.classList.add('show');
+        return;
+      }
+
+      const diagnosis = { name, icon, id: Date.now().toString() };
+      diagnosisRecords[currentZone].push(diagnosis);
+      
+      document.getElementById('newDiagnosisName').value = '';
+      document.getElementById('diagnosisIconInput').value = '';
+      document.getElementById('diagnosisIconPreview').textContent = '📋';
+      
+      saveToLocalStorage();
+      renderDiagnosisList();
+      updateGenreSelect();
+    }
+
+    function removeDiagnosisRecord(zone, id) {
+      diagnosisRecords[zone] = diagnosisRecords[zone].filter(d => d.id !== id);
+      saveToLocalStorage();
+      renderDiagnosisList();
+      updateGenreSelect();
+    }
+
+    function renderDiagnosisList() {
+      const list = document.getElementById('diagnosisList');
+      const records = diagnosisRecords[currentZone] || [];
+      
+      if (records.length === 0) {
+        list.innerHTML = '<div style="padding: 20px; text-align: center; color: var(--text-muted);">Chưa có bệnh án nào. Hãy thêm bệnh án mới!</div>';
+        return;
+      }
+
+      list.innerHTML = records.map(record => `
+        <div class="diagnosis-record-item">
+          <div class="diagnosis-name">
+            <span>${record.icon}</span>
+            <span>${record.name}</span>
+          </div>
+          <button class="diagnosis-remove-btn" onclick="removeDiagnosisRecord('${currentZone}', '${record.id}')">🗑️ Xóa</button>
+        </div>
+      `).join('');
+    }
+
+    function updateGenreSelect() {
+      const select = document.getElementById('promptGenre');
+      const records = diagnosisRecords[currentZone] || [];
+      
+      select.innerHTML = '<option value="">-- Chọn bệnh án --</option>';
+      records.forEach(record => {
+        const option = document.createElement('option');
+        option.value = record.name;
+        option.textContent = `${record.icon} ${record.name}`;
+        select.appendChild(option);
+      });
+    }
+
+    function handleGenreSelect() {
+      const select = document.getElementById('promptGenre');
+      const customInput = document.getElementById('customGenreInput');
+      
+      if (select.value === '') {
+        customInput.style.display = 'block';
+      } else {
+        customInput.style.display = 'none';
+        customInput.value = '';
+      }
+    }
+
     // ============ PROMPT CRUD ============
     function openPromptModal(editId = null) {
       if (!isAdminLoggedIn) {
@@ -849,16 +1089,17 @@
       currentTags = [];
       selectedIcon = '📝';
       document.getElementById('promptTitle').value = '';
-      document.getElementById('promptGenre').value = '';
       document.getElementById('promptUrl').value = '';
       document.getElementById('promptDescription').value = '';
       document.getElementById('enablePassword').checked = false;
       document.getElementById('passwordHint').value = '';
       document.getElementById('promptPassword').value = '';
       document.getElementById('passwordSection').classList.remove('show');
+      document.getElementById('customIconInput').value = '';
+      document.getElementById('iconPreview').textContent = '📝';
       document.querySelectorAll('input[name="zone"]')[0].checked = true;
       renderTags();
-      renderIconPicker();
+      updateGenreSelect();
 
       // Clear errors
       document.querySelectorAll('.error-msg').forEach(el => el.classList.remove('show'));
@@ -874,6 +1115,8 @@
         document.getElementById('promptUrl').value = prompt.url;
         document.getElementById('promptDescription').value = prompt.description || '';
         selectedIcon = prompt.icon || '📝';
+        document.getElementById('customIconInput').value = selectedIcon;
+        document.getElementById('iconPreview').textContent = selectedIcon;
         currentTags = prompt.tags ? [...prompt.tags] : [];
         
         if (prompt.password) {
@@ -885,11 +1128,14 @@
 
         document.querySelectorAll('input[name="zone"]').forEach(input => {
           input.checked = input.value === prompt.zone;
+          if (input.checked) {
+            currentZone = prompt.zone;
+          }
         });
 
         document.getElementById('promptTitle').dataset.editId = editId;
-        renderIconPicker();
         renderTags();
+        updateGenreSelect();
       } else {
         title.textContent = '+ Thêm Prompt Mới';
         delete document.getElementById('promptTitle').dataset.editId;
@@ -900,7 +1146,8 @@
 
     function savePrompt() {
       const title = document.getElementById('promptTitle').value.trim();
-      const genre = document.getElementById('promptGenre').value.trim();
+      let genre = document.getElementById('promptGenre').value.trim();
+      const customGenre = document.getElementById('customGenreInput').value.trim();
       const url = document.getElementById('promptUrl').value.trim();
       const description = document.getElementById('promptDescription').value.trim();
       const zone = document.querySelector('input[name="zone"]:checked').value;
@@ -909,6 +1156,10 @@
       const password = document.getElementById('promptPassword').value;
       const titleInput = document.getElementById('promptTitle');
       const editId = titleInput.dataset.editId;
+
+      if (customGenre && genre === '') {
+        genre = customGenre;
+      }
 
       let hasError = false;
 
@@ -922,11 +1173,19 @@
       }
 
       if (!genre) {
-        document.getElementById('genreError').textContent = '❌ Vui lòng nhập thể loại!';
+        document.getElementById('genreError').textContent = '❌ Vui lòng chọn hoặc nhập bệnh án!';
         document.getElementById('genreError').classList.add('show');
         hasError = true;
       } else {
         document.getElementById('genreError').classList.remove('show');
+      }
+
+      if (!selectedIcon || selectedIcon === '') {
+        document.getElementById('iconError').textContent = '❌ Vui lòng nhập icon!';
+        document.getElementById('iconError').classList.add('show');
+        hasError = true;
+      } else {
+        document.getElementById('iconError').classList.remove('show');
       }
 
       if (!url) {
@@ -965,11 +1224,9 @@
       };
 
       if (editId) {
-        // Edit mode
         const promptIndex = prompts.findIndex(p => p.id === editId);
         prompts[promptIndex] = { ...prompts[promptIndex], ...promptData };
       } else {
-        // Add mode
         const newPrompt = {
           id: Date.now().toString(),
           ...promptData
@@ -998,165 +1255,135 @@
     }
 
     // ============ FILTER & SEARCH ============
-    function filterByGenre(genre) {
-      document.querySelectorAll('.genre-item').forEach(item => {
-        item.classList.remove('active');
-      });
-      event.target.classList.add('active');
-
-      document.getElementById('searchInput').value = '';
-      filterPrompts(genre);
-    }
-
-    function filterPrompts(genre = '') {
-      const search = document.getElementById('searchInput').value.toLowerCase();
+    function renderGenreList() {
+      const list = document.getElementById('genreList');
+      const genres = new Set();
       
-      let filtered = prompts.filter(p => {
-        const matchZone = p.zone === currentZone;
-        const matchGenre = genre === '' || p.genre.toLowerCase() === genre.toLowerCase();
-        const matchSearch = p.title.toLowerCase().includes(search) || 
-                           (p.description && p.description.toLowerCase().includes(search));
-        return matchZone && matchGenre && matchSearch;
+      prompts.forEach(p => {
+        if (p.zone === currentZone) {
+          genres.add(p.genre);
+        }
       });
 
-      renderPromptGrid(filtered);
+      let html = '<div class="genre-item active" onclick="filterByGenre(\'\')">Tất Cả</div>';
+      
+      Array.from(genres).sort().forEach(genre => {
+        html += `<div class="genre-item" onclick="filterByGenre('${genre}')">${genre}</div>`;
+      });
+
+      list.innerHTML = html;
     }
 
-    function renderPromptGrid(filteredPrompts) {
+    function filterByGenre(genre) {
+      currentGenreFilter = genre;
+      document.querySelectorAll('.genre-item').forEach(el => el.classList.remove('active'));
+      event.target.classList.add('active');
+      filterPrompts();
+    }
+
+    function filterPrompts() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
       const grid = document.getElementById('promptGrid');
       
-      if (filteredPrompts.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">📭 Không tìm thấy prompt nào.</div>';
+      let filtered = prompts.filter(p => 
+        p.zone === currentZone && 
+        (currentGenreFilter === '' || p.genre === currentGenreFilter) &&
+        (p.title.toLowerCase().includes(searchTerm) || 
+         p.description.toLowerCase().includes(searchTerm))
+      );
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">Không tìm thấy prompt nào</div>';
         return;
       }
 
-      grid.innerHTML = filteredPrompts.map(p => {
-        const zoneBadgeClass = p.zone === 'hospital' ? 'hospital' : 'cai-nghien';
-        const zoneBadgeText = p.zone === 'hospital' ? '🏥 Bệnh Viện' : '💊 Cai Nghiện';
-        const icon = p.icon || '📝';
-        const tagsHtml = (p.tags || []).map(tag => `<span class="tag-badge">${tag}</span>`).join('');
-
-        let cardHTML = `
-          <div class="prompt-card" onclick="handlePromptClick('${p.id}', ${p.password ? 'true' : 'false'})">
-            <div class="zone-badge ${zoneBadgeClass}">${zoneBadgeText}</div>
-            <div style="font-size: 2rem; margin-bottom: 10px;">${icon}</div>
-            <h3>${p.title}</h3>
-            <p>${p.description || 'Không có mô tả'}</p>
-            <div class="tag-container">
-              <span class="tag-badge">${p.genre}</span>
-              <span class="tag-badge">📅 ${p.createdAt}</span>
-              ${tagsHtml}
-            </div>
-        `;
-
-        if (isAdminLoggedIn) {
-          cardHTML += `
+      grid.innerHTML = filtered.map(prompt => {
+        const card = document.createElement('div');
+        card.className = 'prompt-card';
+        card.innerHTML = `
+          <div class="zone-badge ${prompt.zone}">${prompt.zone === 'hospital' ? '🏥' : '💊'}</div>
+          ${isAdminLoggedIn ? `
             <div class="card-actions">
-              <button class="card-action-btn" onclick="event.stopPropagation(); openPromptModal('${p.id}')">✏️ Sửa</button>
-              <button class="card-action-btn" onclick="event.stopPropagation(); deletePrompt('${p.id}')">🗑️ Xóa</button>
+              <button class="card-action-btn" onclick="openPromptModal('${prompt.id}')">✏️ Sửa</button>
+              <button class="card-action-btn" onclick="deletePrompt('${prompt.id}')">🗑️ Xóa</button>
             </div>
-          `;
-        }
-
-        cardHTML += '</div>';
-        return cardHTML;
-      }).join('');
+          ` : ''}
+          <div style="font-size: 2rem; margin-bottom: 10px;">${prompt.icon}</div>
+          <h3>${prompt.title}</h3>
+          <p style="margin-bottom: 10px;">${prompt.description || 'Không có mô tả'}</p>
+          <div class="tag-container">
+            ${prompt.tags.map(tag => `<span class="tag-badge">${tag}</span>`).join('')}
+          </div>
+          <button onclick="accessPrompt('${prompt.id}', ${prompt.password ? 'true' : 'false'})" style="margin-top: 15px; width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; transition: var(--transition);" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='var(--primary)'">🔗 Truy cập</button>
+        `;
+        return card;
+      }).map(card => card.outerHTML).join('');
     }
 
-    function handlePromptClick(promptId, hasPassword) {
+    function accessPrompt(id, hasPassword) {
+      const prompt = prompts.find(p => p.id === id);
+      
       if (hasPassword) {
-        const prompt = prompts.find(p => p.id === promptId);
         pendingPromptData = prompt;
-        document.getElementById('passwordHintDisplay').textContent = prompt.passwordHint || 'Nhập mật khẩu để truy cập';
+        document.getElementById('passwordHintDisplay').textContent = prompt.passwordHint || 'Không có gợi ý';
+        document.getElementById('userPasswordInput').value = '';
+        document.getElementById('passwordCheckError').classList.remove('show');
         openModal('passwordPromptModal');
       } else {
-        const prompt = prompts.find(p => p.id === promptId);
         window.open(prompt.url, '_blank');
       }
     }
 
     function verifyPromptPassword() {
-      const userPassword = document.getElementById('userPasswordInput').value;
-      const errorMsg = document.getElementById('passwordCheckError');
+      const input = document.getElementById('userPasswordInput').value;
+      const error = document.getElementById('passwordCheckError');
 
-      if (userPassword === pendingPromptData.password) {
-        closeModal('passwordPromptModal');
-        document.getElementById('userPasswordInput').value = '';
+      if (input === pendingPromptData.password) {
         window.open(pendingPromptData.url, '_blank');
-        pendingPromptData = null;
+        closeModal('passwordPromptModal');
       } else {
-        errorMsg.textContent = '❌ Mật khẩu không chính xác!';
-        errorMsg.classList.add('show');
+        error.textContent = '❌ Mật khẩu không chính xác!';
+        error.classList.add('show');
       }
     }
 
-    function renderGenreList() {
-      allGenres = new Set();
-      prompts.forEach(p => {
-        if (p.genre) allGenres.add(p.genre);
-      });
-
-      const genreList = document.getElementById('genreList');
-      const html = '<div class="genre-item active" onclick="filterByGenre(\'\')">Tất Cả</div>' +
-        Array.from(allGenres).sort().map(genre => 
-          `<div class="genre-item" onclick="filterByGenre('${genre}')">${genre}</div>`
-        ).join('');
-
-      genreList.innerHTML = html;
-    }
-
-    // ============ SOCIAL LINKS ============
     function saveLinks() {
       const discordLink = document.getElementById('discordLink').value.trim();
       const facebookLink = document.getElementById('facebookLink').value.trim();
+      const discordError = document.getElementById('discordError');
+      const facebookError = document.getElementById('facebookError');
 
-      let hasError = false;
+      discordError.classList.remove('show');
+      facebookError.classList.remove('show');
 
       if (discordLink && !isValidUrl(discordLink)) {
-        document.getElementById('discordError').textContent = '❌ Liên kết Discord không hợp lệ!';
-        document.getElementById('discordError').classList.add('show');
-        hasError = true;
-      } else {
-        document.getElementById('discordError').classList.remove('show');
+        discordError.textContent = '❌ Link Discord không hợp lệ!';
+        discordError.classList.add('show');
+        return;
       }
 
       if (facebookLink && !isValidUrl(facebookLink)) {
-        document.getElementById('facebookError').textContent = '❌ Liên kết Facebook không hợp lệ!';
-        document.getElementById('facebookError').classList.add('show');
-        hasError = true;
-      } else {
-        document.getElementById('facebookError').classList.remove('show');
+        facebookError.textContent = '❌ Link Facebook không hợp lệ!';
+        facebookError.classList.add('show');
+        return;
       }
-
-      if (hasError) return;
 
       localStorage.setItem('discordLink', discordLink);
       localStorage.setItem('facebookLink', facebookLink);
       loadSocialLinks();
-      closeModal('linksConfigModal');
-      alert('✅ Liên kết đã được cập nhật!');
+      closeModal('settingsModal');
+      alert('✅ Cập nhật liên kết thành công!');
     }
 
     function loadSocialLinks() {
-      const discordLink = localStorage.getItem('discordLink') || '';
-      const facebookLink = localStorage.getItem('facebookLink') || '';
-
-      const welcomeDiscordBtn = document.getElementById('welcomeDiscordBtn');
-      const welcomeFacebookBtn = document.getElementById('welcomeFacebookBtn');
-
-      if (discordLink) {
-        welcomeDiscordBtn.href = discordLink;
-        welcomeDiscordBtn.style.display = 'flex';
-      } else {
-        welcomeDiscordBtn.style.display = 'none';
-      }
-
-      if (facebookLink) {
-        welcomeFacebookBtn.href = facebookLink;
-        welcomeFacebookBtn.style.display = 'flex';
-      } else {
-        welcomeFacebookBtn.style.display = 'none';
-      }
+      const discordLink = localStorage.getItem('discordLink');
+      const facebookLink = localStorage.getItem('facebookLink');
+      
+      const discordBtn = document.getElementById('welcomeDiscordBtn');
+      const facebookBtn = document.getElementById('welcomeFacebookBtn');
+      
+      if (discordLink) discordBtn.href = discordLink;
+      if (facebookLink) facebookBtn.href = facebookLink;
     }
 
     function isValidUrl(string) {
@@ -1168,14 +1395,24 @@
       }
     }
 
-    // ============ LOCAL STORAGE ============
     function saveToLocalStorage() {
       localStorage.setItem('prompts', JSON.stringify(prompts));
+      localStorage.setItem('diagnosisRecords', JSON.stringify(diagnosisRecords));
     }
 
     function loadFromLocalStorage() {
       const stored = localStorage.getItem('prompts');
-      prompts = stored ? JSON.parse(stored) : [];
+      const storedDiagnosis = localStorage.getItem('diagnosisRecords');
+      
+      if (stored) {
+        prompts = JSON.parse(stored);
+      }
+      
+      if (storedDiagnosis) {
+        diagnosisRecords = JSON.parse(storedDiagnosis);
+      } else {
+        diagnosisRecords = { hospital: [], 'cai-nghien': [] };
+      }
     }
   </script>
 </body>
