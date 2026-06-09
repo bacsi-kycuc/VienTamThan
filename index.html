@@ -32,7 +32,6 @@
   #welcomeScreen {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    /* Nền không gian tối sâu thẳm hòa trộn ánh đèn mờ ảo */
     background: radial-gradient(circle at center, #1e1b4b 0%, #0f172a 100%);
     z-index: 9999; 
     display: flex; 
@@ -47,7 +46,6 @@
   .welcome-title { 
     font-family: 'Playfair Display', serif; 
     font-size: 2.8rem; 
-    /* Đổi hiệu ứng chữ đổ màu ánh kim Neon */
     background: linear-gradient(135deg, #38bdf8, #c084fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -55,7 +53,6 @@
     margin-bottom: 12px; 
     filter: drop-shadow(0 2px 8px rgba(192, 132, 252, 0.3));
   }
-  /* Cập nhật dòng chữ custom theo ý bạn */
   .welcome-subtitle { 
     color: #94a3b8; 
     font-size: 1.25rem; 
@@ -74,7 +71,6 @@
     flex-wrap: wrap; 
   }
   
-  /* CÁC THẺ CARD ĐÃ TỐI GIẢN CHỮ - CHỈ CÓ ICON VÀ TÊN */
   .zone-card { 
     border-radius: 28px; 
     padding: 50px 40px; 
@@ -90,7 +86,6 @@
     overflow: hidden;
   }
   
-  /* Card Khu Bệnh Viện: Tone Sáng pha Neon xanh biển */
   .zone-card.hospital-theme {
     background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
     border: 3px solid #38bdf8;
@@ -106,7 +101,6 @@
     font-weight: 800;
   }
 
-  /* Card Trại Cai Nghiện: Tone Tối Huyền Bí pha Neon Đỏ Hồng cực cháy */
   .zone-card.cainghien-theme {
     background: linear-gradient(135deg, #1e293b 0%, #4c0519 100%);
     border: 3px solid #f43f5e;
@@ -140,7 +134,6 @@
   .brand-zone-info { display: flex; align-items: center; gap: 20px; }
   .logo-title h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); }
 
-  /* TOGGLE SLIDER KHU VỰC */
   .zone-slider-wrapper { background: var(--bg3); padding: 4px; border-radius: 30px; display: flex; position: relative; width: 320px; user-select: none; cursor: pointer; }
   .zone-slider-btn { flex: 1; text-align: center; padding: 10px 0; font-weight: 600; font-size: 0.9rem; z-index: 2; transition: var(--transition); color: var(--text-muted); }
   .zone-slider-btn.active { color: white; }
@@ -168,14 +161,12 @@
   .search-bar { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 15px 20px; box-shadow: var(--shadow); display: flex; gap: 15px; }
   .search-bar input { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); outline: none; font-size: 1rem; }
 
-  /* PROMPT CARDS */
   .prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
   .prompt-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); transition: var(--transition); cursor: pointer; position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
   .prompt-card:hover { transform: translateY(-4px); border-color: var(--border2); }
   .prompt-card h3 { font-size: 1.2rem; color: var(--text); padding-right: 80px; line-height: 1.4; }
   .prompt-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
   
-  /* TAGS STYLE */
   .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 5px; }
   .tag-badge { background: #e2e8f0; color: #475569; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px; font-weight: 500; }
 
@@ -183,7 +174,6 @@
   .zone-badge.hospital { background: #e0f2fe; color: var(--primary); }
   .zone-badge.cai-nghien { background: #ffe4e6; color: var(--accent); }
 
-  /* MODALS */
   .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; pointer-events: none; transition: var(--transition); padding: 15px; }
   .modal.show { opacity: 1; pointer-events: auto; }
   .modal-content { background: var(--card); border-radius: var(--radius); padding: 30px; width: 100%; max-width: 520px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); position: relative; transform: scale(0.95); transition: var(--transition); max-height: 90vh; overflow-y: auto; }
@@ -249,16 +239,14 @@
           <h2 style="margin-bottom:0;">DANH SÁCH KHOA</h2>
           <button class="btn btn-primary" id="addGenreBtn" style="display:none; padding:4px 8px; font-size:0.75rem;" onclick="openModal('genreModal')">➕ Thêm Khoa</button>
         </div>
-        <div class="genre-list" id="genreList">
-          </div>
+        <div class="genre-list" id="genreList"></div>
       </div>
 
       <div class="content-area">
         <div class="search-bar">
           <input type="text" id="searchInput" placeholder="Tìm kiếm bệnh án nhân vật..." oninput="renderPrompts()">
         </div>
-        <div class="prompt-grid" id="promptGrid">
-          </div>
+        <div class="prompt-grid" id="promptGrid"></div>
       </div>
     </div>
   </div>
@@ -323,8 +311,7 @@
       </div>
       <div class="form-group">
         <label>Thuộc Khoa bệnh (Thể loại)</label>
-        <select id="pGenre">
-          </select>
+        <select id="pGenre"></select>
       </div>
       <div class="form-group">
         <label>Danh sách Thẻ Tags (Phân tách bằng dấu phẩy)</label>
@@ -339,8 +326,8 @@
         <input type="text" id="pPassword" placeholder="Nhập mật mã khóa dữ liệu...">
       </div>
       <div class="form-group">
-        <label>Gợi ý giải mã bệnh án (Hiện ra cho người dùng giải đố nếu có đặt pass)</label>
-        <input type="text" id="pHint" placeholder="Ví dụ: Ngày sinh của nhân vật này là bao nhiêu? (Gồm 4 chữ số)">
+        <label>Gợi ý giải mã bệnh án</label>
+        <input type="text" id="pHint" placeholder="Ví dụ: Ngày sinh của nhân vật này là bao nhiêu?">
       </div>
       <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="savePrompt()">Lưu Bệnh Án</button>
     </div>
@@ -429,227 +416,4 @@
       `;
       customGenres.forEach(g => {
         html += `
-          <div class="genre-item ${currentGenre === g.id ? 'active' : ''}" onclick="selectGenre('${g.id}')">
-            <span>${g.icon} ${g.name}</span>
-            ${isAdmin ? `<span style="color:var(--accent); font-weight:bold; padding: 0 4px;" onclick="event.stopPropagation(); deleteGenre('${g.id}')">×</span>` : ''}
-          </div>
-        `;
-      });
-      list.innerHTML = html;
-    }
-
-    function selectGenre(genreId) {
-      currentGenre = genreId;
-      renderGenres();
-      renderPrompts();
-    }
-
-    function saveGenre() {
-      const icon = document.getElementById('gIcon').value.trim() || '📁';
-      const name = document.getElementById('gName').value.trim();
-      if(!name) return alert('Vui lòng nhập tên khoa mới!');
-      
-      const id = 'genre-' + Date.now();
-      customGenres.push({ id, icon, name });
-      localStorage.setItem('hospital_genres', JSON.stringify(customGenres));
-      
-      document.getElementById('gIcon').value = '';
-      document.getElementById('gName').value = '';
-      closeModal('genreModal');
-      
-      renderGenres();
-      syncSelectGenreOptions();
-    }
-
-    function deleteGenre(id) {
-      if(confirm('Bạn có chắc chắn muốn xóa khoa bệnh này không? Các bệnh án thuộc khoa này vẫn sẽ được giữ lại.')) {
-        customGenres = customGenres.filter(g => g.id !== id);
-        localStorage.setItem('hospital_genres', JSON.stringify(customGenres));
-        if(currentGenre === id) currentGenre = 'all';
-        renderGenres();
-        syncSelectGenreOptions();
-      }
-    }
-
-    function syncSelectGenreOptions() {
-      const select = document.getElementById('pGenre');
-      select.innerHTML = customGenres.map(g => `<option value="${g.id}">${g.icon} ${g.name}</option>`).join('');
-    }
-
-    function renderPrompts() {
-      const grid = document.getElementById('promptGrid');
-      const search = document.getElementById('searchInput').value.toLowerCase();
-
-      const filtered = prompts.filter(p => {
-        const matchZone = (p.zone || 'hospital') === currentZone;
-        const matchGenre = currentGenre === 'all' || p.genre === currentGenre;
-        
-        const tagsStr = p.tags ? p.tags.toLowerCase() : '';
-        const matchSearch = p.name.toLowerCase().includes(search) || 
-                            p.content.toLowerCase().includes(search) || 
-                            tagsStr.includes(search);
-        return matchZone && matchGenre && matchSearch;
-      });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 40px;">Khu vực này hiện chưa có bệnh án nhân vật nào phù hợp.</div>`;
-        return;
-      }
-
-      grid.innerHTML = filtered.map((p, idx) => {
-        const originalIdx = prompts.findIndex(original => original.name === p.name && original.content === p.content);
-        let tagsHtml = '';
-        if(p.tags) {
-          tagsHtml = p.tags.split(',').map(t => `<span class="tag-badge">#${t.trim()}</span>`).join('');
-        }
-
-        return `
-          <div class="prompt-card" onclick="viewPrompt(${originalIdx})">
-            <span class="zone-badge ${p.zone === 'cai-nghien' ? 'cai-nghien' : 'hospital'}">
-              ${p.zone === 'cai-nghien' ? '💊 Cai Nghiện' : '🏥 Bệnh Viện'}
-            </span>
-            <div style="display:flex; flex-direction:column; gap:8px;">
-              <h3>${p.name}</h3>
-              <div class="tag-container">${tagsHtml}</div>
-              <p style="margin-top:5px;">${p.content.substring(0, 90)}...</p>
-            </div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
-              <span style="font-weight:700; font-size:0.8rem; color:${p.password ? 'var(--accent)' : 'var(--success)'}">
-                ${p.password ? '🔒 ĐANG KHÓA (CẦN GIẢI MÃ)' : '🔓 BỆNH ÁN CÔNG KHAI'}
-              </span>
-              ${isAdmin ? `<button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="event.stopPropagation(); deletePrompt(${originalIdx})">Xóa</button>` : ''}
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function viewPrompt(idx) {
-      currentPromptIdx = idx;
-      const prompt = prompts[idx];
-      if (prompt.password) {
-        document.getElementById('unlockPassword').value = '';
-        document.getElementById('unlockError').classList.remove('show');
-        document.getElementById('hintText').innerText = prompt.hint ? prompt.hint : "Admin không để lại gợi ý nào, hãy tự suy luận!";
-        openModal('unlockModal');
-      } else {
-        accessPromptContent(prompt);
-      }
-    }
-
-    function unlockPrompt() {
-      const inputPw = document.getElementById('unlockPassword').value;
-      const targetPrompt = prompts[currentPromptIdx];
-      
-      if (inputPw === targetPrompt.password) {
-        closeModal('unlockModal');
-        setTimeout(() => {
-          accessPromptContent(targetPrompt);
-        }, 100);
-      } else {
-        document.getElementById('unlockError').classList.add('show');
-      }
-    }
-
-    function accessPromptContent(prompt) {
-      let msg = `📋 THÔNG TIN NHÂN VẬT:\n\nTên: ${prompt.name}\n\nMô tả chi tiết/Prompt:\n${prompt.content}`;
-      if(prompt.botLink) {
-        if(confirm(`${msg}\n\n🔗 Hệ thống tìm thấy liên kết Chat Bot của nhân vật này. Bạn có muốn chuyển hướng đi đến phòng chat ngay bây giờ không?`)) {
-          window.open(prompt.botLink, '_blank');
-        }
-      } else {
-        alert(msg);
-      }
-    }
-
-    function savePrompt() {
-      const zone = document.querySelector('input[name="promptZone"]:checked').value;
-      const name = document.getElementById('pName').value.trim();
-      const botLink = document.getElementById('pBotLink').value.trim();
-      const genre = document.getElementById('pGenre').value;
-      const tags = document.getElementById('pTags').value.trim();
-      const content = document.getElementById('pContent').value.trim();
-      const password = document.getElementById('pPassword').value;
-      const hint = document.getElementById('pHint').value.trim();
-
-      if (!name || !content) {
-        alert('Vui lòng điền tên nhân vật và mô tả chi tiết!');
-        return;
-      }
-
-      prompts.push({ zone, name, botLink, genre, tags, content, password, hint });
-      localStorage.setItem('hospital_prompts', JSON.stringify(prompts));
-      
-      alert('✅ Đã đăng tải hồ sơ bệnh án nhân vật lên hệ thống thành công!');
-      closeModal('promptModal');
-      
-      document.getElementById('pName').value = '';
-      document.getElementById('pBotLink').value = '';
-      document.getElementById('pTags').value = '';
-      document.getElementById('pContent').value = '';
-      document.getElementById('pPassword').value = '';
-      document.getElementById('pHint').value = '';
-      
-      renderPrompts();
-    }
-
-    function deletePrompt(idx) {
-      if(confirm('Bạn có chắc muốn tiêu hủy hồ sơ bệnh án nhân vật này không?')) {
-        prompts.splice(idx, 1);
-        localStorage.setItem('hospital_prompts', JSON.stringify(prompts));
-        renderPrompts();
-      }
-    }
-
-    function checkAdminLogin() {
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value;
-      
-      if (email === 'charmaineminnie8' && password === 'hauyennhi') {
-        isAdmin = true;
-        localStorage.setItem('hospital_admin_logged', 'true');
-        document.getElementById('loginError').classList.remove('show');
-        closeModal('loginModal');
-        updateAdminUI();
-        renderGenres();
-        renderPrompts();
-        alert('✅ Đăng nhập quyền tối cao thành công!');
-      } else {
-        document.getElementById('loginError').classList.add('show');
-      }
-    }
-
-    function checkSavedLogin() {
-      if (localStorage.getItem('hospital_admin_logged') === 'true') {
-        isAdmin = true;
-        updateAdminUI();
-      }
-    }
-
-    function updateAdminUI() {
-      if (isAdmin) {
-        document.getElementById('loginBtn').style.display = 'none';
-        document.getElementById('adminBadge').style.display = 'inline-block';
-        document.getElementById('adminPanelBtn').style.display = 'inline-block';
-        document.getElementById('logoutBtn').style.display = 'inline-block';
-        document.getElementById('addGenreBtn').style.display = 'inline-block';
-      }
-    }
-
-    function logoutAdmin() {
-      isAdmin = false;
-      localStorage.removeItem('hospital_admin_logged');
-      document.getElementById('loginBtn').style.display = 'inline-block';
-      document.getElementById('adminBadge').style.display = 'none';
-      document.getElementById('adminPanelBtn').style.display = 'none';
-      document.getElementById('logoutBtn').style.display = 'none';
-      document.getElementById('addGenreBtn').style.display = 'none';
-      renderGenres();
-      renderPrompts();
-    }
-
-    function openModal(id) { document.getElementById(id).classList.add('show'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-  </script>
-</body>
-</html>
+          <div class="genre-item ${currentGenre === g.id ? 'active' : ''}" onclick="selectGenre('${g.id}')
