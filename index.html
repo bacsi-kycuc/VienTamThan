@@ -82,6 +82,203 @@
 
   #app { position: relative; z-index: 1; }
 
+  /* WELCOME PAGE STYLES */
+  .welcome-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    z-index: 150;
+    background: linear-gradient(135deg, #1a2a4e 0%, #2d4a7a 50%, #1a3a52 100%);
+  }
+
+  .welcome-container.hidden { display: none; }
+
+  .welcome-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .welcome-logo {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+
+  .welcome-logo-icon {
+    font-size: 48px;
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(124,58,237,0.3);
+  }
+
+  .welcome-logo-text {
+    color: white;
+  }
+
+  .welcome-logo-text .main {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 900;
+    margin-bottom: 4px;
+  }
+
+  .welcome-logo-text .sub {
+    font-size: 12px;
+    color: #a0a0ff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .welcome-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: white;
+    text-align: center;
+    margin-bottom: 32px;
+    line-height: 1.2;
+    max-width: 800px;
+  }
+
+  .welcome-category-buttons {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+
+  .welcome-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 36px;
+    border-radius: 14px;
+    border: none;
+    background: white;
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  .welcome-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  }
+
+  .welcome-btn-icon { font-size: 24px; }
+
+  .welcome-social-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .welcome-social-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 12px;
+    border: none;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .social-discord {
+    background: #5865f2;
+    color: white;
+  }
+
+  .social-discord:hover {
+    background: #4752c4;
+  }
+
+  .social-facebook {
+    background: #1877f2;
+    color: white;
+  }
+
+  .social-facebook:hover {
+    background: #0a66c2;
+  }
+
+  .welcome-admin-login {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    z-index: 160;
+  }
+
+  .welcome-admin-btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.1);
+    color: white;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    backdrop-filter: blur(10px);
+  }
+
+  .welcome-admin-btn:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.5);
+  }
+
+  /* CATEGORY TAB SWITCHER */
+  .category-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 24px;
+    background: var(--bg2);
+    border-radius: 12px;
+    padding: 6px;
+    width: fit-content;
+    box-shadow: var(--shadow);
+  }
+
+  .category-tab {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    color: var(--text3);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .category-tab.active {
+    background: var(--card);
+    color: var(--primary);
+    box-shadow: var(--shadow);
+  }
+
   header {
     padding: 24px 40px;
     display: flex;
@@ -685,6 +882,41 @@
     box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
   }
 
+  .category-selection {
+    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
+    border: 1.5px solid var(--primary);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  .category-selection-title { font-size: 14px; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
+  
+  .category-checkboxes { display: flex; gap: 16px; flex-wrap: wrap; }
+  
+  .category-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .category-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+    cursor: pointer;
+  }
+
+  .category-checkbox label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+  }
+
   .pw-section {
     background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
     border: 1.5px solid var(--primary);
@@ -830,6 +1062,9 @@
     .genre-icon { font-size: 36px; }
     .genre-name { font-size: 16px; }
     .header-search-wrap { min-width: 100%; order: 3; }
+    .welcome-title { font-size: 32px; }
+    .welcome-category-buttons { flex-direction: column; }
+    .welcome-btn { width: 100%; }
   }
 </style>
 </head>
@@ -840,7 +1075,48 @@
   <div class="orb orb3"></div>
 </div>
 
-<div id="app">
+<!-- WELCOME PAGE -->
+<div class="welcome-container" id="welcomePage">
+  <div class="welcome-admin-login">
+    <button class="welcome-admin-btn" onclick="showAdminLoginFromWelcome()">👑 Admin</button>
+  </div>
+
+  <div class="welcome-header">
+    <div class="welcome-logo">
+      <div class="welcome-logo-icon">🏥</div>
+      <div class="welcome-logo-text">
+        <div class="main">Cố Thị</div>
+        <div class="sub">Viện Tâm Thần</div>
+      </div>
+    </div>
+  </div>
+
+  <h1 class="welcome-title">Chào mừng các bệnh nhân đến với viện tâm thần Cố Thị</h1>
+
+  <div class="welcome-category-buttons">
+    <button class="welcome-btn" onclick="selectCategory('hospital')">
+      <span class="welcome-btn-icon">📋</span>
+      <span>Menu lựa bệnh ăn</span>
+    </button>
+    <button class="welcome-btn" onclick="selectCategory('rehab')">
+      <span class="welcome-btn-icon">🔺</span>
+      <span>Trại cai nghiện</span>
+    </button>
+  </div>
+
+  <div class="welcome-social-buttons">
+    <button class="welcome-social-btn social-discord" onclick="window.open('https://discord.com', '_blank')">
+      <span>💬</span>
+      <span>Tham gia Discord</span>
+    </button>
+    <button class="welcome-social-btn social-facebook" onclick="window.open('https://facebook.com', '_blank')">
+      <span>f</span>
+      <span>Kết nối Facebook</span>
+    </button>
+  </div>
+</div>
+
+<div id="app" style="display:none">
   <header>
     <div class="logo-wrap">
       <div class="logo-icon">🏥</div>
@@ -866,8 +1142,17 @@
 
   <main>
     <div id="mainView">
+      <div class="category-tabs" id="categoryTabs">
+        <button class="category-tab active" onclick="switchCategory('hospital')" data-category="hospital">
+          📋 Bệnh Viện
+        </button>
+        <button class="category-tab" onclick="switchCategory('rehab')" data-category="rehab">
+          🔺 Trại Cai Nghiện
+        </button>
+      </div>
+
       <div class="section-header">
-        <span class="section-title">🏥 SƠ ĐỒ PHÒNG BAN VIỆN TÂM THẦN CÔ THỊ</span>
+        <span class="section-title" id="categoryTitle">🏥 SƠ ĐỒ PHÒNG BAN VIỆN TÂM THẦN CÔ THỊ</span>
         <span class="count-badge" id="countBadge">0</span>
       </div>
       <div class="genre-grid" id="genreGrid"></div>
@@ -981,6 +1266,20 @@
         <div class="tags-preview" id="fTagPrev"></div>
       </div>
 
+      <div class="category-selection">
+        <div class="category-selection-title">🎯 Lựa chọn Khu vực</div>
+        <div class="category-checkboxes">
+          <div class="category-checkbox">
+            <input type="checkbox" id="fCategoryHospital" checked>
+            <label for="fCategoryHospital">📋 Bệnh Viện</label>
+          </div>
+          <div class="category-checkbox">
+            <input type="checkbox" id="fCategoryRehab">
+            <label for="fCategoryRehab">🔺 Trại Cai Nghiện</label>
+          </div>
+        </div>
+      </div>
+
       <div class="pw-section">
         <label class="pw-toggle">
           <input type="checkbox" id="fPwEnabled" onchange="togglePwFields()">
@@ -998,767 +1297,534 @@
           <div class="security-note">✓ Mật khẩu được mã hóa AES-256. An toàn 100%!</div>
         </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-danger" onclick="logoutAdmin()" id="logoutBtn">🚪 Đăng Xuất</button>
-      <button class="btn" onclick="clearAdminForm()" id="clearBtn">🗑 Xóa Form</button>
-      <button class="btn" onclick="closeAdminPanel()">Hủy</button>
-      <button class="btn btn-gold" onclick="savePrompt()" id="saveBtnAdmin">💾 Lưu Prompt</button>
-    </div>
-  </div>
-</div>
 
-<div class="modal-bg hidden" id="unlockModal">
-  <div class="modal unlock-modal">
-    <div class="modal-header">
-      <span class="modal-title">🔐 Nhập Mật Khẩu</span>
-      <button class="close-btn" onclick="closeUnlockModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="lock-big">🔒</div>
-      <p style="text-align:center;color:var(--text2);margin-bottom:16px;font-weight:600" id="unlockBotName">...</p>
-      <div id="unlockHintWrap" class="hint-text" style="display:none"></div>
-      <div class="form-group">
-        <label class="form-label">Mật Khẩu</label>
-        <div class="pw-input-wrap">
-          <input type="password" id="unlockInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryUnlock()">
-          <button class="pw-toggle-vis" onclick="togglePwVis('unlockInput',this)">👁</button>
-        </div>
-        <div class="pw-error" id="unlockError">❌ Mật khẩu không đúng!</div>
+      <div style="display: flex; gap: 12px; margin-top: 24px;">
+        <button class="btn" onclick="clearForm()" style="flex:1">🗑 Xóa</button>
+        <button class="btn btn-gold" onclick="savePrompt()" style="flex:1">💾 Lưu Prompt</button>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeUnlockModal()">Hủy</button>
-      <button class="btn btn-gold" onclick="tryUnlock()">Mở Khóa ✓</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal-bg hidden" id="viewModal">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <span class="modal-title" id="viewTitle">...</span>
-      <button class="close-btn" onclick="closeViewModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Mô Tả</label>
-        <p id="viewDesc" style="color:var(--text2);line-height:1.8;font-weight:500"></p>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Link / Text</label>
-        <div id="viewLink" style="display:flex;gap:10px;align-items:flex-start"></div>
-      </div>
-      <div class="form-group" id="viewTagsGroup" style="display:none">
-        <label class="form-label">Tags</label>
-        <div id="viewTags" class="card-tags"></div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeViewModal()">Đóng</button>
     </div>
   </div>
 </div>
 
 <script>
-let allGenres = [];
-let allPrompts = [];
-let currentGenreId = null;
-let isAdmin = false;
-let currentEditId = null;
-let globalSearchQuery = '';
+  // Data management
+  let genresData = {};
+  let promptsData = {};
+  let currentGenre = null;
+  let currentCategory = 'hospital';
+  let admin = null;
+  let selectedGenres = [];
+  let selectedTags = [];
+  let selectedCategories = { hospital: true, rehab: false };
 
-function loadData() {
-  const stored = localStorage.getItem('hospitalData');
-  if (stored) {
-    const data = JSON.parse(stored);
-    allGenres = data.genres || [];
-    allPrompts = data.prompts || [];
-  } else {
-    allGenres = [];
-    allPrompts = [];
+  // Initialize
+  function init() {
+    loadData();
+    renderWelcome();
   }
-  renderMainView();
-}
 
-function saveData() {
-  localStorage.setItem('hospitalData', JSON.stringify({ genres: allGenres, prompts: allPrompts }));
-}
-
-function renderMainView() {
-  const grid = document.getElementById('genreGrid');
-  grid.innerHTML = '';
-  document.getElementById('countBadge').textContent = allGenres.length;
-  
-  if (allGenres.length === 0) {
-    grid.parentElement.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">📁</div>
-        <h3>Chưa có phòng ban</h3>
-        <p>Admin hãy thêm phòng ban để bắt đầu!</p>
-      </div>
-    `;
-    return;
+  // Welcome page
+  function selectCategory(category) {
+    currentCategory = category;
+    document.getElementById('welcomePage').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    renderMainView();
   }
-  
-  allGenres.forEach(genre => {
-    const count = allPrompts.filter(p => p.genre === genre.id).length;
-    const card = document.createElement('div');
-    card.className = 'genre-card';
-    card.innerHTML = `
-      <div class="genre-icon">${genre.icon}</div>
-      <div class="genre-name">${genre.name}</div>
-      <div class="genre-count">${count} prompt</div>
-    `;
-    card.onclick = () => enterDetailView(genre.id);
-    grid.appendChild(card);
-  });
-}
 
-function enterDetailView(genreId) {
-  currentGenreId = genreId;
-  document.getElementById('mainView').style.display = 'none';
-  document.getElementById('detailView').style.display = 'block';
-  
-  const genre = allGenres.find(g => g.id === genreId);
-  document.getElementById('detailTitle').textContent = `${genre.icon} ${genre.name}`;
-  document.getElementById('globalSearch').value = '';
-  globalSearchQuery = '';
-  
-  renderDetailView();
-}
-
-function backToGenreView() {
-  document.getElementById('mainView').style.display = 'block';
-  document.getElementById('detailView').style.display = 'none';
-  currentGenreId = null;
-  document.getElementById('searchInput').value = '';
-  document.getElementById('sortSelect').value = 'newest';
-  document.getElementById('globalSearch').value = '';
-  globalSearchQuery = '';
-}
-
-function renderDetailView() {
-  const searchVal = document.getElementById('searchInput').value.toLowerCase();
-  const sortVal = document.getElementById('sortSelect').value;
-  
-  let filtered = allPrompts.filter(p => p.genre === currentGenreId);
-  
-  if (searchVal) {
-    filtered = filtered.filter(p => 
-      p.name.toLowerCase().includes(searchVal) || 
-      (p.desc && p.desc.toLowerCase().includes(searchVal))
-    );
+  function showAdminLoginFromWelcome() {
+    showAdminLoginModal();
   }
-  
-  const tagsFilterBar = document.getElementById('tagsFilterBar');
-  const activeTags = Array.from(tagsFilterBar.querySelectorAll('.tag-filter-btn.active')).map(btn => btn.textContent.trim());
-  
-  if (activeTags.length > 0) {
-    filtered = filtered.filter(p => 
-      activeTags.some(tag => p.tags && p.tags.includes(tag))
-    );
+
+  // Category switching
+  function switchCategory(category) {
+    currentCategory = category;
+    document.querySelectorAll('.category-tab').forEach(tab => {
+      tab.classList.toggle('active', tab.dataset.category === category);
+    });
+    renderMainView();
   }
-  
-  if (sortVal === 'newest') filtered.reverse();
-  else if (sortVal === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
-  
-  document.getElementById('detailCountBadge').textContent = filtered.length;
-  
-  const grid = document.getElementById('promptsGrid');
-  grid.innerHTML = '';
-  
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state" style="grid-column: 1/-1;">
-        <div class="empty-icon">🔍</div>
-        <h3>Không tìm thấy prompt</h3>
-        <p>Hãy thử từ khóa khác hoặc thêm prompt mới</p>
-      </div>
-    `;
-    renderTagsFilterBar();
-    return;
-  }
-  
-  filtered.forEach(prompt => {
-    const card = document.createElement('div');
-    card.className = 'prompt-card';
-    
-    const hasPassword = prompt.password && prompt.password.length > 0;
-    const lockBadge = hasPassword ? `<span class="lock-status">🔒 LOCKED</span>` : '';
-    
-    const tagsHtml = (prompt.tags || []).map(tag => 
-      `<span class="tag-pill tag">${tag}</span>`
-    ).join('');
-    
-    card.innerHTML = `
-      <div class="card-top">
-        <div class="card-name">${prompt.name}</div>
-        ${lockBadge}
-      </div>
-      ${prompt.desc ? `<div class="card-desc">${prompt.desc}</div>` : ''}
-      <div class="card-tags">
-        <span class="tag-pill genre">${prompt.genreName}</span>
-        ${tagsHtml}
-      </div>
-    `;
-    
-    card.onclick = () => {
-      if (hasPassword) {
-        openUnlockModal(prompt);
-      } else {
-        openViewModal(prompt);
-      }
-    };
-    
-    grid.appendChild(card);
-  });
-  
-  renderTagsFilterBar();
-}
 
-function renderTagsFilterBar() {
-  const bar = document.getElementById('tagsFilterBar');
-  bar.innerHTML = '<span class="tags-filter-label">🏷️ Lọc theo tag:</span>';
-  
-  const prompts = allPrompts.filter(p => p.genre === currentGenreId);
-  const allTags = new Set();
-  prompts.forEach(p => {
-    if (p.tags) p.tags.forEach(t => allTags.add(t));
-  });
-  
-  allTags.forEach(tag => {
-    const btn = document.createElement('button');
-    btn.className = 'tag-filter-btn';
-    btn.textContent = tag;
-    btn.onclick = (e) => {
-      e.stopPropagation();
-      btn.classList.toggle('active');
-      renderDetailView();
-    };
-    bar.appendChild(btn);
-  });
-}
-
-function openViewModal(prompt) {
-  document.getElementById('viewTitle').textContent = prompt.name;
-  document.getElementById('viewDesc').textContent = prompt.desc || '(Không có mô tả)';
-  
-  const viewLink = document.getElementById('viewLink');
-  viewLink.innerHTML = '';
-  
-  const isUrl = prompt.link.startsWith('http://') || prompt.link.startsWith('https://');
-  if (isUrl) {
-    const link = document.createElement('a');
-    link.href = prompt.link;
-    link.target = '_blank';
-    link.className = 'btn btn-sm';
-    link.textContent = '🔗 Mở Link';
-    viewLink.appendChild(link);
-  } else {
-    const textDisplay = document.createElement('div');
-    textDisplay.className = 'prompt-text-display';
-    textDisplay.textContent = prompt.link;
-    viewLink.appendChild(textDisplay);
-    
-    const copyBtn = document.createElement('button');
-    copyBtn.className = 'btn btn-sm';
-    copyBtn.textContent = '📋 Copy';
-    copyBtn.onclick = () => {
-      navigator.clipboard.writeText(prompt.link);
-      showToast('Đã copy!', 'success');
-    };
-    viewLink.appendChild(copyBtn);
-  }
-  
-  const tagsGroup = document.getElementById('viewTagsGroup');
-  const viewTags = document.getElementById('viewTags');
-  if (prompt.tags && prompt.tags.length > 0) {
-    tagsGroup.style.display = 'block';
-    viewTags.innerHTML = prompt.tags.map(tag => `<span class="tag-pill tag">${tag}</span>`).join('');
-  } else {
-    tagsGroup.style.display = 'none';
-  }
-  
-  document.getElementById('viewModal').classList.remove('hidden');
-}
-
-function closeViewModal() {
-  document.getElementById('viewModal').classList.add('hidden');
-}
-
-function openUnlockModal(prompt) {
-  currentEditId = prompt.id;
-  document.getElementById('unlockBotName').textContent = prompt.name;
-  document.getElementById('unlockInput').value = '';
-  document.getElementById('unlockError').classList.remove('show');
-  
-  const hintWrap = document.getElementById('unlockHintWrap');
-  if (prompt.hint) {
-    hintWrap.textContent = `💡 Gợi ý: ${prompt.hint}`;
-    hintWrap.style.display = 'block';
-  } else {
-    hintWrap.style.display = 'none';
-  }
-  
-  document.getElementById('unlockModal').classList.remove('hidden');
-}
-
-function closeUnlockModal() {
-  document.getElementById('unlockModal').classList.add('hidden');
-  currentEditId = null;
-}
-
-function tryUnlock() {
-  const input = document.getElementById('unlockInput').value;
-  const prompt = allPrompts.find(p => p.id === currentEditId);
-  
-  if (!prompt) return;
-  
-  try {
-    const decrypted = CryptoJS.AES.decrypt(prompt.password, 'secret-key').toString(CryptoJS.enc.Utf8);
-    if (decrypted === input) {
-      closeUnlockModal();
-      openViewModal(prompt);
+  // Load and Save Data
+  function loadData() {
+    const stored = localStorage.getItem('hospitalData');
+    if (stored) {
+      const data = JSON.parse(stored);
+      genresData = data.genres || {};
+      promptsData = data.prompts || {};
+      admin = data.admin || null;
     } else {
-      document.getElementById('unlockError').classList.add('show');
+      initDefaultData();
     }
-  } catch (e) {
-    document.getElementById('unlockError').classList.add('show');
+    updateCategoryTabs();
   }
-}
 
-function openAdminLogin() {
-  document.getElementById('adminLoginModal').classList.remove('hidden');
-}
-
-function closeAdminLoginModal() {
-  document.getElementById('adminLoginModal').classList.add('hidden');
-  document.getElementById('adminEmailInput').value = '';
-  document.getElementById('adminPasswordInput').value = '';
-  document.getElementById('adminLoginError').textContent = '';
-}
-
-function loginAdmin() {
-  const email = document.getElementById('adminEmailInput').value;
-  const password = document.getElementById('adminPasswordInput').value;
-  
-  // Simple validation (admin password is "hauyennhi")
-  if (email && password === 'hauyennhi') {
-    isAdmin = true;
-    localStorage.setItem('adminEmail', email);
-    localStorage.setItem('adminSession', 'true');
-    document.getElementById('adminStatusInfo').style.display = 'flex';
-    document.getElementById('adminEmail').textContent = email;
-    document.getElementById('adminBtn').textContent = '✏ Chỉnh Sửa';
-    closeAdminLoginModal();
-    showToast('Đăng nhập thành công!', 'success');
-    openAdminPanel();
-  } else {
-    document.getElementById('adminLoginError').textContent = '❌ Email hoặc mật khẩu không đúng!';
+  function saveData() {
+    localStorage.setItem('hospitalData', JSON.stringify({
+      genres: genresData,
+      prompts: promptsData,
+      admin: admin
+    }));
   }
-}
 
-function checkAdminSession() {
-  if (localStorage.getItem('adminSession') === 'true') {
-    isAdmin = true;
-    const email = localStorage.getItem('adminEmail');
-    if (email) {
-      document.getElementById('adminStatusInfo').style.display = 'flex';
-      document.getElementById('adminEmail').textContent = email;
-      document.getElementById('adminBtn').textContent = '✏ Chỉnh Sửa';
-    }
-  }
-}
-
-function toggleAdminPanel() {
-  if (!isAdmin) {
-    openAdminLogin();
-  } else {
-    openAdminPanel();
-  }
-}
-
-function openAdminPanel() {
-  document.getElementById('adminPanelModal').classList.remove('hidden');
-  renderGenreListAdmin();
-  populateGenreSelect();
-  clearAdminForm();
-}
-
-function closeAdminPanel() {
-  document.getElementById('adminPanelModal').classList.add('hidden');
-}
-
-function renderGenreListAdmin() {
-  const list = document.getElementById('genreListAdmin');
-  list.innerHTML = '';
-  
-  allGenres.forEach(genre => {
-    const item = document.createElement('div');
-    item.className = 'genre-item';
-    item.innerHTML = `
-      <span>${genre.icon} ${genre.name}</span>
-      <span class="remove" onclick="deleteGenre('${genre.id}')">✕</span>
-    `;
-    list.appendChild(item);
-  });
-}
-
-function addGenre() {
-  const icon = document.getElementById('newGenreIcon').value || '📌';
-  const name = document.getElementById('newGenreInput').value.trim();
-  
-  if (!name) {
-    showToast('Vui lòng nhập tên thể loại', 'error');
-    return;
-  }
-  
-  const newGenre = {
-    id: 'genre_' + Date.now(),
-    icon,
-    name
-  };
-  
-  allGenres.push(newGenre);
-  saveData();
-  renderMainView();
-  renderGenreListAdmin();
-  populateGenreSelect();
-  
-  document.getElementById('newGenreIcon').value = '';
-  document.getElementById('newGenreInput').value = '';
-  
-  showToast('✓ Thêm thể loại thành công!', 'success');
-}
-
-function deleteGenre(genreId) {
-  if (confirm('Xóa thể loại này? Các prompt trong đó vẫn được lưu.')) {
-    allGenres = allGenres.filter(g => g.id !== genreId);
-    saveData();
-    renderMainView();
-    renderGenreListAdmin();
-    populateGenreSelect();
-    showToast('✓ Đã xóa thể loại', 'success');
-  }
-}
-
-function populateGenreSelect() {
-  const select = document.getElementById('fGenreSelect');
-  select.innerHTML = '<option value="">-- Chọn thể loại --</option>';
-  
-  allGenres.forEach(genre => {
-    const option = document.createElement('option');
-    option.value = genre.id;
-    option.textContent = `${genre.icon} ${genre.name}`;
-    select.appendChild(option);
-  });
-}
-
-function addGenreFromDropdown() {
-  const select = document.getElementById('fGenreSelect');
-  const genreId = select.value;
-  
-  if (!genreId) return;
-  
-  const genre = allGenres.find(g => g.id === genreId);
-  if (!genre) return;
-  
-  let genreList = window.currentFormGenres || [];
-  if (!genreList.find(g => g.id === genreId)) {
-    genreList.push(genre);
-    window.currentFormGenres = genreList;
-    renderFormGenreTags();
-  }
-  
-  select.value = '';
-}
-
-function renderFormGenreTags() {
-  const preview = document.getElementById('fGenrePrev');
-  preview.innerHTML = '';
-  
-  const genres = window.currentFormGenres || [];
-  genres.forEach(genre => {
-    const tag = document.createElement('div');
-    tag.className = 'tag-removable genre';
-    tag.innerHTML = `
-      <span>${genre.icon} ${genre.name}</span>
-      <span class="rm" onclick="removeGenreFromForm('${genre.id}')">✕</span>
-    `;
-    preview.appendChild(tag);
-  });
-}
-
-function removeGenreFromForm(genreId) {
-  let genres = window.currentFormGenres || [];
-  genres = genres.filter(g => g.id !== genreId);
-  window.currentFormGenres = genres;
-  renderFormGenreTags();
-}
-
-function addTag(type) {
-  const inputId = type === 'tag' ? 'fTagInput' : '';
-  const input = document.getElementById(inputId);
-  const val = input.value.trim();
-  
-  if (!val) return;
-  
-  let tags = window.currentFormTags || [];
-  const tagsToAdd = val.split(',').map(t => t.trim()).filter(t => t && !tags.includes(t));
-  
-  tags.push(...tagsToAdd);
-  window.currentFormTags = tags;
-  input.value = '';
-  renderFormTags();
-}
-
-function renderFormTags() {
-  const preview = document.getElementById('fTagPrev');
-  preview.innerHTML = '';
-  
-  const tags = window.currentFormTags || [];
-  tags.forEach(tag => {
-    const tagEl = document.createElement('div');
-    tagEl.className = 'tag-removable tag';
-    tagEl.innerHTML = `
-      <span>${tag}</span>
-      <span class="rm" onclick="removeTagFromForm('${tag}')">✕</span>
-    `;
-    preview.appendChild(tagEl);
-  });
-}
-
-function removeTagFromForm(tag) {
-  let tags = window.currentFormTags || [];
-  tags = tags.filter(t => t !== tag);
-  window.currentFormTags = tags;
-  renderFormTags();
-}
-
-function handleTagKey(e, type) {
-  if (e.key === 'Enter') {
-    e.preventDefault();
-    addTag(type);
-  }
-}
-
-function togglePwFields() {
-  const checked = document.getElementById('fPwEnabled').checked;
-  document.getElementById('pwFields').classList.toggle('hidden', !checked);
-}
-
-function savePrompt() {
-  const name = document.getElementById('fName').value.trim();
-  const link = document.getElementById('fLink').value.trim();
-  const desc = document.getElementById('fDesc').value.trim();
-  const genreId = (window.currentFormGenres || [])[0]?.id;
-  const password = document.getElementById('fPassword').value;
-  const hint = document.getElementById('fHint').value;
-  const tags = window.currentFormTags || [];
-  
-  if (!name || !link) {
-    showToast('❌ Vui lòng nhập tên và link/text', 'error');
-    return;
-  }
-  
-  if (!genreId) {
-    showToast('❌ Vui lòng chọn thể loại', 'error');
-    return;
-  }
-  
-  const genre = allGenres.find(g => g.id === genreId);
-  const encPassword = password ? CryptoJS.AES.encrypt(password, 'secret-key').toString() : '';
-  
-  if (currentEditId) {
-    const idx = allPrompts.findIndex(p => p.id === currentEditId);
-    if (idx !== -1) {
-      allPrompts[idx] = {
-        ...allPrompts[idx],
-        name,
-        link,
-        desc,
-        genre: genreId,
-        genreName: genre.name,
-        password: encPassword,
-        hint,
-        tags
-      };
-    }
-  } else {
-    const newPrompt = {
-      id: 'prompt_' + Date.now(),
-      name,
-      link,
-      desc,
-      genre: genreId,
-      genreName: genre.name,
-      password: encPassword,
-      hint,
-      tags
+  function initDefaultData() {
+    genresData = {
+      'reception': { icon: '🏥', name: 'Tường tiếp đón', category: 'hospital' },
+      'cardio': { icon: '❤️', name: 'Phòng tim mạch', category: 'hospital' },
+      'ortho': { icon: '🦴', name: 'Phòng chỉnh hình', category: 'hospital' },
+      'neuro': { icon: '🧠', name: 'Phòng thần kinh', category: 'hospital' },
+      'program1': { icon: '📚', name: 'Chương trình 1', category: 'rehab' },
+      'program2': { icon: '🎯', name: 'Chương trình 2', category: 'rehab' }
     };
-    allPrompts.push(newPrompt);
+    promptsData = {};
+    saveData();
   }
-  
-  saveData();
-  renderDetailView();
-  closeAdminPanel();
-  showToast('✓ Lưu prompt thành công!', 'success');
-}
 
-function clearAdminForm() {
-  document.getElementById('fName').value = '';
-  document.getElementById('fLink').value = '';
-  document.getElementById('fDesc').value = '';
-  document.getElementById('fPassword').value = '';
-  document.getElementById('fHint').value = '';
-  document.getElementById('fPwEnabled').checked = false;
-  document.getElementById('fGenreSelect').value = '';
-  window.currentFormGenres = [];
-  window.currentFormTags = [];
-  currentEditId = null;
-  togglePwFields();
-  renderFormGenreTags();
-  renderFormTags();
-}
-
-function logoutAdmin() {
-  if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
-    isAdmin = false;
-    localStorage.removeItem('adminSession');
-    localStorage.removeItem('adminEmail');
-    document.getElementById('adminStatusInfo').style.display = 'none';
-    document.getElementById('adminBtn').textContent = '⚙ Admin';
-    closeAdminPanel();
-    showToast('✓ Đã đăng xuất', 'success');
+  // Render functions
+  function renderWelcome() {
+    document.getElementById('welcomePage').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
   }
-}
 
-function togglePwVis(inputId, btn) {
-  const input = document.getElementById(inputId);
-  if (input.type === 'password') {
-    input.type = 'text';
-    btn.textContent = '🙈';
-  } else {
-    input.type = 'password';
-    btn.textContent = '👁';
+  function updateCategoryTabs() {
+    const tabs = document.getElementById('categoryTabs');
+    if (tabs) {
+      const hospitalCount = Object.values(genresData).filter(g => g.category === 'hospital').length;
+      const rehabCount = Object.values(genresData).filter(g => g.category === 'rehab').length;
+      
+      tabs.innerHTML = `
+        <button class="category-tab active" onclick="switchCategory('hospital')" data-category="hospital">
+          📋 Bệnh Viện (${hospitalCount})
+        </button>
+        <button class="category-tab" onclick="switchCategory('rehab')" data-category="rehab">
+          🔺 Trại Cai Nghiện (${rehabCount})
+        </button>
+      `;
+      const firstTab = tabs.querySelector('.category-tab');
+      if (firstTab) firstTab.classList.add('active');
+    }
   }
-}
 
-function showToast(message, type = 'success') {
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.innerHTML = `
-    <span class="toast-icon">${type === 'success' ? '✓' : '✗'}</span>
-    <span>${message}</span>
-  `;
-  document.body.appendChild(toast);
-  
-  setTimeout(() => {
-    toast.classList.add('fade-out');
-    setTimeout(() => toast.remove(), 300);
-  }, 2500);
-}
+  function renderMainView() {
+    const genreGrid = document.getElementById('genreGrid');
+    const filteredGenres = Object.entries(genresData).filter(([_, g]) => g.category === currentCategory);
+    
+    document.getElementById('categoryTitle').textContent = 
+      currentCategory === 'hospital' ? '🏥 SƠ ĐỒ PHÒNG BAN VIỆN TÂM THẦN' : '🔺 CHƯƠNG TRÌNH CẠI NGHIỆN';
 
-function handleGlobalSearch() {
-  globalSearchQuery = document.getElementById('globalSearch').value.toLowerCase();
-  
-  if (currentGenreId === null) {
-    // Ở mainView - tìm kiếm theo tên thể loại
-    renderMainView();
-  } else {
-    // Ở detailView - update renderDetailView để filter theo global search
+    genreGrid.innerHTML = filteredGenres.map(([id, genre]) => `
+      <div class="genre-card" onclick="selectGenre('${id}', '${genre.name}')">
+        <div class="genre-icon">${genre.icon}</div>
+        <div class="genre-name">${genre.name}</div>
+        <div class="genre-count">${Object.values(promptsData).filter(p => p.genre === id && p.categories.includes(currentCategory)).length} prompts</div>
+      </div>
+    `).join('');
+
+    document.getElementById('countBadge').textContent = filteredGenres.length;
+  }
+
+  function selectGenre(genreId, genreName) {
+    currentGenre = genreId;
+    document.getElementById('mainView').style.display = 'none';
+    document.getElementById('detailView').style.display = 'block';
+    document.getElementById('detailTitle').textContent = genresData[genreId].icon + ' ' + genreName;
     renderDetailView();
   }
-}
 
-// Ghi đè renderDetailView để hỗ trợ global search
-const originalRenderDetailView = renderDetailView;
-renderDetailView = function() {
-  const searchVal = (document.getElementById('searchInput').value || '').toLowerCase();
-  const globalSearch = globalSearchQuery;
-  const sortVal = document.getElementById('sortSelect').value;
-  
-  let filtered = allPrompts.filter(p => p.genre === currentGenreId);
-  
-  // Kết hợp cả local search (trong detail view) và global search
-  const combinedSearch = globalSearch || searchVal;
-  if (combinedSearch) {
-    filtered = filtered.filter(p => 
-      p.name.toLowerCase().includes(combinedSearch) || 
-      (p.desc && p.desc.toLowerCase().includes(combinedSearch))
-    );
+  function backToGenreView() {
+    currentGenre = null;
+    document.getElementById('mainView').style.display = 'block';
+    document.getElementById('detailView').style.display = 'none';
   }
-  
-  const tagsFilterBar = document.getElementById('tagsFilterBar');
-  const activeTags = Array.from(tagsFilterBar.querySelectorAll('.tag-filter-btn.active')).map(btn => btn.textContent.trim());
-  
-  if (activeTags.length > 0) {
-    filtered = filtered.filter(p => 
-      activeTags.some(tag => p.tags && p.tags.includes(tag))
-    );
+
+  function renderDetailView() {
+    const searchText = (document.getElementById('searchInput')?.value || '').toLowerCase();
+    const prompts = Object.entries(promptsData)
+      .filter(([_, p]) => {
+        const matchGenre = p.genre === currentGenre;
+        const matchSearch = p.name.toLowerCase().includes(searchText) || p.desc.toLowerCase().includes(searchText);
+        const matchCategory = p.categories.includes(currentCategory);
+        return matchGenre && matchSearch && matchCategory;
+      })
+      .map(([id, p]) => ({ id, ...p }));
+
+    const sortBy = document.getElementById('sortSelect')?.value || 'newest';
+    prompts.sort((a, b) => {
+      if (sortBy === 'newest') return (b.created || 0) - (a.created || 0);
+      if (sortBy === 'oldest') return (a.created || 0) - (b.created || 0);
+      return a.name.localeCompare(b.name);
+    });
+
+    const promptsGrid = document.getElementById('promptsGrid');
+    promptsGrid.innerHTML = prompts.length ? prompts.map(p => `
+      <div class="prompt-card" onclick="viewPrompt('${p.id}')">
+        <div class="card-top">
+          <div class="card-name">${p.name}</div>
+          ${p.password ? '<div class="lock-status">🔐 KHÓA</div>' : ''}
+        </div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-tags">
+          <span class="tag-pill genre">${p.genre}</span>
+          ${p.tags.map(t => `<span class="tag-pill tag">${t}</span>`).join('')}
+        </div>
+      </div>
+    `).join('') : '<div class="empty-state"><div class="empty-icon">📭</div><h3>Không có prompts</h3></div>';
+
+    document.getElementById('detailCountBadge').textContent = prompts.length;
   }
-  
-  if (sortVal === 'newest') filtered.reverse();
-  else if (sortVal === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
-  
-  document.getElementById('detailCountBadge').textContent = filtered.length;
-  
-  const grid = document.getElementById('promptsGrid');
-  grid.innerHTML = '';
-  
-  if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state" style="grid-column: 1/-1;">
-        <div class="empty-icon">🔍</div>
-        <h3>Không tìm thấy prompt</h3>
-        <p>Hãy thử từ khóa khác hoặc thêm prompt mới</p>
+
+  function viewPrompt(promptId) {
+    const prompt = promptsData[promptId];
+    if (!prompt) return;
+
+    if (prompt.password) {
+      showUnlockModal(promptId);
+    } else {
+      openPromptLink(prompt);
+    }
+  }
+
+  function openPromptLink(prompt) {
+    if (prompt.link.startsWith('http')) {
+      window.open(prompt.link, '_blank');
+    } else {
+      showPromptTextModal(prompt);
+    }
+  }
+
+  function showUnlockModal(promptId) {
+    const prompt = promptsData[promptId];
+    const modal = document.createElement('div');
+    modal.className = 'modal-bg';
+    modal.innerHTML = `
+      <div class="modal unlock-modal">
+        <div class="modal-header">
+          <span class="modal-title">🔐 Nhập Mật Khẩu</span>
+          <button class="close-btn" onclick="this.closest('.modal-bg').remove()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="lock-big">🔒</div>
+          <div class="hint-text">${prompt.hint}</div>
+          <div class="form-group">
+            <label class="form-label">Mật Khẩu</label>
+            <div class="pw-input-wrap">
+              <input type="password" id="unlockPw" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPassword('${promptId}')">
+              <button class="pw-toggle-vis" onclick="togglePwVis('unlockPw', this)">👁</button>
+            </div>
+            <div class="pw-error" id="pwError"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" onclick="this.closest('.modal-bg').remove()">Hủy</button>
+          <button class="btn btn-gold" onclick="checkPassword('${promptId}')">Mở Khóa</button>
+        </div>
       </div>
     `;
-    renderTagsFilterBar();
-    return;
+    document.body.appendChild(modal);
+    modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
   }
-  
-  filtered.forEach(prompt => {
-    const card = document.createElement('div');
-    card.className = 'prompt-card';
+
+  function checkPassword(promptId) {
+    const inputPw = document.getElementById('unlockPw').value;
+    const prompt = promptsData[promptId];
     
-    const hasPassword = prompt.password && prompt.password.length > 0;
-    const lockBadge = hasPassword ? `<span class="lock-status">🔒 LOCKED</span>` : '';
-    
-    const tagsHtml = (prompt.tags || []).map(tag => 
-      `<span class="tag-pill tag">${tag}</span>`
-    ).join('');
-    
-    card.innerHTML = `
-      <div class="card-top">
-        <div class="card-name">${prompt.name}</div>
-        ${lockBadge}
-      </div>
-      ${prompt.desc ? `<div class="card-desc">${prompt.desc}</div>` : ''}
-      <div class="card-tags">
-        <span class="tag-pill genre">${prompt.genreName}</span>
-        ${tagsHtml}
+    if (CryptoJS.SHA256(inputPw).toString() === prompt.password) {
+      document.querySelector('.modal-bg').remove();
+      showToast('✓ Đúng mật khẩu!', 'success');
+      openPromptLink(prompt);
+    } else {
+      document.getElementById('pwError').classList.add('show');
+      document.getElementById('pwError').textContent = '❌ Mật khẩu sai!';
+    }
+  }
+
+  function showPromptTextModal(prompt) {
+    const modal = document.createElement('div');
+    modal.className = 'modal-bg';
+    modal.innerHTML = `
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-title">${prompt.name}</span>
+          <button class="close-btn" onclick="this.closest('.modal-bg').remove()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="prompt-text-display">${prompt.link}</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-gold" onclick="navigator.clipboard.writeText(\`${prompt.link}\`); showToast('✓ Đã sao chép!', 'success')">📋 Sao Chép</button>
+        </div>
       </div>
     `;
-    
-    card.onclick = () => {
-      if (hasPassword) {
-        openUnlockModal(prompt);
+    document.body.appendChild(modal);
+    modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+  }
+
+  // Admin functions
+  function showAdminLoginModal() {
+    document.getElementById('adminLoginModal').classList.remove('hidden');
+  }
+
+  function closeAdminLoginModal() {
+    document.getElementById('adminLoginModal').classList.add('hidden');
+    document.getElementById('adminEmailInput').value = '';
+    document.getElementById('adminPasswordInput').value = '';
+    document.getElementById('adminLoginError').textContent = '';
+  }
+
+  function loginAdmin() {
+    const email = document.getElementById('adminEmailInput').value;
+    const password = document.getElementById('adminPasswordInput').value;
+    const errorDiv = document.getElementById('adminLoginError');
+
+    if (!email || !password) {
+      errorDiv.classList.add('show');
+      errorDiv.textContent = '❌ Vui lòng nhập email và mật khẩu!';
+      return;
+    }
+
+    if (!admin) {
+      admin = { email, password: CryptoJS.SHA256(password).toString() };
+      saveData();
+      errorDiv.classList.remove('show');
+      closeAdminLoginModal();
+      document.getElementById('adminStatusInfo').style.display = 'flex';
+      document.getElementById('adminEmail').textContent = email;
+      document.getElementById('adminBtn').style.display = 'inline-flex';
+      showToast('✓ Đã tạo tài khoản Admin!', 'success');
+    } else {
+      if (admin.email === email && admin.password === CryptoJS.SHA256(password).toString()) {
+        errorDiv.classList.remove('show');
+        closeAdminLoginModal();
+        document.getElementById('adminStatusInfo').style.display = 'flex';
+        document.getElementById('adminEmail').textContent = email;
+        document.getElementById('adminBtn').style.display = 'inline-flex';
+        showToast('✓ Đăng nhập thành công!', 'success');
       } else {
-        openViewModal(prompt);
+        errorDiv.classList.add('show');
+        errorDiv.textContent = '❌ Email hoặc mật khẩu sai!';
       }
-    };
-    
-    grid.appendChild(card);
-  });
-  
-  renderTagsFilterBar();
-};
+    }
+  }
 
-// Initialize
-checkAdminSession();
-loadData();
+  function toggleAdminPanel() {
+    if (!admin) {
+      showAdminLoginModal();
+      return;
+    }
+    document.getElementById('adminPanelModal').classList.remove('hidden');
+    renderAdminPanel();
+  }
+
+  function closeAdminPanel() {
+    document.getElementById('adminPanelModal').classList.add('hidden');
+    clearForm();
+  }
+
+  function renderAdminPanel() {
+    renderGenreList();
+    renderGenreSelect();
+    clearForm();
+  }
+
+  function renderGenreList() {
+    const list = document.getElementById('genreListAdmin');
+    list.innerHTML = Object.entries(genresData).map(([id, g]) => `
+      <div class="genre-item">
+        <span>${g.icon} ${g.name}</span>
+        <span class="remove" onclick="removeGenre('${id}')">✕</span>
+      </div>
+    `).join('');
+  }
+
+  function renderGenreSelect() {
+    const select = document.getElementById('fGenreSelect');
+    select.innerHTML = '<option value="">-- Chọn thể loại --</option>' +
+      Object.entries(genresData).map(([id, g]) => `<option value="${id}">${g.icon} ${g.name}</option>`).join('');
+  }
+
+  function addGenre() {
+    const icon = document.getElementById('newGenreIcon').value || '📌';
+    const name = document.getElementById('newGenreInput').value.trim();
+    
+    if (!name) {
+      showToast('❌ Vui lòng nhập tên thể loại!', 'error');
+      return;
+    }
+
+    const id = name.toLowerCase().replace(/\s+/g, '_');
+    genresData[id] = { icon, name, category: currentCategory };
+    saveData();
+    
+    document.getElementById('newGenreIcon').value = '';
+    document.getElementById('newGenreInput').value = '';
+    renderGenreList();
+    renderGenreSelect();
+    renderMainView();
+    updateCategoryTabs();
+    showToast('✓ Đã thêm thể loại!', 'success');
+  }
+
+  function removeGenre(genreId) {
+    if (confirm('Bạn chắc chắn muốn xóa thể loại này?')) {
+      Object.keys(promptsData).forEach(pid => {
+        if (promptsData[pid].genre === genreId) delete promptsData[pid];
+      });
+      delete genresData[genreId];
+      saveData();
+      renderGenreList();
+      renderGenreSelect();
+      renderMainView();
+      updateCategoryTabs();
+      showToast('✓ Đã xóa thể loại!', 'success');
+    }
+  }
+
+  function addGenreFromDropdown() {
+    const select = document.getElementById('fGenreSelect');
+    const genreId = select.value;
+    if (genreId && !selectedGenres.includes(genreId)) {
+      selectedGenres.push(genreId);
+      renderGenrePreview();
+    }
+    select.value = '';
+  }
+
+  function removeGenreFromForm(genreId) {
+    selectedGenres = selectedGenres.filter(g => g !== genreId);
+    renderGenrePreview();
+  }
+
+  function renderGenrePreview() {
+    const preview = document.getElementById('fGenrePrev');
+    preview.innerHTML = selectedGenres.map(gid => `
+      <div class="tag-removable genre">
+        <span>${genresData[gid].icon} ${genresData[gid].name}</span>
+        <span class="rm" onclick="removeGenreFromForm('${gid}')">✕</span>
+      </div>
+    `).join('');
+  }
+
+  function addTag(type) {
+    const input = document.getElementById('fTagInput');
+    const tags = input.value.split(',').map(t => t.trim()).filter(t => t);
+    selectedTags = [...new Set([...selectedTags, ...tags])];
+    input.value = '';
+    renderTagPreview();
+  }
+
+  function removeTag(tag) {
+    selectedTags = selectedTags.filter(t => t !== tag);
+    renderTagPreview();
+  }
+
+  function renderTagPreview() {
+    const preview = document.getElementById('fTagPrev');
+    preview.innerHTML = selectedTags.map(tag => `
+      <div class="tag-removable tag">
+        <span>${tag}</span>
+        <span class="rm" onclick="removeTag('${tag}')">✕</span>
+      </div>
+    `).join('');
+  }
+
+  function handleTagKey(e, type) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addTag(type);
+    }
+  }
+
+  function togglePwFields() {
+    const checked = document.getElementById('fPwEnabled').checked;
+    document.getElementById('pwFields').classList.toggle('hidden', !checked);
+  }
+
+  function savePrompt() {
+    const name = document.getElementById('fName').value.trim();
+    const link = document.getElementById('fLink').value.trim();
+    
+    if (!name || !link) {
+      showToast('❌ Vui lòng nhập tên và link/text!', 'error');
+      return;
+    }
+
+    if (selectedGenres.length === 0) {
+      showToast('❌ Vui lòng chọn ít nhất một thể loại!', 'error');
+      return;
+    }
+
+    const categories = [];
+    if (document.getElementById('fCategoryHospital').checked) categories.push('hospital');
+    if (document.getElementById('fCategoryRehab').checked) categories.push('rehab');
+    
+    if (categories.length === 0) {
+      showToast('❌ Vui lòng chọn ít nhất một khu vực!', 'error');
+      return;
+    }
+
+    const pwEnabled = document.getElementById('fPwEnabled').checked;
+    const id = Date.now().toString();
+
+    promptsData[id] = {
+      name,
+      link,
+      desc: document.getElementById('fDesc').value,
+      genre: selectedGenres[0],
+      tags: selectedTags,
+      password: pwEnabled ? CryptoJS.SHA256(document.getElementById('fPassword').value).toString() : null,
+      hint: pwEnabled ? document.getElementById('fHint').value : null,
+      categories: categories,
+      created: Date.now()
+    };
+
+    saveData();
+    clearForm();
+    showToast('✓ Đã lưu prompt!', 'success');
+  }
+
+  function clearForm() {
+    document.getElementById('fName').value = '';
+    document.getElementById('fLink').value = '';
+    document.getElementById('fDesc').value = '';
+    document.getElementById('fPwEnabled').checked = false;
+    document.getElementById('fPassword').value = '';
+    document.getElementById('fHint').value = '';
+    document.getElementById('fCategoryHospital').checked = true;
+    document.getElementById('fCategoryRehab').checked = false;
+    selectedGenres = [];
+    selectedTags = [];
+    renderGenrePreview();
+    renderTagPreview();
+    togglePwFields();
+  }
+
+  function handleGlobalSearch() {
+    // Implement global search if needed
+  }
+
+  function togglePwVis(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      btn.textContent = '👁';
+    }
+  }
+
+  function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : '❌'}</span><span>${message}</span>`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.add('fade-out');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Initialize on load
+  window.addEventListener('load', init);
 </script>
 </body>
 </html>
