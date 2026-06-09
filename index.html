@@ -22,1640 +22,595 @@
     --success: #00a854;
     --success-light: #1ab394;
     --warning: #f59e0b;
-    --danger: #dc2626;
-    --text: #1a3a52;
-    --text2: #4a6a8a;
-    --text3: #7a8a9a;
-    --text-dark: #556080;
-    --radius: 14px;
-    --glow: 0 0 20px rgba(0,102,204,0.15);
-    --glow-danger: 0 0 20px rgba(220,38,38,0.15);
-    --shadow: 0 4px 12px rgba(0,102,204,0.1);
-    --shadow-lg: 0 8px 24px rgba(0,102,204,0.12);
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --radius: 16px;
+    --radius-sm: 8px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.05);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  body {
-    background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
-    font-size: 16px;
-    min-height: 100vh;
-    overflow-x: hidden;
-    letter-spacing: 0.3px;
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+  body { background: var(--bg); color: var(--text); overflow-x: hidden; min-height: 100vh; }
 
-  body::before {
-    content: '';
+  /* MÀN HÌNH CHÀO MỪNG (WELCOME SCREEN) */
+  #welcomeScreen {
     position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(0,102,204,0.04) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(220,38,38,0.03) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .bg-orbs {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-  .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: 0.06;
-    animation: drift 25s ease-in-out infinite;
-  }
-  .orb1 { width: 600px; height: 600px; background: var(--primary); top: -200px; left: -100px; animation-delay: 0s; }
-  .orb2 { width: 400px; height: 400px; background: var(--accent); bottom: -100px; right: -100px; animation-delay: -8s; }
-  .orb3 { width: 300px; height: 300px; background: var(--success); top: 40%; left: 60%; animation-delay: -15s; }
-  
-  @keyframes drift {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -20px) scale(1.05); }
-    66% { transform: translate(-20px, 30px) scale(0.95); }
-  }
-
-  #app { position: relative; z-index: 1; }
-
-  /* WELCOME PAGE STYLES */
-  .welcome-container {
-    position: fixed;
-    inset: 0;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at center, var(--bg2) 0%, var(--bg) 100%);
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 40px 20px;
-    z-index: 150;
-    background: linear-gradient(135deg, #1a2a4e 0%, #2d4a7a 50%, #1a3a52 100%);
+    padding: 20px;
+    transition: var(--transition);
   }
-
-  .welcome-container.hidden { display: none; }
-
-  .welcome-header {
-    text-align: center;
-    margin-bottom: 60px;
+  #welcomeScreen.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.02);
   }
-
-  .welcome-logo {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    justify-content: center;
-    margin-bottom: 24px;
-  }
-
-  .welcome-logo-icon {
-    font-size: 48px;
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 30px rgba(124,58,237,0.3);
-  }
-
-  .welcome-logo-text {
-    color: white;
-  }
-
-  .welcome-logo-text .main {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 900;
-    margin-bottom: 4px;
-  }
-
-  .welcome-logo-text .sub {
-    font-size: 12px;
-    color: #a0a0ff;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
-
   .welcome-title {
     font-family: 'Playfair Display', serif;
-    font-size: 48px;
-    font-weight: 900;
-    color: white;
+    font-size: 2.5rem;
+    color: var(--primary);
     text-align: center;
-    margin-bottom: 32px;
-    line-height: 1.2;
-    max-width: 800px;
+    margin-bottom: 10px;
   }
-
-  .welcome-category-buttons {
+  .welcome-subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+  .zone-selection-container {
     display: flex;
-    gap: 24px;
-    justify-content: center;
-    margin-bottom: 48px;
-    flex-wrap: wrap;
-  }
-
-  .welcome-btn {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 18px 36px;
-    border-radius: 14px;
-    border: none;
-    background: white;
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
-
-  .welcome-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-  }
-
-  .welcome-btn-icon { font-size: 24px; }
-
-  .welcome-social-buttons {
-    display: flex;
-    gap: 16px;
+    gap: 30px;
+    max-width: 900px;
+    width: 100%;
     justify-content: center;
     flex-wrap: wrap;
   }
-
-  .welcome-social-btn {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    border-radius: 12px;
-    border: none;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .social-discord {
-    background: #5865f2;
-    color: white;
-  }
-
-  .social-discord:hover {
-    background: #4752c4;
-  }
-
-  .social-facebook {
-    background: #1877f2;
-    color: white;
-  }
-
-  .social-facebook:hover {
-    background: #0a66c2;
-  }
-
-  .welcome-admin-login {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    z-index: 160;
-  }
-
-  .welcome-admin-btn {
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: 1.5px solid rgba(255,255,255,0.3);
-    background: rgba(255,255,255,0.1);
-    color: white;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    backdrop-filter: blur(10px);
-  }
-
-  .welcome-admin-btn:hover {
-    background: rgba(255,255,255,0.2);
-    border-color: rgba(255,255,255,0.5);
-  }
-
-  /* CATEGORY TAB SWITCHER */
-  .category-tabs {
-    display: flex;
-    gap: 0;
-    margin-bottom: 24px;
-    background: var(--bg2);
-    border-radius: 12px;
-    padding: 6px;
-    width: fit-content;
-    box-shadow: var(--shadow);
-  }
-
-  .category-tab {
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    background: transparent;
-    color: var(--text3);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  .category-tab.active {
-    background: var(--card);
-    color: var(--primary);
-    box-shadow: var(--shadow);
-  }
-
-  header {
-    padding: 24px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 3px solid var(--primary);
-    backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.9);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: var(--shadow);
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .logo-wrap { display: flex; align-items: center; gap: 16px; }
-  
-  .logo-icon {
-    width: 52px; height: 52px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 32px;
-    box-shadow: var(--shadow), inset 0 0 20px rgba(255,255,255,0.3);
-    animation: pulse 3s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: var(--shadow), inset 0 0 20px rgba(255,255,255,0.3); }
-    50% { box-shadow: 0 0 30px rgba(0,102,204,0.3), inset 0 0 30px rgba(255,255,255,0.4); }
-  }
-
-  .logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 900;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-  }
-
-  .logo-sub { 
-    font-size: 11px; 
-    color: var(--text3); 
-    font-family: 'JetBrains Mono', monospace; 
-    letter-spacing: 2px; 
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-
-  .header-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-  
-  .btn {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: 1.5px solid var(--border);
-    background: var(--card);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    box-shadow: var(--shadow);
-  }
-
-  .btn:hover { 
-    background: var(--bg2);
-    border-color: var(--primary);
-    color: var(--primary);
-    box-shadow: var(--glow), var(--shadow-lg);
-    transform: translateY(-2px);
-  }
-
-  .btn-gold {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    border-color: var(--primary);
-    color: white;
-    box-shadow: var(--shadow);
-  }
-
-  .btn-gold:hover { 
-    background: linear-gradient(135deg, var(--primary-light), var(--primary));
-    box-shadow: var(--glow), var(--shadow-lg);
-  }
-
-  .btn-danger { 
-    border-color: var(--danger); 
-    color: white;
-    background: var(--danger);
-  }
-
-  .btn-danger:hover { 
-    background: rgba(220,38,38,0.9);
-    border-color: var(--danger);
-    box-shadow: var(--glow-danger);
-  }
-
-  .btn-sm { padding: 7px 14px; font-size: 12px; }
-  .btn-icon { padding: 8px; }
-  .btn-back {
-    background: var(--bg2);
-    border-color: var(--border);
-    color: var(--text);
-    margin-bottom: 20px;
-  }
-
-  main { padding: 40px; max-width: 1400px; margin: 0 auto; }
-
-  .search-bar-section {
-    background: var(--bg2);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-  }
-
-  .search-wrap {
-    position: relative;
-    width: 100%;
-  }
-
-  .search-wrap .icon {
-    position: absolute; 
-    left: 16px; 
-    top: 50%; 
-    transform: translateY(-50%);
-    color: var(--text3); 
-    font-size: 16px; 
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .search-wrap input {
-    width: 100%;
-    padding: 12px 16px 12px 48px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    background: var(--card);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 15px;
-    transition: all 0.3s;
-    box-shadow: var(--shadow);
-    position: relative;
-    z-index: 2;
-  }
-
-  .search-wrap input:focus {
-    border-color: var(--primary);
-    background: rgba(0,102,204,0.03);
-    box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
-  }
-
-  .search-wrap input::placeholder {
-    color: var(--text3);
-  }
-
-  .genre-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 24px;
-  }
-
-  .genre-card {
+  .zone-card {
     background: var(--card);
     border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 28px 24px;
-    cursor: pointer;
-    transition: all 0.3s;
+    border-radius: 24px;
+    padding: 40px 30px;
+    width: 380px;
     text-align: center;
+    cursor: pointer;
+    transition: var(--transition);
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
-    position: relative;
-    overflow: hidden;
   }
-
-  .genre-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(220,38,38,0.03) 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: -1;
-  }
-
-  .genre-card:hover {
+  .zone-card:hover {
+    transform: translateY(-8px);
     border-color: var(--primary);
-    transform: translateY(-6px);
-    box-shadow: var(--glow), var(--shadow-lg);
+    box-shadow: 0 12px 30px rgba(0,102,204,0.15);
   }
-
-  .genre-card:hover::before { opacity: 1; }
-
-  .genre-icon {
-    font-size: 48px;
-    line-height: 1;
+  .zone-card .icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
   }
-
-  .genre-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--primary);
-  }
-
-  .genre-count {
-    font-size: 13px;
-    color: var(--text3);
-    font-weight: 600;
-    display: none;
-  }
-
-  .prompts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 18px;
-  }
-
-  .prompt-card {
-    background: var(--card);
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 22px;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-    overflow: visible;
-    animation: fadeUp 0.5s ease both;
-    box-shadow: var(--shadow);
-  }
-
-  .prompt-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    opacity: 0;
-    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(220,38,38,0.03) 100%);
-    transition: opacity 0.3s;
-    pointer-events: none;
-  }
-
-  .prompt-card:hover { 
-    border-color: var(--primary);
-    transform: translateY(-4px);
-    box-shadow: var(--glow), var(--shadow-lg);
-    background: rgba(0,102,204,0.02);
-  }
-
-  .prompt-card:hover::before { opacity: 1; }
-
-  .card-top {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    margin-bottom: 12px; gap: 12px;
-  }
-
-  .card-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--primary);
-    line-height: 1.4;
-    flex: 1;
-  }
-
-  .lock-status {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    color: var(--danger);
-    background: rgba(220,38,38,0.1);
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .card-desc {
-    font-size: 14px;
-    color: var(--text2);
-    line-height: 1.6;
-    margin-bottom: 14px;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    font-weight: 400;
-  }
-
-  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-  
-  .tag-pill {
-    font-size: 11px;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.2px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  .tag-pill.genre { 
-    background: rgba(0,102,204,0.15); 
-    border: 1px solid rgba(0,102,204,0.4); 
-    color: var(--primary);
-  }
-
-  .tag-pill.tag { 
-    background: rgba(220,38,38,0.15); 
-    border: 1px solid rgba(220,38,38,0.4); 
-    color: var(--accent);
-  }
-
-  .filter-bar {
-    display: flex; gap: 14px; align-items: center;
-    margin-bottom: 12px;
-    flex-wrap: wrap;
-  }
-
-  input[type="text"], input[type="password"], input[type="email"], textarea, select {
-    background: var(--card);
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
+  .zone-card h3 {
+    font-size: 1.6rem;
     color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 15px;
-    padding: 12px 16px;
-    width: 100%;
-    transition: all 0.3s;
-    outline: none;
-    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+  }
+  .zone-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
-  input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
-    border-color: var(--primary);
-    background: rgba(0,102,204,0.03);
-    box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
-  }
+  /* GIAO DIỆN HỆ THỐNG CHÍNH */
+  #app { display: none; padding: 20px; max-width: 1400px; margin: 0 auto; }
+  #app.active { display: block; }
 
-  select { appearance: none; cursor: pointer; }
-
-  .tags-filter-bar {
+  header {
     display: flex;
-    gap: 10px;
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .tags-filter-label {
-    font-size: 13px;
-    color: var(--primary);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    white-space: nowrap;
-  }
-
-  .tag-filter-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 10px;
-    border: 1.5px solid var(--border);
-    background: var(--card);
-    color: var(--text2);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-  }
-
-  .tag-filter-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-  }
-
-  .tag-filter-btn.active {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    border-color: var(--primary);
-    color: white;
-    box-shadow: var(--glow);
-  }
-
-  .section-header {
-    display: flex; align-items: baseline; gap: 14px;
-    margin-bottom: 24px;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
-    font-weight: 900;
-    color: var(--primary);
-    letter-spacing: -0.5px;
-  }
-
-  .count-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    color: var(--primary);
-    background: rgba(0,102,204,0.1);
-    border: 1px solid var(--primary);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-weight: 700;
-  }
-
-  .modal-bg {
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(8px);
-    z-index: 200;
-    display: flex; align-items: center; justify-content: center;
     padding: 20px;
-    animation: fadeIn 0.3s ease;
-    overflow-y: auto;
-  }
-
-  .modal-bg.hidden { display: none; }
-  
-  .modal {
     background: var(--card);
-    border: 2px solid var(--primary);
-    border-radius: 20px;
-    width: 100%;
-    max-width: 560px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: 0 30px 80px rgba(0,102,204,0.2), var(--glow);
-    animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-
-  .modal-lg { max-width: 720px; }
-  
-  .modal-header {
-    padding: 28px;
-    border-bottom: 2px solid var(--primary);
-    display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, transparent 100%);
-  }
-
-  .modal-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--primary);
-  }
-
-  .modal-body { padding: 28px; }
-  
-  .modal-footer {
-    padding: 20px 28px 28px;
-    display: flex; gap: 12px; justify-content: flex-end;
-    border-top: 2px solid var(--primary);
-    background: linear-gradient(135deg, rgba(0,102,204,0.04) 0%, transparent 100%);
-  }
-
-  .close-btn {
-    width: 36px; height: 36px; border-radius: 10px;
-    background: var(--bg2); border: 1.5px solid var(--border);
-    color: var(--text3); cursor: pointer; font-size: 18px;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.3s;
-    font-weight: 700;
-  }
-
-  .close-btn:hover { 
-    background: rgba(220,38,38,0.1);
-    color: var(--danger); 
-    border-color: var(--danger);
-  }
-
-  .form-group { margin-bottom: 20px; }
-  
-  .form-label {
-    display: block;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--primary);
-    font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 8px;
-    font-weight: 700;
-  }
-
-  .form-hint { font-size: 12px; color: var(--text3); margin-top: 6px; font-weight: 500; }
-  textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  
-  .tags-input-wrap { display: flex; gap: 8px; }
-  .tags-input-wrap input { flex: 1; }
-  .tags-preview { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
-  
-  .tag-removable {
-    display: flex; align-items: center; gap: 5px;
-    font-size: 11px; padding: 4px 12px; border-radius: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    cursor: default;
-    font-weight: 600;
-  }
-
-  .tag-removable .rm { cursor: pointer; opacity: 0.6; font-size: 14px; line-height: 1; transition: opacity 0.2s; }
-  .tag-removable .rm:hover { opacity: 1; }
-  
-  .tag-removable.genre { 
-    background: rgba(0,102,204,0.15); 
-    border: 1px solid rgba(0,102,204,0.3); 
-    color: var(--primary);
-  }
-
-  .tag-removable.tag { 
-    background: rgba(220,38,38,0.15); 
-    border: 1px solid rgba(220,38,38,0.3); 
-    color: var(--accent);
-  }
-
-  .genre-management {
-    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
-    border: 1.5px solid var(--primary);
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 15px;
   }
-
-  .genre-section-title { font-size: 14px; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
   
-  .genre-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .genre-item { 
-    display: flex; align-items: center; gap: 6px; 
-    background: var(--bg2); 
-    border: 1.5px solid var(--primary); 
-    padding: 8px 12px; 
-    border-radius: 8px; 
-    font-size: 13px; 
-    color: var(--text);
-    font-weight: 600;
-    box-shadow: var(--shadow);
-  }
-  .genre-item .remove { cursor: pointer; color: var(--danger); font-weight: 700; opacity: 0.7; transition: opacity 0.2s; }
-  .genre-item .remove:hover { opacity: 1; }
+  .brand-zone-info { display: flex; align-items: center; gap: 20px; }
+  .logo-title h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); }
 
-  .genre-input-group { display: flex; gap: 8px; }
-  .genre-input-group input { flex: 1; }
-
-  .genre-icon-input-group {
-    display: flex; gap: 8px; align-items: center;
-    margin-bottom: 12px;
-  }
-  .genre-icon-input-group input:first-child {
-    max-width: 80px;
-    font-size: 20px;
-    text-align: center;
-  }
-  .genre-icon-input-group input:last-child {
-    flex: 1;
-  }
-
-  .genre-dropdown-group {
-    display: flex; gap: 8px; align-items: center;
-    margin-top: 10px;
-  }
-  .genre-dropdown {
-    flex: 1;
-    appearance: none;
-    background: var(--card);
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 12px;
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    font-weight: 600;
-  }
-  .genre-dropdown:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
-  }
-
-  .category-selection {
-    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
-    border: 1.5px solid var(--primary);
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-  }
-
-  .category-selection-title { font-size: 14px; color: var(--primary); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; }
-  
-  .category-checkboxes { display: flex; gap: 16px; flex-wrap: wrap; }
-  
-  .category-checkbox {
+  /* THANH TRƯỢT CHUYỂN KHU VỰC (SLIDER TOGGLE) */
+  .zone-slider-wrapper {
+    background: var(--bg3);
+    padding: 4px;
+    border-radius: 30px;
     display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
+    position: relative;
+    width: 320px;
     user-select: none;
-  }
-
-  .category-checkbox input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--primary);
     cursor: pointer;
   }
-
-  .category-checkbox label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-    cursor: pointer;
-  }
-
-  .pw-section {
-    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
-    border: 1.5px solid var(--primary);
-    border-radius: 12px;
-    padding: 18px;
-    margin-top: 18px;
-    box-shadow: var(--shadow);
-  }
-
-  .pw-toggle {
-    display: flex; align-items: center; gap: 10px; cursor: pointer;
-    color: var(--text); font-size: 14px;
-    user-select: none;
-    font-weight: 600;
-  }
-
-  .pw-toggle input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
-  .pw-fields { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
-  .pw-fields.hidden { display: none; }
-
-  .security-note {
-    background: rgba(0,168,84,0.1);
-    border: 1.5px solid var(--success);
-    padding: 12px 14px;
-    border-radius: 10px;
-    font-size: 12px;
-    color: var(--success);
-    margin-top: 10px;
-    font-weight: 600;
-  }
-
-  .unlock-modal .lock-big { font-size: 56px; text-align: center; margin-bottom: 14px; }
-  
-  .unlock-modal .hint-text {
+  .zone-slider-btn {
+    flex: 1;
     text-align: center;
-    font-size: 13px;
-    color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
-    background: rgba(220,38,38,0.1);
-    border: 1.5px solid var(--danger);
-    padding: 10px 16px;
-    border-radius: 10px;
-    margin-bottom: 18px;
+    padding: 10px 0;
     font-weight: 600;
+    font-size: 0.9rem;
+    z-index: 2;
+    transition: var(--transition);
+    color: var(--text-muted);
   }
-
-  .pw-input-wrap { position: relative; }
-  .pw-input-wrap input { padding-right: 44px; letter-spacing: 2px; font-family: 'JetBrains Mono', monospace; }
-  
-  .pw-toggle-vis {
-    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-    background: none; border: none; color: var(--text3); cursor: pointer;
-    font-size: 16px; padding: 4px; transition: all 0.2s; font-weight: 700;
-  }
-
-  .pw-toggle-vis:hover { color: var(--primary); }
-  .pw-error { color: var(--danger); font-size: 13px; margin-top: 8px; display: none; font-weight: 600; }
-  .pw-error.show { display: block; }
-
-  .prompt-text-display {
-    background: var(--bg2);
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    padding: 16px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 13px;
-    line-height: 1.8;
-    color: var(--text);
-    white-space: pre-wrap;
-    word-break: break-word;
-    max-height: 300px;
-    overflow-y: auto;
-  }
-
-  .empty-state {
-    text-align: center;
-    padding: 100px 20px;
-    color: var(--text3);
-  }
-
-  .empty-state .empty-icon { font-size: 64px; margin-bottom: 18px; opacity: 0.4; }
-  
-  .empty-state h3 { 
-    font-family: 'Playfair Display', serif; 
-    font-size: 20px; 
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-
-  .empty-state p { font-size: 14px; color: var(--text2); }
-
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-  .admin-controls.hidden { display: none !important; }
-
-  .settings-container {
-    background: var(--card);
-    border: 2px solid var(--primary);
-    border-radius: 20px;
-    padding: 28px;
-    box-shadow: var(--shadow-lg);
-  }
-
-  .settings-section {
-    margin-bottom: 24px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .settings-section:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-
-  .settings-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 900;
-    color: var(--primary);
-    margin-bottom: 16px;
-  }
-
-  .logout-btn-container {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 2px solid var(--danger);
-  }
-
-  .logout-btn {
-    width: 100%;
-    padding: 12px 24px;
-    background: var(--danger);
-    border: 1.5px solid var(--danger);
-    border-radius: 10px;
+  .zone-slider-btn.active {
     color: white;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  }
+  .zone-slider-bg {
+    position: absolute;
+    top: 4px; left: 4px;
+    width: calc(50% - 4px);
+    height: calc(100% - 8px);
+    background: var(--primary);
+    border-radius: 26px;
+    z-index: 1;
+    transition: var(--transition);
+  }
+  .zone-slider-wrapper.active-cai-nghien .zone-slider-bg {
+    left: calc(50%);
+    background: var(--accent);
   }
 
-  .logout-btn:hover {
-    background: rgba(220,38,38,0.9);
-    box-shadow: var(--glow-danger), var(--shadow-lg);
-    transform: translateY(-2px);
+  .user-actions { display: flex; align-items: center; gap: 15px; }
+  .btn {
+    padding: 10px 20px; border-radius: var(--radius-sm); border: none;
+    font-weight: 600; cursor: pointer; transition: var(--transition);
+  }
+  .btn-primary { background: var(--primary); color: white; }
+  .btn-primary:hover { background: var(--primary-light); }
+  .btn-outline { background: transparent; border: 1px solid var(--border2); color: var(--text); }
+  .btn-outline:hover { background: var(--bg2); }
+
+  .main-layout { display: grid; grid-template-columns: 280px 1fr; gap: 30px; }
+  @media(max-width: 768px) { .main-layout { grid-template-columns: 1fr; } }
+
+  .sidebar {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
+    align-self: start;
+  }
+  .sidebar h2 { font-size: 1.1rem; margin-bottom: 15px; color: var(--text-muted); font-weight: 700; }
+  
+  .genre-list { display: flex; flex-direction: column; gap: 8px; }
+  .genre-item {
+    padding: 12px 15px; border-radius: var(--radius-sm); cursor: pointer;
+    transition: var(--transition); font-weight: 500; display: flex; align-items: center; gap: 10px;
+  }
+  .genre-item:hover, .genre-item.active { background: var(--bg2); color: var(--primary); }
+
+  .content-area { display: flex; flex-direction: column; gap: 20px; }
+  .search-bar {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 15px 20px; box-shadow: var(--shadow);
+    display: flex; gap: 15px;
+  }
+  .search-bar input {
+    flex: 1; padding: 10px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); outline: none; font-size: 1rem;
   }
 
-  .coming-soon-badge {
-    display: inline-block;
-    background: rgba(245,158,11,0.15);
-    border: 1px solid #f59e0b;
-    color: #d97706;
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-left: 8px;
+  .prompt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .prompt-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
+    transition: var(--transition); cursor: pointer; position: relative;
+    display: flex; flex-direction: column; justify-content: space-between;
   }
+  .prompt-card:hover { transform: translateY(-4px); border-color: var(--border2); }
+  .prompt-card h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--text); }
+  .prompt-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; }
 
-  @media (max-width: 640px) {
-    header { padding: 16px 20px; }
-    main { padding: 24px 20px; }
-    .form-row { grid-template-columns: 1fr; }
-    .logo-text { font-size: 18px; }
-    .section-title { font-size: 20px; }
-    .genre-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
-    .genre-card { padding: 20px 16px; }
-    .genre-icon { font-size: 36px; }
-    .genre-name { font-size: 16px; }
-    .welcome-title { font-size: 32px; }
-    .welcome-category-buttons { flex-direction: column; }
-    .welcome-btn { width: 100%; }
+  .zone-badge {
+    position: absolute; top: 15px; right: 15px; font-size: 0.75rem;
+    padding: 4px 8px; border-radius: 12px; font-weight: 700; text-transform: uppercase;
   }
+  .zone-badge.hospital { background: #e0f2fe; color: var(--primary); }
+  .zone-badge.cai-nghien { background: #ffe4e6; color: var(--accent); }
+
+  /* MODAL */
+  .modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; z-index: 1000;
+    opacity: 0; pointer-events: none; transition: var(--transition);
+  }
+  .modal.show { opacity: 1; pointer-events: auto; }
+  .modal-content {
+    background: var(--card); border-radius: var(--radius);
+    padding: 30px; width: 100%; max-width: 500px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    position: relative; transform: scale(0.95); transition: var(--transition);
+  }
+  .modal.show .modal-content { transform: scale(1); }
+  .modal-header { font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;}
+  .close-modal { cursor: pointer; font-size: 1.5rem; color: var(--text-muted); }
+
+  .form-group { margin-bottom: 15px; }
+  .form-group label { display: block; font-weight: 600; margin-bottom: 6px; font-size: 0.9rem; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 10px; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); outline: none; font-size: 0.95rem;
+  }
+  
+  .radio-group-zone {
+    display: flex; gap: 20px; margin-top: 5px;
+  }
+  .radio-label {
+    display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500 !important;
+  }
+  .radio-label input { width: auto; cursor: pointer; }
+
+  .error-msg { color: var(--accent); font-size: 0.85rem; margin-top: 5px; display: none; }
+  .error-msg.show { display: block; }
 </style>
 </head>
 <body>
 
-<div class="bg-orbs">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-</div>
-
-<!-- WELCOME PAGE -->
-<div class="welcome-container" id="welcomeContainer">
-  <div class="welcome-admin-login">
-    <button class="welcome-admin-btn" onclick="openAdminLoginModal()">👑 Admin</button>
-  </div>
-
-  <div class="welcome-header">
-    <div class="welcome-logo">
-      <div class="welcome-logo-icon">🏥</div>
-      <div class="welcome-logo-text">
-        <div class="main">Viện Tâm Thần</div>
-        <div class="sub">Digital Sanctuary</div>
+  <!-- MÀN HÌNH CHÀO MỪNG PHÂN CHIA KHU VỰC -->
+  <div id="welcomeScreen">
+    <h1 class="welcome-title">🏥 VIỆN TÂM THẦN ĐA KHOA KỸ THUẬT SỐ</h1>
+    <p class="welcome-subtitle">Vui lòng chọn phân khu quản lý để tiếp tục trải nghiệm hệ thống</p>
+    <div class="zone-selection-container">
+      <div class="zone-card" onclick="selectInitialZone('hospital')">
+        <div class="icon">🏥</div>
+        <h3>Khu Bệnh Viện</h3>
+        <p>Nơi lưu trữ và tổng hợp các Prompt thông thường, hỗ trợ điều trị tâm lý cơ bản và tác vụ văn phòng số.</p>
+      </div>
+      <div class="zone-card" onclick="selectInitialZone('cai-nghien')">
+        <div class="icon">💊</div>
+        <h3>Trại Cai Nghiện</h3>
+        <p>Khu vực đặc biệt dành riêng cho các Prompt cấp cao, điều chỉnh tư duy chuyên sâu và nghiên cứu hành vi đặc biệt.</p>
       </div>
     </div>
   </div>
 
-  <h1 class="welcome-title">Khám phá Thế Giới Tâm Lý Số</h1>
-
-  <div class="welcome-category-buttons">
-    <button class="welcome-btn" onclick="selectCategory('hospital')">
-      <span class="welcome-btn-icon">🏥</span>
-      <span>Bệnh Viện</span>
-    </button>
-    <button class="welcome-btn" onclick="selectCategory('rehab')">
-      <span class="welcome-btn-icon">🔺</span>
-      <span>Trại Cai Nghiện</span>
-    </button>
-  </div>
-
-  <div class="welcome-social-buttons" id="welcomeSocialButtons">
-    <button class="welcome-social-btn social-discord" onclick="openSocialLink('discord')">
-      <span>💬</span>
-      <span>Tham gia Discord</span>
-    </button>
-    <button class="welcome-social-btn social-facebook" onclick="openSocialLink('facebook')">
-      <span>f</span>
-      <span>Kết nối Facebook</span>
-    </button>
-  </div>
-</div>
-
-<div id="app" style="display:none">
-  <header>
-    <div class="logo-wrap">
-      <div class="logo-icon">🏥</div>
-      <div>
-        <div class="logo-text">Viện Tâm Thần</div>
-        <div class="logo-sub">Digital Sanctuary</div>
-      </div>
-    </div>
-    <div class="header-actions">
-      <button class="btn btn-gold" id="settingsBtn" onclick="openSettings()" style="display: none;">⚙️ Cài đặt</button>
-      <button class="btn" id="backBtn" onclick="goBack()" style="display: none;">← Quay lại</button>
-    </div>
-  </header>
-
-  <main>
-    <div id="mainContent"></div>
-  </main>
-</div>
-
-<!-- ADMIN LOGIN MODAL -->
-<div id="adminLoginModal" class="modal-bg hidden">
-  <div class="modal">
-    <div class="modal-header">
-      <h2 class="modal-title">🔐 Đăng Nhập Quản Trị</h2>
-      <button class="close-btn" onclick="closeAdminLoginModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Tài khoản Admin</label>
-        <input type="text" id="adminUsername" placeholder="Nhập tài khoản">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Mật khẩu</label>
-        <div class="pw-input-wrap">
-          <input type="password" id="adminPassword" placeholder="Nhập mật khẩu">
-          <button class="pw-toggle-vis" onclick="toggleAdminPasswordVisibility()">👁</button>
+  <!-- GIAO DIỆN HỆ THỐNG CHÍNH -->
+  <div id="app">
+    <header>
+      <div class="brand-zone-info">
+        <div class="logo-title">
+          <h1>🏥 VIỆN TÂM THẦN CỐ THỊ</h1>
+        </div>
+        
+        <!-- THANH TRƯỢT CHUYỂN ĐỔI KHU VỰC GIỮA 2 BÊN -->
+        <div class="zone-slider-wrapper" id="zoneSlider" onclick="toggleZoneSlider()">
+          <div class="zone-slider-btn id-hospital active" id="btnSliderHospital">🏥 Bệnh Viện</div>
+          <div class="zone-slider-btn id-cainghien" id="btnSliderCaiNghien">💊 Trại Cai Nghiện</div>
+          <div class="zone-slider-bg"></div>
         </div>
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeAdminLoginModal()">Hủy</button>
-      <button class="btn btn-gold" onclick="loginAdmin()">Đăng Nhập</button>
-    </div>
-  </div>
-</div>
 
-<!-- SETTINGS MODAL (For Logged-in Admin) -->
-<div id="settingsModal" class="modal-bg hidden">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h2 class="modal-title">⚙️ Cài Đặt Quản Trị</h2>
-      <button class="close-btn" onclick="closeSettings()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="settings-container">
-        <div class="settings-section">
-          <div class="settings-title">📝 Quản Lý Thể Loại</div>
-          <button class="btn btn-gold" onclick="openGenreManagement()">Chỉnh sửa thể loại</button>
+      <div class="user-actions">
+        <span id="adminBadge" style="display:none; background: #fef3c7; color: #d97706; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 0.85rem;">👑 ADMIN</span>
+        <button class="btn btn-outline" id="loginBtn" onclick="openModal('loginModal')">⚙ Admin</button>
+        <button class="btn btn-primary" id="adminPanelBtn" style="display:none;" onclick="openModal('promptModal')">+ Thêm Prompt</button>
+        <button class="btn btn-outline" id="logoutBtn" style="display:none; color: var(--accent); border-color: var(--accent);" onclick="logoutAdmin()">Đăng xuất</button>
+      </div>
+    </header>
+
+    <div class="main-layout">
+      <!-- SIDEBAR KHOA/THỂ LOẠI -->
+      <div class="sidebar">
+        <h2>DANH SÁCH KHOA</h2>
+        <div class="genre-list" id="genreList">
+          <!-- Sẽ tự động render -->
+        </div>
+      </div>
+
+      <!-- VÙNG NỘI DUNG CHÍNH -->
+      <div class="content-area">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Tìm kiếm tên prompt hoặc từ khóa..." oninput="renderPrompts()">
         </div>
 
-        <div class="settings-section">
-          <div class="settings-title">🎯 Quản Lý Prompt</div>
-          <button class="btn btn-gold" onclick="openPromptManagement()">Thêm / Chỉnh sửa prompt</button>
-        </div>
-
-        <div class="logout-btn-container">
-          <button class="logout-btn" onclick="logoutAdmin()">🚪 Đăng Xuất</button>
+        <div class="prompt-grid" id="promptGrid">
+          <!-- Sẽ tự động render -->
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- GENRE MANAGEMENT MODAL -->
-<div id="genreModal" class="modal-bg hidden">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h2 class="modal-title">📝 Quản Lý Thể Loại</h2>
-      <button class="close-btn" onclick="closeGenreManagement()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="genre-management">
-        <div class="genre-section-title">Danh sách thể loại hiện tại</div>
-        <div class="genre-list" id="genreList"></div>
+  <!-- MODAL ĐĂNG NHẬP (TRỐNG HOÀN TOÀN - CHỈ ADMIN MỚI BIẾT TK) -->
+  <div class="modal" id="loginModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Đăng nhập hệ thống Admin</span>
+        <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
       </div>
-
-      <div class="genre-management">
-        <div class="genre-section-title">Thêm thể loại mới</div>
-        <div class="genre-icon-input-group">
-          <input type="text" id="genreIcon" placeholder="🎨" maxlength="2">
-          <input type="text" id="genreName" placeholder="Tên thể loại">
-        </div>
-        <button class="btn btn-gold" onclick="addGenre()">Thêm Thể Loại</button>
+      <div class="form-group">
+        <label>Tài khoản Admin (ID)</label>
+        <input type="text" id="loginEmail" placeholder="Nhập ID Admin...">
       </div>
+      <div class="form-group">
+        <label>Mật khẩu</label>
+        <input type="password" id="loginPassword" placeholder="••••••••">
+      </div>
+      <div class="error-msg" id="loginError">ID hoặc mật khẩu không chính xác!</div>
+      <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="checkAdminLogin()">Đăng Nhập</button>
     </div>
   </div>
-</div>
 
-<!-- PROMPT MANAGEMENT MODAL -->
-<div id="promptModal" class="modal-bg hidden">
-  <div class="modal modal-lg">
-    <div class="modal-header">
-      <h2 class="modal-title">🎯 Quản Lý Prompt</h2>
-      <button class="close-btn" onclick="closePromptManagement()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group">
-        <label class="form-label">Tên Prompt</label>
-        <input type="text" id="promptName" placeholder="Ví dụ: AI Copywriting">
+  <!-- MODAL QUẢN LÝ / THÊM PROMPT -->
+  <div class="modal" id="promptModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span id="formTitle">Tạo Prompt Mới</span>
+        <span class="close-modal" onclick="closeModal('promptModal')">&times;</span>
       </div>
       <div class="form-group">
-        <label class="form-label">Mô Tả</label>
-        <textarea id="promptDesc" placeholder="Mô tả ngắn gọn về prompt..."></textarea>
+        <label>Phân bổ Khu vực dữ liệu</label>
+        <div class="radio-group-zone">
+          <label class="radio-label">
+            <input type="radio" name="promptZone" value="hospital" checked> 🏥 Bệnh Viện
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="promptZone" value="cai-nghien"> 💊 Trại Cai Nghiện
+          </label>
+        </div>
       </div>
       <div class="form-group">
-        <label class="form-label">Nội Dung Prompt</label>
-        <textarea id="promptContent" placeholder="Nhập nội dung prompt đầy đủ..."></textarea>
+        <label>Tên Prompt / Liệu pháp</label>
+        <input type="text" id="pName" placeholder="Ví dụ: Prompt Điều Hướng Hành Vi">
       </div>
       <div class="form-group">
-        <label class="form-label">Thể Loại</label>
-        <select id="promptCategory">
-          <option value="">Chọn thể loại</option>
+        <label>Thuộc Khoa bệnh</label>
+        <select id="pGenre">
+          <option value="hoang-tuong">🧠 Khoa Hoang Tưởng</option>
+          <option value="tram-cam">🌧️ Khoa Trầm Cảm</option>
+          <option value="da-nhan-cach">👥 Khoa Đa Nhân Cách</option>
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Thẻ Tag (cách nhau bằng dấu phẩy)</label>
-        <input type="text" id="promptTags" placeholder="Ví dụ: AI, Học tập, Sáng tạo">
+        <label>Nội dung Prompt chi tiết</label>
+        <textarea id="pContent" rows="5" placeholder="Nhập câu lệnh prompt tại đây..."></textarea>
       </div>
-      <div class="category-selection">
-        <div class="category-selection-title">Độ Khó</div>
-        <div class="category-checkboxes">
-          <label class="category-checkbox">
-            <input type="radio" name="difficulty" value="easy"> Dễ
-          </label>
-          <label class="category-checkbox">
-            <input type="radio" name="difficulty" value="medium"> Trung Bình
-          </label>
-          <label class="category-checkbox">
-            <input type="radio" name="difficulty" value="hard"> Khó
-          </label>
-        </div>
-      </div>
-      <div class="category-selection">
-        <div class="category-selection-title">Tính Năng Bổ Sung <span class="coming-soon-badge">Coming soon!</span></div>
-        <div class="category-checkboxes">
-          <label class="category-checkbox">
-            <input type="checkbox" disabled> 🔗 Chèn Link
-          </label>
-          <label class="category-checkbox">
-            <input type="checkbox" disabled> 📎 Chèn Tệp
-          </label>
-          <label class="category-checkbox">
-            <input type="checkbox" disabled> 🎨 Tùy Chỉnh Kiểu
-          </label>
-        </div>
-      </div>
-      <div class="pw-section">
-        <label class="pw-toggle">
-          <input type="checkbox" id="promptPassworded" onchange="togglePasswordField()"> 
-          <span>Bảo vệ bằng mật khẩu</span>
-        </label>
-        <div class="pw-fields hidden" id="pwFieldsPrompt">
-          <input type="password" id="promptPassword" placeholder="Nhập mật khẩu bảo vệ">
-          <div class="security-note">🔒 Mật khẩu sẽ được mã hóa</div>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closePromptManagement()">Hủy</button>
-      <button class="btn btn-gold" onclick="savePrompt()">Lưu Prompt</button>
-    </div>
-  </div>
-</div>
-
-<!-- UNLOCK PROMPT MODAL -->
-<div id="unlockModal" class="modal-bg hidden">
-  <div class="modal unlock-modal">
-    <div class="modal-header">
-      <h2 class="modal-title">🔐 Mở Khóa Prompt</h2>
-      <button class="close-btn" onclick="closeUnlockModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="lock-big">🔒</div>
-      <div class="hint-text">Prompt này được bảo vệ bằng mật khẩu</div>
       <div class="form-group">
-        <label class="form-label">Nhập Mật Khẩu</label>
-        <div class="pw-input-wrap">
-          <input type="password" id="unlockPassword" placeholder="Mật khẩu">
-          <button class="pw-toggle-vis" onclick="toggleUnlockPasswordVisibility()">👁</button>
-        </div>
-        <div class="pw-error" id="unlockError">Mật khẩu không đúng</div>
+        <label>Mật mã bảo vệ bài viết (Bỏ trống nếu muốn công khai)</label>
+        <input type="text" id="pPassword" placeholder="Nhập mật mã nếu cần khóa">
       </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeUnlockModal()">Hủy</button>
-      <button class="btn btn-gold" onclick="unlockPrompt()">Mở Khóa</button>
+      <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="savePrompt()">Lưu Dữ Liệu</button>
     </div>
   </div>
-</div>
 
-<script>
-// ============ STATE MANAGEMENT ============
-let adminLoggedIn = false;
-let genres = [
-  { icon: '🧠', name: 'Tâm Lý Chung' },
-  { icon: '😰', name: 'Lo Âu' },
-  { icon: '😢', name: 'Trầm Cảm' },
-  { icon: '💪', name: 'Phát Triển Kỹ Năng' },
-  { icon: '😴', name: 'Giấc Ngủ' }
-];
-let prompts = [];
-let currentPrompt = null;
-
-// ============ ADMIN AUTHENTICATION ============
-function openAdminLoginModal() {
-  document.getElementById('adminLoginModal').classList.remove('hidden');
-}
-
-function closeAdminLoginModal() {
-  document.getElementById('adminLoginModal').classList.add('hidden');
-  document.getElementById('adminUsername').value = '';
-  document.getElementById('adminPassword').value = '';
-}
-
-function toggleAdminPasswordVisibility() {
-  const input = document.getElementById('adminPassword');
-  const btn = event.target;
-  if (input.type === 'password') {
-    input.type = 'text';
-    btn.textContent = '🙈';
-  } else {
-    input.type = 'password';
-    btn.textContent = '👁';
-  }
-}
-
-function loginAdmin() {
-  const username = document.getElementById('adminUsername').value;
-  const password = document.getElementById('adminPassword').value;
-  
-  if (username === 'charmaineminnie8' && password === 'hauyennhi') {
-    adminLoggedIn = true;
-    alert('✅ Đăng nhập thành công!');
-    closeAdminLoginModal();
-    showMainApp();
-  } else {
-    alert('❌ Tài khoản hoặc mật khẩu không đúng!');
-  }
-}
-
-function logoutAdmin() {
-  adminLoggedIn = false;
-  document.getElementById('settingsModal').classList.add('hidden');
-  document.getElementById('welcomeContainer').classList.remove('hidden');
-  document.getElementById('app').classList.add('hidden');
-}
-
-// ============ UI CONTROL ============
-function showMainApp() {
-  document.getElementById('welcomeContainer').classList.add('hidden');
-  document.getElementById('app').classList.remove('hidden');
-  document.getElementById('settingsBtn').style.display = adminLoggedIn ? 'inline-flex' : 'none';
-  goToCategory('general');
-}
-
-function selectCategory(category) {
-  if (category === 'hospital') {
-    goToCategory('hospital');
-  } else if (category === 'rehab') {
-    goToCategory('rehab');
-  }
-}
-
-function goToCategory(category) {
-  const content = document.getElementById('mainContent');
-  content.innerHTML = `
-    <div class="search-bar-section">
-      <div class="search-wrap">
-        <span class="icon">🔍</span>
-        <input type="text" id="searchInput" placeholder="Tìm kiếm prompt..." onkeyup="filterPrompts()">
+  <!-- MODAL NHẬP MẬT MÃ MỞ KHÓA PROMPT -->
+  <div class="modal" id="unlockModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>🔒 Prompt này yêu cầu mật mã mở khóa</span>
+        <span class="close-modal" onclick="closeModal('unlockModal')">&times;</span>
       </div>
-    </div>
-    <div class="section-header">
-      <h2 class="section-title">📚 Thư Viện Prompt</h2>
-      <span class="count-badge" id="promptCount">0</span>
-    </div>
-    <div class="prompts-grid" id="promptsGrid"></div>
-  `;
-  renderPrompts();
-}
-
-function renderPrompts() {
-  const grid = document.getElementById('promptsGrid');
-  if (!grid) return;
-  
-  if (prompts.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state" style="grid-column: 1/-1;">
-        <div class="empty-icon">📭</div>
-        <h3>Chưa có Prompt nào</h3>
-        <p>Hãy thêm prompt mới từ phần Cài đặt</p>
+      <div class="form-group">
+        <label>Vui lòng nhập mật mã bệnh án để xem</label>
+        <input type="password" id="unlockPassword" placeholder="••••••••">
       </div>
-    `;
-    document.getElementById('promptCount').textContent = '0';
-    return;
-  }
-
-  grid.innerHTML = prompts.map((prompt, idx) => `
-    <div class="prompt-card" onclick="viewPrompt(${idx})">
-      <div class="card-top">
-        <div class="card-name">${prompt.name}</div>
-        ${prompt.password ? '<div class="lock-status">🔒 LOCKED</div>' : ''}
-      </div>
-      <div class="card-desc">${prompt.description}</div>
-      <div class="card-tags">
-        <span class="tag-pill genre">${prompt.category}</span>
-        ${prompt.tags.split(',').map(tag => `<span class="tag-pill tag">${tag.trim()}</span>`).join('')}
-      </div>
+      <div class="error-msg" id="unlockError">Mật mã mở khóa không chính xác!</div>
+      <button class="btn btn-primary" style="width:100%; margin-top:10px;" onclick="unlockPrompt()">Xác Nhận Mở Khóa</button>
     </div>
-  `).join('');
-  
-  document.getElementById('promptCount').textContent = prompts.length;
-}
+  </div>
 
-function filterPrompts() {
-  const search = document.getElementById('searchInput').value.toLowerCase();
-  const cards = document.querySelectorAll('.prompt-card');
-  cards.forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(search) ? 'block' : 'none';
-  });
-}
+  <script>
+    let currentZone = 'hospital'; 
+    let currentGenre = 'all';
+    let isAdmin = false;
+    let currentPromptIdx = null;
 
-// ============ SETTINGS MANAGEMENT ============
-function openSettings() {
-  if (!adminLoggedIn) {
-    alert('❌ Bạn cần đăng nhập với tài khoản Admin!');
-    return;
-  }
-  document.getElementById('settingsModal').classList.remove('hidden');
-}
+    let prompts = JSON.parse(localStorage.getItem('hospital_prompts')) || [
+      { zone: 'hospital', name: 'Prompt Kiểm Soát Sự Tập Trung', genre: 'hoang-tuong', content: 'Hãy đóng vai chuyên gia tập trung...', password: '' },
+      { zone: 'cai-nghien', name: 'Prompt Nghiên Cứu Ám Ảnh Kháng Cự', genre: 'hoang-tuong', content: 'Phân tích các phản ứng ám ảnh cưỡng chế...', password: '123' },
+      { zone: 'hospital', name: 'Prompt Xoa Dịu Cơn Khủng Hoảng Lo Âu', genre: 'tram-cam', content: 'Tạo lập không gian trò chuyện an toàn...', password: '' }
+    ];
 
-function closeSettings() {
-  document.getElementById('settingsModal').classList.add('hidden');
-}
+    const genres = [
+      { id: 'all', name: '📁 Tất Cả Các Khoa' },
+      { id: 'hoang-tuong', name: '🧠 Khoa Hoang Tưởng' },
+      { id: 'tram-cam', name: '🌧️ Khoa Trầm Cảm' },
+      { id: 'da-nhan-cach', name: '👥 Khoa Đa Nhân Cách' }
+    ];
 
-// ============ GENRE MANAGEMENT ============
-function openGenreManagement() {
-  document.getElementById('genreModal').classList.remove('hidden');
-  renderGenreList();
-}
-
-function closeGenreManagement() {
-  document.getElementById('genreModal').classList.add('hidden');
-}
-
-function renderGenreList() {
-  const list = document.getElementById('genreList');
-  list.innerHTML = genres.map((genre, idx) => `
-    <div class="genre-item">
-      <span>${genre.icon} ${genre.name}</span>
-      <span class="remove" onclick="removeGenre(${idx})">✕</span>
-    </div>
-  `).join('');
-}
-
-function addGenre() {
-  const icon = document.getElementById('genreIcon').value.trim();
-  const name = document.getElementById('genreName').value.trim();
-  
-  if (!icon || !name) {
-    alert('⚠️ Vui lòng điền tất cả thông tin!');
-    return;
-  }
-  
-  genres.push({ icon, name });
-  document.getElementById('genreIcon').value = '';
-  document.getElementById('genreName').value = '';
-  renderGenreList();
-  updateCategorySelect();
-  alert('✅ Thêm thể loại thành công!');
-}
-
-function removeGenre(idx) {
-  genres.splice(idx, 1);
-  renderGenreList();
-  updateCategorySelect();
-}
-
-function updateCategorySelect() {
-  const select = document.getElementById('promptCategory');
-  select.innerHTML = '<option value="">Chọn thể loại</option>' + 
-    genres.map(g => `<option value="${g.name}">${g.icon} ${g.name}</option>`).join('');
-}
-
-// ============ PROMPT MANAGEMENT ============
-function openPromptManagement() {
-  document.getElementById('promptModal').classList.remove('hidden');
-  updateCategorySelect();
-  clearPromptForm();
-}
-
-function closePromptManagement() {
-  document.getElementById('promptModal').classList.add('hidden');
-}
-
-function clearPromptForm() {
-  document.getElementById('promptName').value = '';
-  document.getElementById('promptDesc').value = '';
-  document.getElementById('promptContent').value = '';
-  document.getElementById('promptCategory').value = '';
-  document.getElementById('promptTags').value = '';
-  document.getElementById('promptPassworded').checked = false;
-  document.getElementById('promptPassword').value = '';
-  document.getElementById('pwFieldsPrompt').classList.add('hidden');
-  document.querySelector('input[name="difficulty"]').checked = false;
-}
-
-function togglePasswordField() {
-  const checked = document.getElementById('promptPassworded').checked;
-  document.getElementById('pwFieldsPrompt').classList.toggle('hidden', !checked);
-}
-
-function savePrompt() {
-  const name = document.getElementById('promptName').value.trim();
-  const description = document.getElementById('promptDesc').value.trim();
-  const content = document.getElementById('promptContent').value.trim();
-  const category = document.getElementById('promptCategory').value;
-  const tags = document.getElementById('promptTags').value.trim();
-  const passworded = document.getElementById('promptPassworded').checked;
-  const password = document.getElementById('promptPassword').value;
-
-  if (!name || !description || !content || !category) {
-    alert('⚠️ Vui lòng điền tất cả thông tin bắt buộc!');
-    return;
-  }
-
-  let encryptedPassword = null;
-  if (passworded) {
-    if (!password) {
-      alert('⚠️ Vui lòng nhập mật khẩu bảo vệ!');
-      return;
+    function selectInitialZone(zone) {
+      currentZone = zone;
+      const slider = document.getElementById('zoneSlider');
+      if (zone === 'cai-nghien') {
+        slider.classList.add('active-cai-nghien');
+        document.getElementById('btnSliderHospital').classList.remove('active');
+        document.getElementById('btnSliderCaiNghien').classList.add('active');
+      } else {
+        slider.classList.remove('active-cai-nghien');
+        document.getElementById('btnSliderHospital').classList.add('active');
+        document.getElementById('btnSliderCaiNghien').classList.remove('active');
+      }
+      document.getElementById('welcomeScreen').classList.add('hidden');
+      document.getElementById('app').classList.add('active');
+      initApp();
     }
-    encryptedPassword = CryptoJS.SHA256(password).toString();
-  }
 
-  prompts.push({
-    name,
-    description,
-    content,
-    category,
-    tags: tags || 'General',
-    password: encryptedPassword,
-    difficulty: document.querySelector('input[name="difficulty"]:checked')?.value || 'medium'
-  });
+    function toggleZoneSlider() {
+      const slider = document.getElementById('zoneSlider');
+      if (currentZone === 'hospital') {
+        currentZone = 'cai-nghien';
+        slider.classList.add('active-cai-nghien');
+        document.getElementById('btnSliderHospital').classList.remove('active');
+        document.getElementById('btnSliderCaiNghien').classList.add('active');
+      } else {
+        currentZone = 'hospital';
+        slider.classList.remove('active-cai-nghien');
+        document.getElementById('btnSliderHospital').classList.add('active');
+        document.getElementById('btnSliderCaiNghien').classList.remove('active');
+      }
+      renderPrompts();
+    }
 
-  alert('✅ Lưu prompt thành công!');
-  closePromptManagement();
-  renderPrompts();
-}
+    function initApp() {
+      renderGenres();
+      renderPrompts();
+      checkSavedLogin();
+    }
 
-// ============ PROMPT VIEWING ============
-function viewPrompt(idx) {
-  currentPrompt = prompts[idx];
-  
-  if (currentPrompt.password) {
-    document.getElementById('unlockModal').classList.remove('hidden');
-  } else {
-    showPromptContent();
-  }
-}
+    function renderGenres() {
+      const list = document.getElementById('genreList');
+      list.innerHTML = genres.map(g => `
+        <div class="genre-item ${currentGenre === g.id ? 'active' : ''}" onclick="selectGenre('${g.id}')">
+          ${g.name}
+        </div>
+      `).join('');
+    }
 
-function unlockPrompt() {
-  const password = document.getElementById('unlockPassword').value;
-  const hash = CryptoJS.SHA256(password).toString();
-  
-  if (hash === currentPrompt.password) {
-    document.getElementById('unlockModal').classList.add('hidden');
-    document.getElementById('unlockPassword').value = '';
-    document.getElementById('unlockError').classList.remove('show');
-    showPromptContent();
-  } else {
-    document.getElementById('unlockError').classList.add('show');
-  }
-}
+    function selectGenre(genreId) {
+      currentGenre = genreId;
+      renderGenres();
+      renderPrompts();
+    }
 
-function toggleUnlockPasswordVisibility() {
-  const input = document.getElementById('unlockPassword');
-  const btn = event.target;
-  if (input.type === 'password') {
-    input.type = 'text';
-    btn.textContent = '🙈';
-  } else {
-    input.type = 'password';
-    btn.textContent = '👁';
-  }
-}
+    function renderPrompts() {
+      const grid = document.getElementById('promptGrid');
+      const search = document.getElementById('searchInput').value.toLowerCase();
 
-function showPromptContent() {
-  alert(`📖 ${currentPrompt.name}\n\n${currentPrompt.content}`);
-}
+      const filtered = prompts.filter(p => {
+        const matchZone = (p.zone || 'hospital') === currentZone;
+        const matchGenre = currentGenre === 'all' || p.genre === currentGenre;
+        const matchSearch = p.name.toLowerCase().includes(search) || p.content.toLowerCase().includes(search);
+        return matchZone && matchGenre && matchSearch;
+      });
 
-function goBack() {
-  document.getElementById('welcomeContainer').classList.remove('hidden');
-  document.getElementById('app').classList.add('hidden');
-  adminLoggedIn = false;
-}
-</script>
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color: var(--text-muted); padding: 40px;">Khu vực này hiện chưa có bệnh án Prompt nào được đăng tải.</div>`;
+        return;
+      }
 
+      grid.innerHTML = filtered.map((p, idx) => {
+        const originalIdx = prompts.findIndex(original => original.name === p.name && original.content === p.content);
+        return `
+          <div class="prompt-card" onclick="viewPrompt(${originalIdx})">
+            <span class="zone-badge ${p.zone === 'cai-nghien' ? 'cai-nghien' : 'hospital'}">
+              ${p.zone === 'cai-nghien' ? '💊 Cai Nghiện' : '🏥 Bệnh Viện'}
+            </span>
+            <div>
+              <h3 style="margin-top: 15px;">${p.name}</h3>
+              <p>${p.content.substring(0, 100)}...</p>
+            </div>
+            <div style="font-weight:700; font-size:0.85rem; color:${p.password ? 'var(--accent)' : 'var(--success)'}">
+              ${p.password ? '🔒 ĐÃ KHÓA' : '🔓 CÔNG KHAI'}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function viewPrompt(idx) {
+      currentPromptIdx = idx;
+      const prompt = prompts[idx];
+      if (prompt.password) {
+        document.getElementById('unlockPassword').value = '';
+        document.getElementById('unlockError').classList.remove('show');
+        openModal('unlockModal');
+      } else {
+        alert(`📖 NỘI DUNG PROMPT:\n\n${prompt.content}`);
+      }
+    }
+
+    function unlockPrompt() {
+      const inputPw = document.getElementById('unlockPassword').value;
+      const targetPrompt = prompts[currentPromptIdx];
+      
+      if (inputPw === targetPrompt.password) {
+        closeModal('unlockModal');
+        setTimeout(() => {
+          alert(`🔓 MỞ KHÓA THÀNH CÔNG:\n\n${targetPrompt.content}`);
+        }, 100);
+      } else {
+        document.getElementById('unlockError').classList.add('show');
+      }
+    }
+
+    // KIỂM TRA ĐĂNG NHẬP VỚI THÔNG TIN BẢO MẬT MỚI
+    function checkAdminLogin() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      
+      // Khớp chính xác ID và Pass bạn yêu cầu
+      if (email === 'charmaineminnie8' && password === 'hauyennhi') {
+        isAdmin = true;
+        localStorage.setItem('hospital_admin_logged', 'true');
+        document.getElementById('loginError').classList.remove('show');
+        closeModal('loginModal');
+        updateAdminUI();
+        alert('✅ Đăng nhập quyền Admin thành công!');
+      } else {
+        document.getElementById('loginError').classList.add('show');
+      }
+    }
+
+    function checkSavedLogin() {
+      if (localStorage.getItem('hospital_admin_logged') === 'true') {
+        isAdmin = true;
+        updateAdminUI();
+      }
+    }
+
+    function updateAdminUI() {
+      if (isAdmin) {
+        document.getElementById('loginBtn').style.display = 'none';
+        document.getElementById('adminBadge').style.display = 'inline-block';
+        document.getElementById('adminPanelBtn').style.display = 'inline-block';
+        document.getElementById('logoutBtn').style.display = 'inline-block';
+      }
+    }
+
+    function logoutAdmin() {
+      isAdmin = false;
+      localStorage.removeItem('hospital_admin_logged');
+      document.getElementById('loginBtn').style.display = 'inline-block';
+      document.getElementById('adminBadge').style.display = 'none';
+      document.getElementById('adminPanelBtn').style.display = 'none';
+      document.getElementById('logoutBtn').style.display = 'none';
+      renderPrompts();
+    }
+
+    function savePrompt() {
+      const zone = document.querySelector('input[name="promptZone"]:checked').value;
+      const name = document.getElementById('pName').value;
+      const genre = document.getElementById('pGenre').value;
+      const content = document.getElementById('pContent').value;
+      const password = document.getElementById('pPassword').value;
+
+      if (!name || !content) {
+        alert('Vui lòng điền tên và nội dung prompt đầy đủ!');
+        return;
+      }
+
+      prompts.push({ zone, name, genre, content, password });
+      localStorage.setItem('hospital_prompts', JSON.stringify(prompts));
+      
+      alert('✅ Thêm dữ liệu prompt thành công!');
+      closeModal('promptModal');
+      
+      document.getElementById('pName').value = '';
+      document.getElementById('pContent').value = '';
+      document.getElementById('pPassword').value = '';
+      
+      renderPrompts();
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.add('show');
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('show');
+    }
+  </script>
 </body>
 </html>
