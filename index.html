@@ -333,47 +333,6 @@
     font-weight: 600;
   }
 
-  .header-search-wrap {
-    flex: 1;
-    min-width: 250px;
-    position: relative;
-    order: 3;
-    width: 100%;
-  }
-
-  .header-search-wrap .icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text3);
-    font-size: 16px;
-    pointer-events: none;
-  }
-
-  .header-search-wrap input {
-    width: 100%;
-    padding: 10px 14px 10px 42px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    background: var(--card);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    transition: all 0.3s;
-    box-shadow: var(--shadow);
-  }
-
-  .header-search-wrap input:focus {
-    border-color: var(--primary);
-    background: rgba(0,102,204,0.03);
-    box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
-  }
-
-  .header-search-wrap input::placeholder {
-    color: var(--text3);
-  }
-  
   .header-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
   
   .btn {
@@ -436,6 +395,46 @@
   }
 
   main { padding: 40px; max-width: 1400px; margin: 0 auto; }
+
+  .search-bar-section {
+    background: var(--bg2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  .search-wrap {
+    position: relative;
+  }
+
+  .search-wrap .icon {
+    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    color: var(--text3); font-size: 16px; pointer-events: none;
+  }
+
+  .search-wrap input {
+    width: 100%;
+    padding: 12px 16px 12px 48px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    transition: all 0.3s;
+    box-shadow: var(--shadow);
+  }
+
+  .search-wrap input:focus {
+    border-color: var(--primary);
+    background: rgba(0,102,204,0.03);
+    box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
+  }
+
+  .search-wrap input::placeholder {
+    color: var(--text3);
+  }
 
   .genre-grid {
     display: grid;
@@ -604,15 +603,6 @@
     flex-wrap: wrap;
   }
 
-  .search-wrap {
-    position: relative; flex: 1; min-width: 220px;
-  }
-
-  .search-wrap .icon {
-    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-    color: var(--text3); font-size: 16px; pointer-events: none;
-  }
-
   input[type="text"], input[type="password"], input[type="email"], textarea, select {
     background: var(--card);
     border: 1.5px solid var(--border);
@@ -633,7 +623,6 @@
     box-shadow: 0 0 0 3px rgba(0,102,204,0.1), var(--shadow-lg);
   }
 
-  .search-wrap input { padding-left: 48px; }
   select { appearance: none; cursor: pointer; }
 
   .tags-filter-bar {
@@ -1045,6 +1034,68 @@
     font-size: 11px;
   }
 
+  .admin-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .settings-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .tabs-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 16px;
+  }
+
+  .tab-btn {
+    padding: 8px 16px;
+    border: none;
+    background: transparent;
+    color: var(--text3);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+  }
+
+  .tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .settings-section {
+    background: linear-gradient(135deg, rgba(0,102,204,0.08) 0%, rgba(26,126,232,0.04) 100%);
+    border: 1.5px solid var(--primary);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  .coming-soon {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text3);
+    font-size: 16px;
+    font-weight: 600;
+  }
+
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -1061,7 +1112,6 @@
     .genre-card { padding: 20px 16px; }
     .genre-icon { font-size: 36px; }
     .genre-name { font-size: 16px; }
-    .header-search-wrap { min-width: 100%; order: 3; }
     .welcome-title { font-size: 32px; }
     .welcome-category-buttons { flex-direction: column; }
     .welcome-btn { width: 100%; }
@@ -1100,16 +1150,16 @@
     </button>
     <button class="welcome-btn" onclick="selectCategory('rehab')">
       <span class="welcome-btn-icon">🔺</span>
-      <span>Trại cai nghiện</span>
+      <span>Chương trình cai nghiện</span>
     </button>
   </div>
 
-  <div class="welcome-social-buttons">
-    <button class="welcome-social-btn social-discord" onclick="window.open('https://discord.com', '_blank')">
+  <div class="welcome-social-buttons" id="welcomeSocialButtons">
+    <button class="welcome-social-btn social-discord" onclick="openSocialLink('discord')">
       <span>💬</span>
       <span>Tham gia Discord</span>
     </button>
-    <button class="welcome-social-btn social-facebook" onclick="window.open('https://facebook.com', '_blank')">
+    <button class="welcome-social-btn social-facebook" onclick="openSocialLink('facebook')">
       <span>f</span>
       <span>Kết nối Facebook</span>
     </button>
@@ -1125,16 +1175,15 @@
         <div class="logo-sub">⚡ Viện Tâm Thần Cố Thị ⚡</div>
       </div>
     </div>
-    
-    <div class="header-search-wrap">
-      <span class="icon">🔍</span>
-      <input type="text" id="globalSearch" placeholder="Tìm kiếm prompt..." oninput="handleGlobalSearch()">
-    </div>
 
     <div class="header-actions">
       <div id="adminStatusInfo" class="admin-status" style="display:none">
         <span id="adminEmail"></span>
         <span class="admin-badge">👑 ADMIN</span>
+        <div class="admin-toolbar">
+          <button class="btn btn-sm settings-btn" id="adminSettingsBtn" onclick="showAdminSettings()" title="Cài đặt">⚙</button>
+          <button class="btn btn-sm" onclick="logoutAdmin()" title="Đăng xuất">🚪 Thoát</button>
+        </div>
       </div>
       <button class="btn btn-gold" id="adminBtn" onclick="toggleAdminPanel()">⚙ Admin</button>
     </div>
@@ -1147,7 +1196,7 @@
           📋 Bệnh Viện
         </button>
         <button class="category-tab" onclick="switchCategory('rehab')" data-category="rehab">
-          🔺 Trại Cai Nghiện
+          🔺 Chương trình cai nghiện
         </button>
       </div>
 
@@ -1155,6 +1204,14 @@
         <span class="section-title" id="categoryTitle">🏥 SƠ ĐỒ PHÒNG BAN VIỆN TÂM THẦN CÔ THỊ</span>
         <span class="count-badge" id="countBadge">0</span>
       </div>
+
+      <div class="search-bar-section">
+        <div class="search-wrap">
+          <span class="icon">🔍</span>
+          <input type="text" id="globalSearch" placeholder="Tìm kiếm bệnh án nhân vật..." oninput="handleGlobalSearch()">
+        </div>
+      </div>
+
       <div class="genre-grid" id="genreGrid"></div>
     </div>
 
@@ -1166,9 +1223,9 @@
       </div>
 
       <div class="filter-bar">
-        <div class="search-wrap">
+        <div class="search-wrap" style="flex:1; min-width:220px">
           <span class="icon">🔍</span>
-          <input type="text" id="searchInput" placeholder="Tìm kiếm prompts..." oninput="renderDetailView()">
+          <input type="text" id="searchInput" placeholder="Tìm kiếm bệnh án nhân vật..." oninput="renderDetailView()">
         </div>
         <select id="sortSelect" onchange="renderDetailView()" style="width:auto;min-width:150px">
           <option value="newest">🆕 Mới nhất</option>
@@ -1230,11 +1287,11 @@
       </div>
 
       <div class="section-header" style="margin-bottom:16px">
-        <span class="section-title" style="font-size:18px">✨ Thêm / Chỉnh Sửa Prompt</span>
+        <span class="section-title" style="font-size:18px">✨ Thêm / Chỉnh Sửa Bệnh Án</span>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Tên Prompt *</label>
+          <label class="form-label">Tên Bệnh Án *</label>
           <input type="text" id="fName" placeholder="Ví dụ: ChatGPT Pro">
         </div>
         <div class="form-group">
@@ -1275,7 +1332,7 @@
           </div>
           <div class="category-checkbox">
             <input type="checkbox" id="fCategoryRehab">
-            <label for="fCategoryRehab">🔺 Trại Cai Nghiện</label>
+            <label for="fCategoryRehab">🔺 Chương trình cai nghiện</label>
           </div>
         </div>
       </div>
@@ -1300,13 +1357,58 @@
 
       <div style="display: flex; gap: 12px; margin-top: 24px;">
         <button class="btn" onclick="clearForm()" style="flex:1">🗑 Xóa</button>
-        <button class="btn btn-gold" onclick="savePrompt()" style="flex:1">💾 Lưu Prompt</button>
+        <button class="btn btn-gold" onclick="savePrompt()" style="flex:1">💾 Lưu Bệnh Án</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg hidden" id="settingsModal">
+  <div class="modal modal-lg">
+    <div class="modal-header">
+      <span class="modal-title">⚙ Cài Đặt Admin</span>
+      <button class="close-btn" onclick="closeSettingsModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs-container">
+        <button class="tab-btn active" onclick="switchTab('social')">🔗 Liên Kết Xã Hội</button>
+        <button class="tab-btn" onclick="switchTab('other')">📋 Khác</button>
+      </div>
+
+      <div id="social" class="tab-content active">
+        <div class="settings-section">
+          <div class="genre-section-title">🔗 Quản Lý Liên Kết Xã Hội</div>
+          
+          <div class="form-group">
+            <label class="form-label">💬 Link Discord</label>
+            <input type="text" id="discordLink" placeholder="https://discord.gg/...">
+            <div class="form-hint">Nhập URL của server Discord hoặc invite link</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">f Link Facebook</label>
+            <input type="text" id="facebookLink" placeholder="https://facebook.com/...">
+            <div class="form-hint">Nhập URL trang Facebook của bạn</div>
+          </div>
+
+          <button class="btn btn-gold" onclick="saveSettings()" style="width:100%">💾 Lưu Cài Đặt</button>
+        </div>
+      </div>
+
+      <div id="other" class="tab-content">
+        <div class="settings-section">
+          <div class="coming-soon">🚀 Coming soon!</div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+  // Constants
+  const SESSION_EXPIRY_HOURS = 24;
+  const SESSION_EXPIRY_MS = SESSION_EXPIRY_HOURS * 60 * 60 * 1000;
+
   // Data management
   let genresData = {};
   let promptsData = {};
@@ -1316,11 +1418,43 @@
   let selectedGenres = [];
   let selectedTags = [];
   let selectedCategories = { hospital: true, rehab: false };
+  let settings = { discord: '', facebook: '' };
 
   // Initialize
   function init() {
     loadData();
+    checkSessionExpiry();
     renderWelcome();
+  }
+
+  // Session management
+  function checkSessionExpiry() {
+    const adminData = localStorage.getItem('adminSession');
+    if (adminData) {
+      const { timestamp } = JSON.parse(adminData);
+      if (Date.now() - timestamp > SESSION_EXPIRY_MS) {
+        localStorage.removeItem('adminSession');
+        admin = null;
+      } else {
+        const stored = JSON.parse(localStorage.getItem('hospitalData') || '{}');
+        admin = stored.admin;
+      }
+    }
+  }
+
+  function saveAdminSession() {
+    localStorage.setItem('adminSession', JSON.stringify({ timestamp: Date.now() }));
+  }
+
+  function logoutAdmin() {
+    if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
+      admin = null;
+      localStorage.removeItem('adminSession');
+      document.getElementById('adminStatusInfo').style.display = 'none';
+      document.getElementById('adminBtn').style.display = 'inline-flex';
+      showToast('✓ Đã đăng xuất!', 'success');
+      closeAdminPanel();
+    }
   }
 
   // Welcome page
@@ -1333,6 +1467,15 @@
 
   function showAdminLoginFromWelcome() {
     showAdminLoginModal();
+  }
+
+  function openSocialLink(platform) {
+    const link = platform === 'discord' ? settings.discord : settings.facebook;
+    if (link) {
+      window.open(link, '_blank');
+    } else {
+      showToast(`❌ Link ${platform} chưa được cài đặt`, 'error');
+    }
   }
 
   // Category switching
@@ -1352,17 +1495,20 @@
       genresData = data.genres || {};
       promptsData = data.prompts || {};
       admin = data.admin || null;
+      settings = data.settings || { discord: '', facebook: '' };
     } else {
       initDefaultData();
     }
     updateCategoryTabs();
+    updateWelcomeSocialButtons();
   }
 
   function saveData() {
     localStorage.setItem('hospitalData', JSON.stringify({
       genres: genresData,
       prompts: promptsData,
-      admin: admin
+      admin: admin,
+      settings: settings
     }));
   }
 
@@ -1376,7 +1522,21 @@
       'program2': { icon: '🎯', name: 'Chương trình 2', category: 'rehab' }
     };
     promptsData = {};
+    settings = { discord: '', facebook: '' };
     saveData();
+  }
+
+  function updateWelcomeSocialButtons() {
+    // Update social button links
+    const discordBtn = document.querySelector('.social-discord');
+    const facebookBtn = document.querySelector('.social-facebook');
+    
+    if (discordBtn && settings.discord) {
+      discordBtn.onclick = () => window.open(settings.discord, '_blank');
+    }
+    if (facebookBtn && settings.facebook) {
+      facebookBtn.onclick = () => window.open(settings.facebook, '_blank');
+    }
   }
 
   // Render functions
@@ -1396,7 +1556,7 @@
           📋 Bệnh Viện (${hospitalCount})
         </button>
         <button class="category-tab" onclick="switchCategory('rehab')" data-category="rehab">
-          🔺 Trại Cai Nghiện (${rehabCount})
+          🔺 Chương trình cai nghiện (${rehabCount})
         </button>
       `;
       const firstTab = tabs.querySelector('.category-tab');
@@ -1415,7 +1575,7 @@
       <div class="genre-card" onclick="selectGenre('${id}', '${genre.name}')">
         <div class="genre-icon">${genre.icon}</div>
         <div class="genre-name">${genre.name}</div>
-        <div class="genre-count">${Object.values(promptsData).filter(p => p.genre === id && p.categories.includes(currentCategory)).length} prompts</div>
+        <div class="genre-count">${Object.values(promptsData).filter(p => p.genre === id && p.categories.includes(currentCategory)).length} items</div>
       </div>
     `).join('');
 
@@ -1467,7 +1627,7 @@
           ${p.tags.map(t => `<span class="tag-pill tag">${t}</span>`).join('')}
         </div>
       </div>
-    `).join('') : '<div class="empty-state"><div class="empty-icon">📭</div><h3>Không có prompts</h3></div>';
+    `).join('') : '<div class="empty-state"><div class="empty-icon">📭</div><h3>Không có items</h3></div>';
 
     document.getElementById('detailCountBadge').textContent = prompts.length;
   }
@@ -1584,19 +1744,21 @@
     if (!admin) {
       admin = { email, password: CryptoJS.SHA256(password).toString() };
       saveData();
+      saveAdminSession();
       errorDiv.classList.remove('show');
       closeAdminLoginModal();
       document.getElementById('adminStatusInfo').style.display = 'flex';
       document.getElementById('adminEmail').textContent = email;
-      document.getElementById('adminBtn').style.display = 'inline-flex';
+      document.getElementById('adminBtn').style.display = 'none';
       showToast('✓ Đã tạo tài khoản Admin!', 'success');
     } else {
       if (admin.email === email && admin.password === CryptoJS.SHA256(password).toString()) {
         errorDiv.classList.remove('show');
+        saveAdminSession();
         closeAdminLoginModal();
         document.getElementById('adminStatusInfo').style.display = 'flex';
         document.getElementById('adminEmail').textContent = email;
-        document.getElementById('adminBtn').style.display = 'inline-flex';
+        document.getElementById('adminBtn').style.display = 'none';
         showToast('✓ Đăng nhập thành công!', 'success');
       } else {
         errorDiv.classList.add('show');
@@ -1617,6 +1779,33 @@
   function closeAdminPanel() {
     document.getElementById('adminPanelModal').classList.add('hidden');
     clearForm();
+  }
+
+  function showAdminSettings() {
+    document.getElementById('settingsModal').classList.remove('hidden');
+    document.getElementById('discordLink').value = settings.discord;
+    document.getElementById('facebookLink').value = settings.facebook;
+  }
+
+  function closeSettingsModal() {
+    document.getElementById('settingsModal').classList.add('hidden');
+  }
+
+  function switchTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function saveSettings() {
+    settings.discord = document.getElementById('discordLink').value;
+    settings.facebook = document.getElementById('facebookLink').value;
+    saveData();
+    updateWelcomeSocialButtons();
+    showToast('✓ Đã lưu cài đặt!', 'success');
+    closeSettingsModal();
   }
 
   function renderAdminPanel() {
@@ -1778,7 +1967,7 @@
 
     saveData();
     clearForm();
-    showToast('✓ Đã lưu prompt!', 'success');
+    showToast('✓ Đã lưu bệnh án!', 'success');
   }
 
   function clearForm() {
