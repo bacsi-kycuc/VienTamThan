@@ -1054,7 +1054,7 @@
     border-radius: 10px;
     color: white;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.3s;
@@ -1067,6 +1067,35 @@
     box-shadow: var(--glow-danger), var(--shadow-lg);
     transform: translateY(-2px);
   }
+
+  .coming-soon-badge {
+    display: inline-block;
+    background: rgba(245,158,11,0.15);
+    border: 1px solid #f59e0b;
+    color: #d97706;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 8px;
+  }
+
+  @media (max-width: 640px) {
+    header { padding: 16px 20px; }
+    main { padding: 24px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .logo-text { font-size: 18px; }
+    .section-title { font-size: 20px; }
+    .genre-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+    .genre-card { padding: 20px 16px; }
+    .genre-icon { font-size: 36px; }
+    .genre-name { font-size: 16px; }
+    .welcome-title { font-size: 32px; }
+    .welcome-category-buttons { flex-direction: column; }
+    .welcome-btn { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -1077,10 +1106,12 @@
   <div class="orb orb3"></div>
 </div>
 
+<!-- WELCOME PAGE -->
 <div class="welcome-container" id="welcomeContainer">
   <div class="welcome-admin-login">
-    <button class="welcome-admin-btn" onclick="openAdminLoginModal()">🔐 Admin</button>
+    <button class="welcome-admin-btn" onclick="openAdminLoginModal()">👑 Admin</button>
   </div>
+
   <div class="welcome-header">
     <div class="welcome-logo">
       <div class="welcome-logo-icon">🏥</div>
@@ -1089,21 +1120,34 @@
         <div class="sub">Digital Sanctuary</div>
       </div>
     </div>
-    <h1 class="welcome-title">Khám phá Thế Giới Tâm Lý Số</h1>
   </div>
+
+  <h1 class="welcome-title">Khám phá Thế Giới Tâm Lý Số</h1>
+
   <div class="welcome-category-buttons">
-    <button class="welcome-btn" onclick="goToCategory('general')">
-      <span class="welcome-btn-icon">🧠</span>
-      <span>Bắt Đầu</span>
+    <button class="welcome-btn" onclick="selectCategory('hospital')">
+      <span class="welcome-btn-icon">🏥</span>
+      <span>Bệnh Viện</span>
+    </button>
+    <button class="welcome-btn" onclick="selectCategory('rehab')">
+      <span class="welcome-btn-icon">🔺</span>
+      <span>Trại Cai Nghiện</span>
     </button>
   </div>
-  <div class="welcome-social-buttons">
-    <button class="welcome-social-btn social-discord">💜 Discord</button>
-    <button class="welcome-social-btn social-facebook">👍 Facebook</button>
+
+  <div class="welcome-social-buttons" id="welcomeSocialButtons">
+    <button class="welcome-social-btn social-discord" onclick="openSocialLink('discord')">
+      <span>💬</span>
+      <span>Tham gia Discord</span>
+    </button>
+    <button class="welcome-social-btn social-facebook" onclick="openSocialLink('facebook')">
+      <span>f</span>
+      <span>Kết nối Facebook</span>
+    </button>
   </div>
 </div>
 
-<div id="app" class="hidden">
+<div id="app" style="display:none">
   <header>
     <div class="logo-wrap">
       <div class="logo-icon">🏥</div>
@@ -1188,13 +1232,15 @@
       <div class="genre-management">
         <div class="genre-section-title">Danh sách thể loại hiện tại</div>
         <div class="genre-list" id="genreList"></div>
-        <div class="genre-input-group" style="margin-top: 14px;">
-          <div class="genre-icon-input-group">
-            <input type="text" id="newGenreIcon" placeholder="Icon (emoji)" maxlength="2" value="">
-            <input type="text" id="newGenreName" placeholder="Tên thể loại">
-          </div>
+      </div>
+
+      <div class="genre-management">
+        <div class="genre-section-title">Thêm thể loại mới</div>
+        <div class="genre-icon-input-group">
+          <input type="text" id="genreIcon" placeholder="🎨" maxlength="2">
+          <input type="text" id="genreName" placeholder="Tên thể loại">
         </div>
-        <button class="btn btn-gold" style="width: 100%; margin-top: 12px;" onclick="addGenre()">+ Thêm thể loại</button>
+        <button class="btn btn-gold" onclick="addGenre()">Thêm Thể Loại</button>
       </div>
     </div>
   </div>
@@ -1210,20 +1256,20 @@
     <div class="modal-body">
       <div class="form-group">
         <label class="form-label">Tên Prompt</label>
-        <input type="text" id="promptName" placeholder="Nhập tên prompt">
+        <input type="text" id="promptName" placeholder="Ví dụ: AI Copywriting">
       </div>
       <div class="form-group">
         <label class="form-label">Mô Tả</label>
-        <input type="text" id="promptDesc" placeholder="Nhập mô tả ngắn">
+        <textarea id="promptDesc" placeholder="Mô tả ngắn gọn về prompt..."></textarea>
       </div>
       <div class="form-group">
         <label class="form-label">Nội Dung Prompt</label>
-        <textarea id="promptContent" placeholder="Nhập nội dung prompt chi tiết"></textarea>
+        <textarea id="promptContent" placeholder="Nhập nội dung prompt đầy đủ..."></textarea>
       </div>
       <div class="form-group">
         <label class="form-label">Thể Loại</label>
         <select id="promptCategory">
-          <option value="">-- Chọn thể loại --</option>
+          <option value="">Chọn thể loại</option>
         </select>
       </div>
       <div class="form-group">
@@ -1241,6 +1287,20 @@
           </label>
           <label class="category-checkbox">
             <input type="radio" name="difficulty" value="hard"> Khó
+          </label>
+        </div>
+      </div>
+      <div class="category-selection">
+        <div class="category-selection-title">Tính Năng Bổ Sung <span class="coming-soon-badge">Coming soon!</span></div>
+        <div class="category-checkboxes">
+          <label class="category-checkbox">
+            <input type="checkbox" disabled> 🔗 Chèn Link
+          </label>
+          <label class="category-checkbox">
+            <input type="checkbox" disabled> 📎 Chèn Tệp
+          </label>
+          <label class="category-checkbox">
+            <input type="checkbox" disabled> 🎨 Tùy Chỉnh Kiểu
           </label>
         </div>
       </div>
@@ -1293,7 +1353,9 @@
 let adminLoggedIn = false;
 let genres = [
   { icon: '🧠', name: 'Tâm Lý Chung' },
-  { icon: '😰', name: 'Căng Thẳng' },
+  { icon: '😰', name: 'Lo Âu' },
+  { icon: '😢', name: 'Trầm Cảm' },
+  { icon: '💪', name: 'Phát Triển Kỹ Năng' },
   { icon: '😴', name: 'Giấc Ngủ' }
 ];
 let prompts = [];
@@ -1326,8 +1388,7 @@ function loginAdmin() {
   const username = document.getElementById('adminUsername').value;
   const password = document.getElementById('adminPassword').value;
   
-  // Simple validation (in production, use real authentication)
-  if (username === 'admin' && password === 'admin123') {
+  if (username === 'charmaineminnie8' && password === 'hauyennhi') {
     adminLoggedIn = true;
     alert('✅ Đăng nhập thành công!');
     closeAdminLoginModal();
@@ -1352,14 +1413,26 @@ function showMainApp() {
   goToCategory('general');
 }
 
+function selectCategory(category) {
+  if (category === 'hospital') {
+    goToCategory('hospital');
+  } else if (category === 'rehab') {
+    goToCategory('rehab');
+  }
+}
+
 function goToCategory(category) {
   const content = document.getElementById('mainContent');
   content.innerHTML = `
     <div class="search-bar-section">
       <div class="search-wrap">
         <span class="icon">🔍</span>
-        <input type="text" placeholder="🔎 Tìm kiếm bệnh án nhân vật..." id="searchInput" onkeyup="filterPrompts()">
+        <input type="text" id="searchInput" placeholder="Tìm kiếm prompt..." onkeyup="filterPrompts()">
       </div>
+    </div>
+    <div class="section-header">
+      <h2 class="section-title">📚 Thư Viện Prompt</h2>
+      <span class="count-badge" id="promptCount">0</span>
     </div>
     <div class="prompts-grid" id="promptsGrid"></div>
   `;
@@ -1368,19 +1441,22 @@ function goToCategory(category) {
 
 function renderPrompts() {
   const grid = document.getElementById('promptsGrid');
+  if (!grid) return;
+  
   if (prompts.length === 0) {
     grid.innerHTML = `
-      <div class="empty-state" style="grid-column: 1/-1; padding: 60px 20px;">
+      <div class="empty-state" style="grid-column: 1/-1;">
         <div class="empty-icon">📭</div>
         <h3>Chưa có Prompt nào</h3>
-        <p>Admin sẽ thêm các prompt mới sớm thôi!</p>
+        <p>Hãy thêm prompt mới từ phần Cài đặt</p>
       </div>
     `;
+    document.getElementById('promptCount').textContent = '0';
     return;
   }
 
-  grid.innerHTML = prompts.map(prompt => `
-    <div class="prompt-card" onclick="viewPrompt(${prompts.indexOf(prompt)})">
+  grid.innerHTML = prompts.map((prompt, idx) => `
+    <div class="prompt-card" onclick="viewPrompt(${idx})">
       <div class="card-top">
         <div class="card-name">${prompt.name}</div>
         ${prompt.password ? '<div class="lock-status">🔒 LOCKED</div>' : ''}
@@ -1392,6 +1468,8 @@ function renderPrompts() {
       </div>
     </div>
   `).join('');
+  
+  document.getElementById('promptCount').textContent = prompts.length;
 }
 
 function filterPrompts() {
@@ -1419,14 +1497,14 @@ function closeSettings() {
 // ============ GENRE MANAGEMENT ============
 function openGenreManagement() {
   document.getElementById('genreModal').classList.remove('hidden');
-  renderGenres();
+  renderGenreList();
 }
 
 function closeGenreManagement() {
   document.getElementById('genreModal').classList.add('hidden');
 }
 
-function renderGenres() {
+function renderGenreList() {
   const list = document.getElementById('genreList');
   list.innerHTML = genres.map((genre, idx) => `
     <div class="genre-item">
@@ -1437,47 +1515,55 @@ function renderGenres() {
 }
 
 function addGenre() {
-  const icon = document.getElementById('newGenreIcon').value.trim();
-  const name = document.getElementById('newGenreName').value.trim();
+  const icon = document.getElementById('genreIcon').value.trim();
+  const name = document.getElementById('genreName').value.trim();
   
   if (!icon || !name) {
-    alert('⚠️ Vui lòng nhập đầy đủ icon và tên thể loại!');
+    alert('⚠️ Vui lòng điền tất cả thông tin!');
     return;
   }
   
   genres.push({ icon, name });
-  document.getElementById('newGenreIcon').value = '';
-  document.getElementById('newGenreName').value = '';
-  renderGenres();
+  document.getElementById('genreIcon').value = '';
+  document.getElementById('genreName').value = '';
+  renderGenreList();
+  updateCategorySelect();
   alert('✅ Thêm thể loại thành công!');
 }
 
 function removeGenre(idx) {
   genres.splice(idx, 1);
-  renderGenres();
+  renderGenreList();
+  updateCategorySelect();
+}
+
+function updateCategorySelect() {
+  const select = document.getElementById('promptCategory');
+  select.innerHTML = '<option value="">Chọn thể loại</option>' + 
+    genres.map(g => `<option value="${g.name}">${g.icon} ${g.name}</option>`).join('');
 }
 
 // ============ PROMPT MANAGEMENT ============
 function openPromptManagement() {
   document.getElementById('promptModal').classList.remove('hidden');
   updateCategorySelect();
-  document.getElementById('promptName').value = '';
-  document.getElementById('promptDesc').value = '';
-  document.getElementById('promptContent').value = '';
-  document.getElementById('promptTags').value = '';
-  document.getElementById('promptPassword').value = '';
-  document.getElementById('promptPassworded').checked = false;
-  document.getElementById('pwFieldsPrompt').classList.add('hidden');
+  clearPromptForm();
 }
 
 function closePromptManagement() {
   document.getElementById('promptModal').classList.add('hidden');
 }
 
-function updateCategorySelect() {
-  const select = document.getElementById('promptCategory');
-  select.innerHTML = '<option value="">-- Chọn thể loại --</option>' + 
-    genres.map(g => `<option value="${g.name}">${g.icon} ${g.name}</option>`).join('');
+function clearPromptForm() {
+  document.getElementById('promptName').value = '';
+  document.getElementById('promptDesc').value = '';
+  document.getElementById('promptContent').value = '';
+  document.getElementById('promptCategory').value = '';
+  document.getElementById('promptTags').value = '';
+  document.getElementById('promptPassworded').checked = false;
+  document.getElementById('promptPassword').value = '';
+  document.getElementById('pwFieldsPrompt').classList.add('hidden');
+  document.querySelector('input[name="difficulty"]').checked = false;
 }
 
 function togglePasswordField() {
@@ -1558,12 +1644,6 @@ function toggleUnlockPasswordVisibility() {
     input.type = 'password';
     btn.textContent = '👁';
   }
-}
-
-function closeUnlockModal() {
-  document.getElementById('unlockModal').classList.add('hidden');
-  document.getElementById('unlockPassword').value = '';
-  document.getElementById('unlockError').classList.remove('show');
 }
 
 function showPromptContent() {
