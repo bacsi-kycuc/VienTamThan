@@ -375,12 +375,12 @@
 
   .btn-danger { 
     border-color: var(--danger); 
-    color: var(--danger); 
-    background: rgba(220,38,38,0.05);
+    color: white;
+    background: var(--danger);
   }
 
   .btn-danger:hover { 
-    background: rgba(220,38,38,0.15); 
+    background: rgba(220,38,38,0.9);
     border-color: var(--danger);
     box-shadow: var(--glow-danger);
   }
@@ -406,11 +406,17 @@
 
   .search-wrap {
     position: relative;
+    width: 100%;
   }
 
   .search-wrap .icon {
-    position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
-    color: var(--text3); font-size: 16px; pointer-events: none;
+    position: absolute; 
+    left: 16px; 
+    top: 50%; 
+    transform: translateY(-50%);
+    color: var(--text3); 
+    font-size: 16px; 
+    pointer-events: none;
   }
 
   .search-wrap input {
@@ -1096,6 +1102,9 @@
     font-weight: 600;
   }
 
+  .admin-only { display: none; }
+  .admin-only.show { display: block; }
+
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -1182,10 +1191,9 @@
         <span class="admin-badge">👑 ADMIN</span>
         <div class="admin-toolbar">
           <button class="btn btn-sm settings-btn" id="adminSettingsBtn" onclick="showAdminSettings()" title="Cài đặt">⚙</button>
-          <button class="btn btn-sm" onclick="logoutAdmin()" title="Đăng xuất">🚪 Thoát</button>
         </div>
       </div>
-      <button class="btn btn-gold" id="adminBtn" onclick="toggleAdminPanel()">⚙ Admin</button>
+      <button class="btn btn-gold admin-only" id="adminBtn" onclick="toggleAdminPanel()">⚙ Admin</button>
     </div>
   </header>
 
@@ -1391,7 +1399,10 @@
             <div class="form-hint">Nhập URL trang Facebook của bạn</div>
           </div>
 
-          <button class="btn btn-gold" onclick="saveSettings()" style="width:100%">💾 Lưu Cài Đặt</button>
+          <button class="btn btn-gold" onclick="saveSettings()" style="width:100%;margin-bottom:16px">💾 Lưu Cài Đặt</button>
+          
+          <div class="genre-section-title" style="margin-top:24px">🚪 Quản Lý Tài Khoản</div>
+          <button class="btn btn-danger" onclick="confirmLogout()" style="width:100%">🚪 Đăng Xuất Admin</button>
         </div>
       </div>
 
@@ -1446,15 +1457,20 @@
     localStorage.setItem('adminSession', JSON.stringify({ timestamp: Date.now() }));
   }
 
-  function logoutAdmin() {
+  function confirmLogout() {
     if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
-      admin = null;
-      localStorage.removeItem('adminSession');
-      document.getElementById('adminStatusInfo').style.display = 'none';
-      document.getElementById('adminBtn').style.display = 'inline-flex';
-      showToast('✓ Đã đăng xuất!', 'success');
-      closeAdminPanel();
+      logoutAdmin();
     }
+  }
+
+  function logoutAdmin() {
+    admin = null;
+    localStorage.removeItem('adminSession');
+    document.getElementById('adminStatusInfo').style.display = 'none';
+    document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('show'));
+    showToast('✓ Đã đăng xuất!', 'success');
+    closeSettingsModal();
+    closeAdminPanel();
   }
 
   // Welcome page
@@ -1527,7 +1543,6 @@
   }
 
   function updateWelcomeSocialButtons() {
-    // Update social button links
     const discordBtn = document.querySelector('.social-discord');
     const facebookBtn = document.querySelector('.social-facebook');
     
@@ -1747,24 +1762,26 @@
       saveAdminSession();
       errorDiv.classList.remove('show');
       closeAdminLoginModal();
-      document.getElementById('adminStatusInfo').style.display = 'flex';
-      document.getElementById('adminEmail').textContent = email;
-      document.getElementById('adminBtn').style.display = 'none';
+      updateAdminUI();
       showToast('✓ Đã tạo tài khoản Admin!', 'success');
     } else {
       if (admin.email === email && admin.password === CryptoJS.SHA256(password).toString()) {
         errorDiv.classList.remove('show');
         saveAdminSession();
         closeAdminLoginModal();
-        document.getElementById('adminStatusInfo').style.display = 'flex';
-        document.getElementById('adminEmail').textContent = email;
-        document.getElementById('adminBtn').style.display = 'none';
+        updateAdminUI();
         showToast('✓ Đăng nhập thành công!', 'success');
       } else {
         errorDiv.classList.add('show');
         errorDiv.textContent = '❌ Email hoặc mật khẩu sai!';
       }
     }
+  }
+
+  function updateAdminUI() {
+    document.getElementById('adminStatusInfo').style.display = 'flex';
+    document.getElementById('adminEmail').textContent = admin.email;
+    document.querySelectorAll('.admin-only').forEach(el => el.classList.add('show'));
   }
 
   function toggleAdminPanel() {
@@ -1805,7 +1822,6 @@
     saveData();
     updateWelcomeSocialButtons();
     showToast('✓ Đã lưu cài đặt!', 'success');
-    closeSettingsModal();
   }
 
   function renderAdminPanel() {
