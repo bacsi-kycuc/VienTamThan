@@ -258,7 +258,6 @@
     display: none;
   }
 
-  /* Details View Styles */
   .prompts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -816,7 +815,6 @@
   </header>
 
   <main>
-    <!-- MAIN VIEW: GENRE SUMMARY -->
     <div id="mainView">
       <div class="section-header">
         <span class="section-title">🏥 SƠ ĐỒ PHÒNG BAN VIỆN TÂM THẦN CÔ THỊ</span>
@@ -825,7 +823,6 @@
       <div class="genre-grid" id="genreGrid"></div>
     </div>
 
-    <!-- DETAIL VIEW: PROMPTS IN SELECTED GENRE -->
     <div id="detailView" style="display:none">
       <button class="btn btn-back" onclick="backToGenreView()">← Quay Lại</button>
       <div class="section-header">
@@ -833,7 +830,6 @@
         <span class="count-badge" id="detailCountBadge">0</span>
       </div>
 
-      <!-- SEARCH & SORT -->
       <div class="filter-bar">
         <div class="search-wrap">
           <span class="icon">🔍</span>
@@ -846,7 +842,6 @@
         </select>
       </div>
 
-      <!-- TAGS FILTER BAR -->
       <div class="tags-filter-bar" id="tagsFilterBar"></div>
 
       <div class="prompts-grid" id="promptsGrid"></div>
@@ -854,7 +849,6 @@
   </main>
 </div>
 
-<!-- ADMIN LOGIN MODAL -->
 <div class="modal-bg hidden" id="adminLoginModal">
   <div class="modal">
     <div class="modal-header">
@@ -883,7 +877,6 @@
   </div>
 </div>
 
-<!-- ADMIN PANEL MODAL -->
 <div class="modal-bg hidden" id="adminPanelModal">
   <div class="modal modal-lg">
     <div class="modal-header">
@@ -891,7 +884,6 @@
       <button class="close-btn" onclick="closeAdminPanel()">✕</button>
     </div>
     <div class="modal-body">
-      <!-- GENRE MANAGEMENT -->
       <div class="genre-management">
         <div class="genre-section-title">🏷️ Quản lý thể loại</div>
         <div class="genre-list" id="genreListAdmin"></div>
@@ -902,7 +894,6 @@
         </div>
       </div>
 
-      <!-- PROMPT FORM -->
       <div class="section-header" style="margin-bottom:16px">
         <span class="section-title" style="font-size:18px">✨ Thêm / Chỉnh Sửa Prompt</span>
       </div>
@@ -921,7 +912,6 @@
         <textarea id="fDesc" placeholder="Mô tả chi tiết..."></textarea>
       </div>
       
-      <!-- GENRE SELECTION -->
       <div class="form-group">
         <label class="form-label">Thể Loại (Genre)</label>
         <div class="genre-dropdown-group">
@@ -932,7 +922,6 @@
         <div class="tags-preview" id="fGenrePrev"></div>
       </div>
 
-      <!-- TAGS -->
       <div class="form-group">
         <label class="form-label">Tags</label>
         <div class="tags-input-wrap">
@@ -969,7 +958,6 @@
   </div>
 </div>
 
-<!-- UNLOCK MODAL -->
 <div class="modal-bg hidden" id="unlockModal">
   <div class="modal unlock-modal">
     <div class="modal-header">
@@ -996,7 +984,6 @@
   </div>
 </div>
 
-<!-- VIEW MODAL -->
 <div class="modal-bg hidden" id="viewModal">
   <div class="modal modal-lg">
     <div class="modal-header">
@@ -1035,7 +1022,6 @@ let prompts = [];
 let genres = [];
 let selectedGenreId = null;
 let editingId = null;
-let unlockTargetId = null;
 let viewingId = null;
 let sessionUnlocked = new Set();
 let editGenres = [];
@@ -1044,7 +1030,6 @@ let isAdmin = false;
 let adminEmail = null;
 let selectedTagFilter = null;
 
-// ===== ADMIN AUTH =====
 const ADMIN_USERS = [
   { email: 'charmaineminnie8@gmail.com', password: 'BenhVienAdmin2024' }
 ];
@@ -1063,7 +1048,7 @@ function renderDetailView() {
   if (sortBy === 'newest') {
     filtered.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
   } else if (sortBy === 'oldest') {
-    filtered.sort((a, a) => (a.timestamp || 0) - (b.timestamp || 0));
+    filtered.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
   } else if (sortBy === 'name') {
     filtered.sort((a, b) => a.name.localeCompare(b.name));
   }
@@ -1085,7 +1070,6 @@ function renderDetailView() {
   
   promptsGrid.innerHTML = filtered.map(p => {
     const isLocked = p.password && !sessionUnlocked.has(p.id);
-    const genreName = genres.find(g => g.id === p.genres[0])?.name || '';
     
     return `
       <div class="prompt-card" onclick="viewPrompt('${p.id}')">
@@ -1237,15 +1221,11 @@ function viewPrompt(promptId) {
 
 function tryUnlock() {
   const pwInput = document.getElementById('unlockInput').value;
-  const prompt = prompts.find(p => p.id === unlockTargetId);
-  unlockTargetId = viewingId;
+  const prompt = prompts.find(p => p.id === viewingId);
   
   if (!prompt || !prompt.password) return;
   
-  const encryptedPw = CryptoJS.AES.encrypt(pwInput, ENCRYPTION_KEY).toString();
-  const storedEncrypted = prompt.password;
-  
-  const decrypted = CryptoJS.AES.decrypt(storedEncrypted, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
+  const decrypted = CryptoJS.AES.decrypt(prompt.password, ENCRYPTION_KEY).toString(CryptoJS.enc.Utf8);
   
   if (pwInput === decrypted) {
     sessionUnlocked.add(viewingId);
@@ -1267,7 +1247,6 @@ function tryUnlock() {
 
 function closeUnlockModal() {
   document.getElementById('unlockModal').classList.add('hidden');
-  unlockTargetId = null;
 }
 
 function closeViewModal() {
@@ -1588,10 +1567,6 @@ function editPrompt(promptId) {
   
   closeViewModal();
   document.getElementById('adminPanelModal').classList.remove('hidden');
-  
-  setTimeout(() => {
-    document.querySelector('.prompt-form')?.scrollIntoView({ behavior: 'smooth' });
-  }, 100);
 }
 
 function deletePrompt(promptId) {
