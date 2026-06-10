@@ -174,11 +174,12 @@
   #welcomeScreen.hidden { opacity: 0; pointer-events: none; transform: scale(1.02); }
   
   .welcome-header-top {
-    position: absolute;
+    position: absolute !important;
     top: 20px;
     right: 20px;
     display: flex;
     gap: 10px;
+    z-index: 2;
   }
 
   .theme-toggle-btn {
@@ -2286,6 +2287,24 @@
           document.body.classList.remove('has-custom-bg');
         }
       }
+
+      // Sync slider UI to match selected zone
+      const slider = document.getElementById('zoneSlider');
+      const btnHospital = document.getElementById('btnSliderHospital');
+      const btnCaiNghien = document.getElementById('btnSliderCaiNghien');
+      if (zone === 'hospital') {
+        slider.classList.remove('active-cai-nghien');
+        btnHospital.classList.add('active');
+        btnCaiNghien.classList.remove('active');
+      } else {
+        slider.classList.add('active-cai-nghien');
+        btnHospital.classList.remove('active');
+        btnCaiNghien.classList.add('active');
+      }
+
+      // Sync sidebar title
+      document.getElementById('sidebarTitle').textContent =
+        zone === 'hospital' ? '🏷️ Danh Mục - Khu Bệnh Viện' : '🏷️ Danh Mục - Trại Cai Nghiện';
       
       loadPrompts(zone);
       loadGenres(zone);
