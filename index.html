@@ -99,7 +99,7 @@
   }
 
   body.welcome-bg {
-    background-image: var(--welcome-bg-image, linear-gradient(135deg, #fef08a 0%, #fbcfe8 50%, #e9d5ff 100%));
+    background-image: var(--welcome-bg-image, linear-gradient(160deg, #022b22 0%, #101c13 30%, #275d46 65%, #022b22 100%));
   }
 
   body.app-bg {
@@ -120,7 +120,7 @@
 
   /* Welcome: tông tím-hồng - chỉ khi ở màn chào mừng */
   body.welcome-bg.has-custom-bg::after {
-    background: rgba(109, 40, 217, 0.38);
+    background: rgba(2, 43, 34, 0.55);
   }
 
   /* App Bệnh Viện: tông hồng - CHỈ khi đang active hospital, KHÔNG ảnh hưởng cai-nghien */
@@ -139,7 +139,7 @@
     background: transparent;
   }
 
-  /* MÀN HÌNH CHÀO MỪNG - GAM MÀU PASTEL ĐÁNG YÊU, XINH XẮN */
+  /* MÀN HÌNH CHÀO MỪNG - GAM MÀU EERIE DARK GREEN */
   #welcomeScreen {
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -150,8 +150,26 @@
     justify-content: center; 
     padding: 20px; 
     transition: var(--transition);
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.18);
+    backdrop-filter: blur(2px);
+  }
+  #welcomeScreen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 45% at 20% 80%, rgba(39, 93, 70, 0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 20%, rgba(86, 149, 120, 0.14) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 30% at 50% 50%, rgba(2, 43, 34, 0.3) 0%, transparent 80%);
+    animation: eerieGlow 8s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+  #welcomeScreen > * { position: relative; z-index: 1; }
+  @keyframes eerieGlow {
+    0%   { opacity: 0.6; transform: scale(1); }
+    50%  { opacity: 1;   transform: scale(1.02); }
+    100% { opacity: 0.75; transform: scale(1.01); }
   }
   #welcomeScreen.hidden { opacity: 0; pointer-events: none; transform: scale(1.02); }
   
@@ -198,21 +216,21 @@
     font-family: 'Comfortaa', cursive; 
     font-size: 2.3rem; 
     font-weight: 700;
-    background: linear-gradient(135deg, #6d28d9, #db2777);
+    background: linear-gradient(135deg, #569578, #a8f0d0, #275d46);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center; 
     text-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   .welcome-subtitle { 
-    color: #6d28d9; 
+    color: #569578; 
     font-family: 'Comfortaa', cursive;
     font-size: 1.1rem; 
     font-weight: 500;
     margin-bottom: 40px; 
     text-align: center; 
-    opacity: 0.8;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    opacity: 0.85;
+    text-shadow: 0 1px 8px rgba(86, 149, 120, 0.4);
   }
   
   .zone-selection-container { 
@@ -237,22 +255,23 @@
     align-items: center; 
     justify-content: center;
     position: relative;
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(10px);
+    background: rgba(16, 28, 19, 0.65);
+    backdrop-filter: blur(14px);
     border: 3px solid transparent;
   }
   
   .zone-card.hospital-theme {
-    border-color: #e8a5b8;
-    box-shadow: 0 8px 20px rgba(173, 91, 120, 0.15);
+    border-color: rgba(86, 149, 120, 0.5);
+    box-shadow: 0 8px 24px rgba(86, 149, 120, 0.18), 0 0 40px rgba(39, 93, 70, 0.1);
   }
   .zone-card.hospital-theme:hover {
     transform: translateY(-8px);
-    background: #ffffff;
-    box-shadow: 0 15px 30px rgba(173, 91, 120, 0.25);
+    background: rgba(16, 28, 19, 0.85);
+    box-shadow: 0 15px 35px rgba(86, 149, 120, 0.3), 0 0 60px rgba(86, 149, 120, 0.12);
+    border-color: #569578;
   }
   .zone-card.hospital-theme h3 {
-    color: #AD5B78;
+    color: #7ecfaa;
     font-family: 'Comfortaa', cursive;
     font-size: 1.3rem;
     font-weight: 700;
@@ -260,16 +279,17 @@
   }
 
   .zone-card.cainghien-theme {
-    border-color: #3d7a62;
-    box-shadow: 0 8px 20px rgba(50, 96, 79, 0.15);
+    border-color: rgba(39, 93, 70, 0.6);
+    box-shadow: 0 8px 24px rgba(2, 43, 34, 0.3), 0 0 40px rgba(39, 93, 70, 0.12);
   }
   .zone-card.cainghien-theme:hover {
     transform: translateY(-8px);
-    background: #ffffff;
-    box-shadow: 0 15px 30px rgba(50, 96, 79, 0.25);
+    background: rgba(2, 20, 14, 0.88);
+    box-shadow: 0 15px 35px rgba(39, 93, 70, 0.35), 0 0 60px rgba(86, 149, 120, 0.1);
+    border-color: #275d46;
   }
   .zone-card.cainghien-theme h3 {
-    color: #32604F;
+    color: #569578;
     font-family: 'Comfortaa', cursive;
     font-size: 1.3rem;
     font-weight: 700;
@@ -314,11 +334,11 @@
   .btn-facebook:hover { background: #1664d4; transform: translateY(-2px); }
 
   .btn-key {
-    background: #8b5cf6;
-    color: white;
+    background: rgba(39, 93, 70, 0.75);
+    color: #a8f0d0;
     padding: 8px 14px;
     border-radius: 12px;
-    border: none;
+    border: 1px solid rgba(86, 149, 120, 0.5);
     cursor: pointer;
     font-weight: 700;
     font-size: 0.9rem;
@@ -326,9 +346,11 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    backdrop-filter: blur(8px);
   }
   .btn-key:hover {
-    background: #7c3aed;
+    background: rgba(86, 149, 120, 0.5);
+    border-color: #569578;
     transform: scale(1.05);
   }
 
@@ -793,6 +815,58 @@
   .card-action-btn:hover { 
     background: var(--zone-primary);
     color: white;
+  }
+
+  /* LOGIN MODAL - eerie dark green theme, works even without zone active */
+  #loginModal .modal-content {
+    background: linear-gradient(160deg, #0d2218 0%, #101c13 60%, #0a1a10 100%);
+    border: 1px solid rgba(86, 149, 120, 0.35);
+    box-shadow: 0 25px 60px rgba(2, 43, 34, 0.7), 0 0 80px rgba(39, 93, 70, 0.2);
+    color: #c8f0de;
+  }
+  #loginModal .modal-header {
+    color: #7ecfaa;
+  }
+  #loginModal .close-modal {
+    color: #569578;
+  }
+  #loginModal .close-modal:hover {
+    color: #a8f0d0;
+  }
+  #loginModal .form-group label {
+    color: #7ecfaa;
+  }
+  #loginModal .form-group input {
+    background: rgba(2, 43, 34, 0.6);
+    border-color: rgba(86, 149, 120, 0.4);
+    color: #c8f0de;
+  }
+  #loginModal .form-group input::placeholder {
+    color: rgba(86, 149, 120, 0.55);
+  }
+  #loginModal .form-group input:focus {
+    border-color: #569578;
+    box-shadow: 0 0 0 3px rgba(86, 149, 120, 0.15);
+  }
+  /* FIX: btn-submit inside login modal — solid colors, no zone variable dependency */
+  #loginModal .btn-submit {
+    background: #275d46 !important;
+    color: #c8f0de !important;
+    border: 1px solid rgba(86, 149, 120, 0.4);
+  }
+  #loginModal .btn-submit:hover {
+    background: #569578 !important;
+    color: #022b22 !important;
+    transform: translateY(-2px);
+  }
+  #loginModal .btn-cancel {
+    background: rgba(2, 43, 34, 0.5) !important;
+    color: #7ecfaa !important;
+    border: 1px solid rgba(86, 149, 120, 0.25);
+  }
+  #loginModal .btn-cancel:hover {
+    background: rgba(39, 93, 70, 0.4) !important;
+    color: #a8f0d0 !important;
   }
 
   /* MODALS */
