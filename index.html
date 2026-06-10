@@ -63,27 +63,27 @@
   }
 
   :root.zone-cai-nghien {
-    --zone-primary: #1e5f5e;
-    --zone-primary-light: #2a8a88;
-    --zone-primary-lighter: #d4f0f0;
+    --zone-primary: #32604F;
+    --zone-primary-light: #3d7a62;
+    --zone-primary-lighter: #d6ebe4;
     --zone-accent: #c8a400;
     --zone-accent-light: #f0d680;
-    --zone-bg-gradient: linear-gradient(135deg, #f0f8f8 0%, #e6f5f5 50%, #d4f0f0 100%);
-    --zone-card-glow: rgba(30, 95, 94, 0.08);
-    --zone-border: #b8e0df;
-    --zone-header-bg: linear-gradient(135deg, #1e5f5e 0%, #0d3d3c 100%);
+    --zone-bg-gradient: linear-gradient(135deg, #f0f7f4 0%, #e4f2ec 50%, #d6ebe4 100%);
+    --zone-card-glow: rgba(50, 96, 79, 0.08);
+    --zone-border: #b8d9ce;
+    --zone-header-bg: linear-gradient(135deg, #32604F 0%, #1a3d30 100%);
   }
 
   :root.zone-cai-nghien.dark-mode {
-    --zone-primary: #4ab9b6;
-    --zone-primary-light: #5fd5d2;
-    --zone-primary-lighter: #1a3d3c;
+    --zone-primary: #5fa882;
+    --zone-primary-light: #74c497;
+    --zone-primary-lighter: #1a3d30;
     --zone-accent: #e6c200;
     --zone-accent-light: #f0d680;
-    --zone-bg-gradient: linear-gradient(135deg, #0d2626 0%, #082020 50%, #051a19 100%);
-    --zone-card-glow: rgba(74, 185, 182, 0.15);
-    --zone-border: #2a5f5e;
-    --zone-header-bg: linear-gradient(135deg, #0d5f5e 0%, #051414 100%);
+    --zone-bg-gradient: linear-gradient(135deg, #0d2620 0%, #082018 50%, #051a12 100%);
+    --zone-card-glow: rgba(95, 168, 130, 0.15);
+    --zone-border: #2a5f47;
+    --zone-header-bg: linear-gradient(135deg, #1e4d3a 0%, #0d2820 100%);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
@@ -104,6 +104,31 @@
 
   body.app-bg {
     background-image: var(--app-bg-image, none);
+  }
+
+  /* Overlay để ảnh nền hoà vào theme khi admin đặt hình nền tuỳ chỉnh */
+  body.has-custom-bg::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    transition: background 0.5s ease;
+  }
+
+  /* Welcome: tông tím-hồng */
+  body.welcome-bg.has-custom-bg::after {
+    background: rgba(109, 40, 217, 0.38);
+  }
+
+  /* App Bệnh Viện: tông hồng */
+  body.app-bg.zone-hospital-active.has-custom-bg::after {
+    background: rgba(173, 91, 120, 0.42);
+  }
+
+  /* App Cai Nghiện: tông xanh rừng */
+  body.app-bg.zone-cainhien-active.has-custom-bg::after {
+    background: rgba(50, 96, 79, 0.42);
   }
 
   /* MÀN HÌNH CHÀO MỪNG - GAM MÀU PASTEL ĐÁNG YÊU, XINH XẮN */
@@ -227,16 +252,16 @@
   }
 
   .zone-card.cainghien-theme {
-    border-color: #2a8a88;
-    box-shadow: 0 8px 20px rgba(30, 95, 94, 0.15);
+    border-color: #3d7a62;
+    box-shadow: 0 8px 20px rgba(50, 96, 79, 0.15);
   }
   .zone-card.cainghien-theme:hover {
     transform: translateY(-8px);
     background: #ffffff;
-    box-shadow: 0 15px 30px rgba(30, 95, 94, 0.25);
+    box-shadow: 0 15px 30px rgba(50, 96, 79, 0.25);
   }
   .zone-card.cainghien-theme h3 {
-    color: #1e5f5e;
+    color: #32604F;
     font-family: 'Comfortaa', cursive;
     font-size: 1.3rem;
     font-weight: 700;
@@ -630,7 +655,7 @@
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    z-index: 9000;
+    z-index: 10000;
     opacity: 0;
     pointer-events: none;
     transition: var(--transition);
@@ -1085,6 +1110,16 @@
     display: none;
   }
 
+  @keyframes tickerScroll {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+
+  .music-song-ticker.active span {
+    animation: tickerScroll 8s linear infinite;
+    padding-left: 100%;
+  }
+
   .image-preview-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -1138,13 +1173,157 @@
     align-items: center;
     justify-content: center;
   }
+
+  /* ===== SETTINGS TABS ===== */
+  .settings-tab-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .settings-tab-btn {
+    padding: 9px 16px;
+    border-radius: 12px;
+    border: 2px solid var(--zone-border);
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Nunito', sans-serif;
+    white-space: nowrap;
+  }
+  .settings-tab-btn:hover {
+    border-color: var(--zone-primary);
+    color: var(--zone-primary);
+    background: var(--zone-primary-lighter);
+  }
+  .settings-tab-btn.active {
+    background: var(--zone-primary);
+    color: white;
+    border-color: var(--zone-primary);
+  }
+  .settings-tab-panel {
+    display: none;
+  }
+  .settings-tab-panel.active {
+    display: block;
+  }
+
+  /* ===== TOAST NOTIFICATION ===== */
+  .toast-notification {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--zone-primary);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    z-index: 99999;
+    opacity: 0;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .toast-notification.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ===== LOGOUT CONFIRM MODAL ===== */
+  .logout-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 99998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition);
+  }
+  .logout-confirm-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .logout-confirm-box {
+    background: white;
+    border-radius: 24px;
+    padding: 36px 32px 28px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    text-align: center;
+    transform: scale(0.92);
+    transition: var(--transition);
+  }
+  .logout-confirm-overlay.show .logout-confirm-box {
+    transform: scale(1);
+  }
+  :root.dark-mode .logout-confirm-box {
+    background: #2d3748;
+    color: var(--text);
+  }
+  .logout-confirm-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+  }
+  .logout-confirm-title {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--zone-primary);
+    margin-bottom: 8px;
+  }
+  .logout-confirm-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+  }
+  .logout-confirm-actions {
+    display: flex;
+    gap: 12px;
+  }
+  .logout-confirm-actions button {
+    flex: 1;
+    padding: 12px;
+    border-radius: 14px;
+    border: none;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: 'Nunito', sans-serif;
+  }
+  .btn-logout-confirm {
+    background: #ef4444;
+    color: white;
+  }
+  .btn-logout-confirm:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+  }
+  .btn-logout-cancel {
+    background: var(--zone-primary-lighter);
+    color: var(--zone-primary);
+  }
+  .btn-logout-cancel:hover {
+    background: var(--zone-border);
+  }
 </style>
 </head>
 <body class="welcome-bg">
 
   <div id="welcomeScreen">
     <div class="welcome-header-top">
-      <button class="theme-toggle-btn" onclick="toggleTheme()">🌙</button>
       <button class="btn-key" onclick="openModal('loginModal')">🔑 Admin</button>
     </div>
 
@@ -1186,6 +1365,7 @@
       </div>
 
       <div class="user-actions">
+        <button class="theme-toggle-btn" id="appThemeToggle" onclick="toggleTheme()" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">🌙</button>
         <span id="adminBadge" style="display:none; background: rgba(255,255,255,0.25); color: white; padding: 6px 12px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; margin-right: 5px;">👤 Admin</span>
         <button class="btn btn-outline" id="configLinksBtn" style="display:none; margin-right:5px;" onclick="openModal('settingsModal')">⚙️ Cài Đặt</button>
         <button class="btn btn-primary" id="adminPanelBtn" style="display:none;" onclick="openPromptModal()">+ Thêm Prompt</button>
@@ -1204,7 +1384,7 @@
 
       <div class="content-area">
         <div class="search-bar">
-          <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm prompt..." onkeyup="filterPrompts()">
+          <input type="text" id="searchInput" placeholder="🔍 Tìm kiếm Bệnh án nhân vật..." onkeyup="filterPrompts()">
         </div>
 
         <div class="prompt-grid" id="promptGrid">
@@ -1215,13 +1395,16 @@
   </div>
 
   <!-- MUSIC PLAYER -->
-  <div class="music-player" id="musicPlayer">
+  <div class="music-player" id="musicPlayer" style="display:none;">
     <div class="music-player-header">
-      <span>🎵 Nhạc Nền</span>
+      <span id="musicPlayerTitle">🎵 Music Standby</span>
       <button class="music-minimize-btn" onclick="toggleMusicPlayer()">−</button>
     </div>
     <div class="music-player-body">
-      <div class="music-status" id="musicStatus">🎵 Chế độ Chờ</div>
+      <div class="music-status" id="musicStatus">🎵 Music Standby</div>
+      <div class="music-song-ticker" id="musicSongTicker" style="display:none; overflow:hidden; white-space:nowrap; background: var(--zone-primary-lighter); border-radius:8px; padding: 5px 0; margin-bottom:4px;">
+        <span id="musicSongText" style="display:inline-block; padding-left:100%; animation: none; font-size:0.8rem; font-weight:600; color: var(--zone-primary);"></span>
+      </div>
       <div class="music-controls">
         <button class="music-btn" onclick="playMusic()">▶️ Phát</button>
         <button class="music-btn" onclick="pauseMusic()">⏸ Tạm Dừng</button>
@@ -1260,79 +1443,163 @@
 
   <!-- SETTINGS MODAL -->
   <div class="modal" id="settingsModal">
-    <div class="modal-content" style="max-width: 700px;">
+    <div class="modal-content" style="max-width: 680px; max-height: 92vh; display: flex; flex-direction: column;">
       <div class="modal-header">
         <span>⚙️ Cài Đặt</span>
         <span class="close-modal" onclick="closeModal('settingsModal')">✕</span>
       </div>
-      <div class="hint-box">💡 Quản lý hình nền và nhạc nền cho ứng dụng của bạn.</div>
-      
-      <!-- THEME SETTINGS -->
-      <div class="form-group">
-        <label>🎨 Chế Độ Giao Diện</label>
-        <div class="radio-group-zone">
-          <label class="radio-label">
-            <input type="radio" name="theme" value="light" onchange="setTheme('light')"> ☀️ Sáng
-          </label>
-          <label class="radio-label">
-            <input type="radio" name="theme" value="dark" onchange="setTheme('dark')"> 🌙 Tối
-          </label>
+
+      <!-- TAB BAR -->
+      <div class="settings-tab-bar">
+        <button class="settings-tab-btn active" onclick="switchSettingsTab('giaodien', this)">🎨 Giao Diện</button>
+        <button class="settings-tab-btn" onclick="switchSettingsTab('hinhanh', this)">🖼️ Hình Nền</button>
+        <button class="settings-tab-btn" onclick="switchSettingsTab('nhacnen', this)">🎵 Nhạc Nền</button>
+        <button class="settings-tab-btn" onclick="switchSettingsTab('lienket', this)">🔗 Liên Kết</button>
+      </div>
+
+      <!-- SCROLLABLE CONTENT -->
+      <div style="overflow-y: auto; flex: 1; padding-right: 4px;">
+
+        <!-- TAB: GIAO DIỆN -->
+        <div class="settings-tab-panel active" id="tab-giaodien">
+          <div class="hint-box">💡 Chọn chế độ sáng hoặc tối cho toàn bộ giao diện.</div>
+          <div class="form-group">
+            <label>🎨 Chế Độ Giao Diện</label>
+            <div class="radio-group-zone">
+              <label class="radio-label">
+                <input type="radio" name="theme" value="light" onchange="setTheme('light')"> ☀️ Sáng
+              </label>
+              <label class="radio-label">
+                <input type="radio" name="theme" value="dark" onchange="setTheme('dark')"> 🌙 Tối
+              </label>
+            </div>
+          </div>
+          <div class="modal-actions" style="margin-top: 20px;">
+            <button class="btn-submit" onclick="saveSettingsTab('giaodien')">💾 Lưu Thay Đổi</button>
+          </div>
         </div>
-      </div>
 
-      <!-- BACKGROUND IMAGES -->
-      <div class="form-group">
-        <label>🖼️ Hình Nền Trang Chào Mừng</label>
-        <input type="file" id="welcomeBgInput" accept="image/*" onchange="handleWelcomeBgUpload()">
-        <div id="welcomeBgPreview" class="image-preview-container"></div>
-      </div>
+        <!-- TAB: HÌNH NỀN -->
+        <div class="settings-tab-panel" id="tab-hinhanh">
+          <div class="hint-box">💡 Tải ảnh lên để đặt làm hình nền. Mỗi khu vực có hình nền riêng.</div>
 
-      <div class="form-group">
-        <label>🖼️ Hình Nền Khu Bệnh Viện</label>
-        <input type="file" id="hospitalBgInput" accept="image/*" onchange="handleHospitalBgUpload()">
-        <div id="hospitalBgPreview" class="image-preview-container"></div>
-      </div>
+          <div class="form-group">
+            <label>Hình Nền Trang Chào Mừng</label>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <input type="file" id="welcomeBgInput" accept="image/*" onchange="handleWelcomeBgUpload()" style="display:none;">
+              <button class="btn btn-primary" style="padding:8px 14px; font-size:0.85rem;" onclick="document.getElementById('welcomeBgInput').click()">📁 Chọn File</button>
+              <span id="welcomeBgFileName" style="font-size:0.85rem; color: var(--text-muted); font-style:italic;">Chưa chọn file</span>
+              <button id="welcomeBgRemoveBtn" onclick="removeBgImage('welcomeBgPreview')" style="display:none; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:8px; cursor:pointer; font-size:0.8rem;">✕ Xóa</button>
+            </div>
+            <div id="welcomeBgPreview" class="image-preview-container" style="display:none;"></div>
+          </div>
 
-      <div class="form-group">
-        <label>🖼️ Hình Nền Trại Cai Nghiện</label>
-        <input type="file" id="cainhienBgInput" accept="image/*" onchange="handleCainhienBgUpload()">
-        <div id="cainhienBgPreview" class="image-preview-container"></div>
-      </div>
+          <div class="form-group">
+            <label>Hình Nền Khu Bệnh Viện</label>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <input type="file" id="hospitalBgInput" accept="image/*" onchange="handleHospitalBgUpload()" style="display:none;">
+              <button class="btn btn-primary" style="padding:8px 14px; font-size:0.85rem;" onclick="document.getElementById('hospitalBgInput').click()">📁 Chọn File</button>
+              <span id="hospitalBgFileName" style="font-size:0.85rem; color: var(--text-muted); font-style:italic;">Chưa chọn file</span>
+              <button id="hospitalBgRemoveBtn" onclick="removeBgImage('hospitalBgPreview')" style="display:none; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:8px; cursor:pointer; font-size:0.8rem;">✕ Xóa</button>
+            </div>
+            <div id="hospitalBgPreview" class="image-preview-container" style="display:none;"></div>
+          </div>
 
-      <!-- MUSIC SETTINGS -->
-      <hr style="margin: 20px 0; border: 1px solid var(--zone-border);">
+          <div class="form-group">
+            <label>Hình Nền Trại Cai Nghiện</label>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <input type="file" id="cainhienBgInput" accept="image/*" onchange="handleCainhienBgUpload()" style="display:none;">
+              <button class="btn btn-primary" style="padding:8px 14px; font-size:0.85rem;" onclick="document.getElementById('cainhienBgInput').click()">📁 Chọn File</button>
+              <span id="cainhienBgFileName" style="font-size:0.85rem; color: var(--text-muted); font-style:italic;">Chưa chọn file</span>
+              <button id="cainhienBgRemoveBtn" onclick="removeBgImage('cainhienBgPreview')" style="display:none; background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:8px; cursor:pointer; font-size:0.8rem;">✕ Xóa</button>
+            </div>
+            <div id="cainhienBgPreview" class="image-preview-container" style="display:none;"></div>
+          </div>
 
-      <div class="form-group">
-        <label>🎵 Tải Nhạc Nền</label>
-        <div style="display: flex; gap: 10px;">
-          <input type="file" id="musicFileInput" accept="audio/*" onchange="handleMusicFileUpload()" style="flex: 1; padding: 10px; border: 2px solid var(--zone-border); border-radius: 12px;">
-          <button class="btn btn-primary" onclick="document.getElementById('musicFileInput').click()">📁 Chọn Tập Tin</button>
+          <div class="modal-actions" style="margin-top: 20px;">
+            <button class="btn-submit" onclick="saveSettingsTab('hinhanh')">💾 Lưu Thay Đổi</button>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>🔗 Hoặc Nhập URL YouTube</label>
-        <input type="url" id="youtubeUrlInput" placeholder="Nhập URL YouTube...">
-      </div>
+        <!-- TAB: NHẠC NỀN -->
+        <div class="settings-tab-panel" id="tab-nhacnen">
+          <div class="hint-box">💡 Tải file nhạc hoặc dán URL YouTube để làm nhạc nền.</div>
 
-      <div class="form-group">
-        <label>Nhạc Hiện Tại: <span id="currentMusicName" style="color: var(--zone-primary); font-weight: 600;">Chưa có</span></label>
-      </div>
+          <div class="form-group">
+            <label>Tải File Nhạc</label>
+            <div style="display: flex; align-items:center; gap: 10px; flex-wrap:wrap;">
+              <input type="file" id="musicFileInput" accept="audio/*" onchange="handleMusicFileUpload()" style="display:none;">
+              <button class="btn btn-primary" style="padding:8px 14px; font-size:0.85rem;" onclick="document.getElementById('musicFileInput').click()">📁 Chọn Tập Tin</button>
+              <span id="musicFileName" style="font-size:0.85rem; color: var(--text-muted); font-style:italic;">Chưa chọn file</span>
+            </div>
+          </div>
 
-      <div class="modal-actions">
-        <button class="btn-submit" onclick="saveMusicUrl()">💾 Lưu Nhạc</button>
-        <button class="btn-cancel" onclick="closeModal('settingsModal')">Đóng</button>
+          <div class="form-group">
+            <label>🔗 Hoặc Nhập URL YouTube</label>
+            <input type="url" id="youtubeUrlInput" placeholder="Nhập URL YouTube...">
+          </div>
+
+          <div class="form-group">
+            <label>Nhạc Hiện Tại: <span id="currentMusicName" style="color: var(--zone-primary); font-weight: 600;">Chưa có</span></label>
+          </div>
+
+          <div class="modal-actions" style="margin-top: 20px;">
+            <button class="btn-submit" onclick="saveSettingsTab('nhacnen')">💾 Lưu Thay Đổi</button>
+          </div>
+        </div>
+
+        <!-- TAB: LIÊN KẾT -->
+        <div class="settings-tab-panel" id="tab-lienket">
+          <div class="hint-box">💡 Cài link Discord và Facebook hiển thị trên trang chào mừng.</div>
+
+          <div class="form-group">
+            <label>💬 Link Kết nối Discord</label>
+            <input type="url" id="discordLinkInput" placeholder="https://discord.gg/...">
+          </div>
+
+          <div class="form-group">
+            <label>👍 Link Kết nối Facebook</label>
+            <input type="url" id="facebookLinkInput" placeholder="https://facebook.com/...">
+          </div>
+
+          <div class="modal-actions" style="margin-top: 20px;">
+            <button class="btn-submit" onclick="saveSettingsTab('lienket')">💾 Lưu Thay Đổi</button>
+          </div>
+        </div>
+
+      </div><!-- end scrollable -->
+
+      <!-- BOTTOM CLOSE -->
+      <div style="padding-top: 14px; display:flex; justify-content:flex-end;">
+        <button class="btn-cancel" style="padding: 10px 24px; border-radius: 12px; border: none; font-weight: 700; cursor: pointer; background: var(--zone-primary-lighter); color: var(--zone-primary);" onclick="closeModal('settingsModal')">✕ Đóng</button>
       </div>
     </div>
   </div>
 
+  <!-- LOGOUT CONFIRM OVERLAY -->
+  <div class="logout-confirm-overlay" id="logoutConfirmOverlay">
+    <div class="logout-confirm-box">
+      <div class="logout-confirm-icon">👋</div>
+      <div class="logout-confirm-title">Đăng xuất?</div>
+      <div class="logout-confirm-desc">Bạn có chắc chắn muốn đăng xuất khỏi tài khoản Admin không?</div>
+      <div class="logout-confirm-actions">
+        <button class="btn-logout-cancel" onclick="closeLogoutConfirm()">↩️ Ở lại</button>
+        <button class="btn-logout-confirm" onclick="doLogout()">🚪 Đăng xuất</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-notification" id="toastNotification"></div>
+
   <!-- PROMPT MODAL (ADD/EDIT) -->
   <div class="modal" id="promptModal">
-    <div class="modal-content" style="max-width: 600px;">
+    <div class="modal-content" style="max-width: 600px; max-height: 90vh; display: flex; flex-direction: column;">
       <div class="modal-header">
         <span id="promptModalTitle">+ Thêm Prompt Mới</span>
         <span class="close-modal" onclick="closeModal('promptModal')">✕</span>
       </div>
+      <div style="overflow-y: auto; flex: 1; padding-right: 4px;">
       <div class="hint-box">💡 Tạo một prompt chi tiết với icon, thẻ tag, và tùy chọn mật khẩu.</div>
       
       <div class="form-group">
@@ -1409,6 +1676,7 @@
         </div>
       </div>
 
+      </div><!-- end scrollable body -->
       <div class="modal-actions">
         <button class="btn-submit" onclick="savePrompt()">💾 Lưu Prompt</button>
         <button class="btn-cancel" onclick="closeModal('promptModal')">Hủy</button>
@@ -1427,15 +1695,15 @@
 
     function setTheme(theme) {
       const root = document.documentElement;
-      const toggleBtn = document.querySelector('.theme-toggle-btn');
+      const appToggleBtn = document.getElementById('appThemeToggle');
       
       if (theme === 'dark') {
         root.classList.add('dark-mode');
-        if (toggleBtn) toggleBtn.textContent = '☀️';
+        if (appToggleBtn) appToggleBtn.textContent = '☀️';
         localStorage.setItem('theme', 'dark');
       } else {
         root.classList.remove('dark-mode');
-        if (toggleBtn) toggleBtn.textContent = '🌙';
+        if (appToggleBtn) appToggleBtn.textContent = '🌙';
         localStorage.setItem('theme', 'light');
       }
       
@@ -1462,8 +1730,10 @@
         reader.onload = (e) => {
           const bgImage = `url('${e.target.result}')`;
           localStorage.setItem('welcomeBgImage', e.target.result);
+          localStorage.setItem('welcomeBgFileName', file.name);
           document.documentElement.style.setProperty('--welcome-bg-image', bgImage);
-          displayBgPreview(e.target.result, 'welcomeBgPreview');
+          displayBgPreview(e.target.result, 'welcomeBgPreview', file.name);
+          document.body.classList.add('has-custom-bg');
         };
         reader.readAsDataURL(file);
       }
@@ -1476,13 +1746,16 @@
         reader.onload = (e) => {
           const bgImage = `url('${e.target.result}')`;
           localStorage.setItem('hospitalBgImage', e.target.result);
+          localStorage.setItem('hospitalBgFileName', file.name);
           document.documentElement.style.setProperty('--hospital-bg-image', bgImage);
-          displayBgPreview(e.target.result, 'hospitalBgPreview');
+          displayBgPreview(e.target.result, 'hospitalBgPreview', file.name);
           
           // Apply if currently on hospital zone
           const root = document.documentElement;
           if (root.classList.contains('zone-hospital')) {
             document.body.style.backgroundImage = bgImage;
+            document.body.classList.add('has-custom-bg', 'zone-hospital-active');
+            document.body.classList.remove('zone-cainhien-active');
           }
         };
         reader.readAsDataURL(file);
@@ -1496,41 +1769,61 @@
         reader.onload = (e) => {
           const bgImage = `url('${e.target.result}')`;
           localStorage.setItem('cainhienBgImage', e.target.result);
+          localStorage.setItem('cainhienBgFileName', file.name);
           document.documentElement.style.setProperty('--cainhien-bg-image', bgImage);
-          displayBgPreview(e.target.result, 'cainhienBgPreview');
+          displayBgPreview(e.target.result, 'cainhienBgPreview', file.name);
           
           // Apply if currently on cai-nghien zone
           const root = document.documentElement;
           if (root.classList.contains('zone-cai-nghien')) {
             document.body.style.backgroundImage = bgImage;
+            document.body.classList.add('has-custom-bg', 'zone-cainhien-active');
+            document.body.classList.remove('zone-hospital-active');
           }
         };
         reader.readAsDataURL(file);
       }
     }
 
-    function displayBgPreview(imageSrc, containerId) {
+    function displayBgPreview(imageSrc, containerId, fileName) {
       const container = document.getElementById(containerId);
+      // Hide the image container - we show filename text only
+      container.style.display = 'none';
       container.innerHTML = '';
-      const div = document.createElement('div');
-      div.className = 'image-preview-item active';
-      div.innerHTML = `<img src="${imageSrc}" alt="Preview"><button class="image-preview-remove" onclick="removeBgImage('${containerId}')">✕</button>`;
-      container.appendChild(div);
+
+      // Map containerId to fileName span and remove button
+      const map = {
+        'welcomeBgPreview':  { name: 'welcomeBgFileName',  remove: 'welcomeBgRemoveBtn'  },
+        'hospitalBgPreview': { name: 'hospitalBgFileName', remove: 'hospitalBgRemoveBtn' },
+        'cainhienBgPreview': { name: 'cainhienBgFileName', remove: 'cainhienBgRemoveBtn' },
+      };
+      const ids = map[containerId];
+      if (ids) {
+        const nameEl = document.getElementById(ids.name);
+        const removeEl = document.getElementById(ids.remove);
+        if (nameEl) nameEl.textContent = fileName || 'Đã chọn file';
+        if (removeEl) removeEl.style.display = 'inline-block';
+      }
     }
 
     function removeBgImage(containerId) {
       const container = document.getElementById(containerId);
       container.innerHTML = '';
-      
-      if (containerId === 'welcomeBgPreview') {
-        localStorage.removeItem('welcomeBgImage');
-        document.documentElement.style.setProperty('--welcome-bg-image', 'linear-gradient(135deg, #fef08a 0%, #fbcfe8 50%, #e9d5ff 100%)');
-      } else if (containerId === 'hospitalBgPreview') {
-        localStorage.removeItem('hospitalBgImage');
-        document.documentElement.style.setProperty('--hospital-bg-image', 'none');
-      } else if (containerId === 'cainhienBgPreview') {
-        localStorage.removeItem('cainhienBgImage');
-        document.documentElement.style.setProperty('--cainhien-bg-image', 'none');
+      container.style.display = 'none';
+
+      const map = {
+        'welcomeBgPreview':  { name: 'welcomeBgFileName',  remove: 'welcomeBgRemoveBtn',  key: 'welcomeBgImage',  cssVar: '--welcome-bg-image',  fallback: 'linear-gradient(135deg, #fef08a 0%, #fbcfe8 50%, #e9d5ff 100%)' },
+        'hospitalBgPreview': { name: 'hospitalBgFileName', remove: 'hospitalBgRemoveBtn', key: 'hospitalBgImage',  cssVar: '--hospital-bg-image',  fallback: 'none' },
+        'cainhienBgPreview': { name: 'cainhienBgFileName', remove: 'cainhienBgRemoveBtn', key: 'cainhienBgImage',  cssVar: '--cainhien-bg-image',  fallback: 'none' },
+      };
+      const ids = map[containerId];
+      if (ids) {
+        localStorage.removeItem(ids.key);
+        document.documentElement.style.setProperty(ids.cssVar, ids.fallback);
+        const nameEl = document.getElementById(ids.name);
+        const removeEl = document.getElementById(ids.remove);
+        if (nameEl) nameEl.textContent = 'Chưa chọn file';
+        if (removeEl) removeEl.style.display = 'none';
       }
     }
 
@@ -1541,15 +1834,16 @@
       
       if (welcomeBg) {
         document.documentElement.style.setProperty('--welcome-bg-image', `url('${welcomeBg}')`);
-        displayBgPreview(welcomeBg, 'welcomeBgPreview');
+        displayBgPreview(welcomeBg, 'welcomeBgPreview', localStorage.getItem('welcomeBgFileName') || 'Đã có hình nền');
+        document.body.classList.add('has-custom-bg');
       }
       if (hospitalBg) {
         document.documentElement.style.setProperty('--hospital-bg-image', `url('${hospitalBg}')`);
-        displayBgPreview(hospitalBg, 'hospitalBgPreview');
+        displayBgPreview(hospitalBg, 'hospitalBgPreview', localStorage.getItem('hospitalBgFileName') || 'Đã có hình nền');
       }
       if (cainhienBg) {
         document.documentElement.style.setProperty('--cainhien-bg-image', `url('${cainhienBg}')`);
-        displayBgPreview(cainhienBg, 'cainhienBgPreview');
+        displayBgPreview(cainhienBg, 'cainhienBgPreview', localStorage.getItem('cainhienBgFileName') || 'Đã có hình nền');
       }
     }
 
@@ -1564,21 +1858,25 @@
         reader.onload = (e) => {
           localStorage.setItem('musicData', e.target.result);
           localStorage.setItem('musicName', file.name);
+          audio.src = e.target.result;
           updateMusicDisplay(file.name);
+          const fileNameEl = document.getElementById('musicFileName');
+          if (fileNameEl) fileNameEl.textContent = file.name;
+          showToast('✅ Đã tải nhạc: ' + file.name);
         };
         reader.readAsDataURL(file);
       }
     }
 
     function saveMusicUrl() {
-      const youtubeUrl = document.getElementById('youtubeUrlInput').value;
+      const youtubeUrl = document.getElementById('youtubeUrlInput').value.trim();
       if (youtubeUrl) {
         localStorage.setItem('musicUrl', youtubeUrl);
         localStorage.setItem('musicName', 'YouTube: ' + youtubeUrl);
         updateMusicDisplay('YouTube: ' + youtubeUrl);
-        alert('✅ Lưu đường link YouTube thành công!');
+        showToast('✅ Đã lưu đường link YouTube!');
       } else {
-        alert('⚠️ Vui lòng nhập URL YouTube');
+        showToast('⚠️ Vui lòng nhập URL YouTube');
       }
     }
 
@@ -1594,6 +1892,8 @@
       
       if (musicName) {
         updateMusicDisplay(musicName);
+        const fileNameEl = document.getElementById('musicFileName');
+        if (fileNameEl) fileNameEl.textContent = musicName;
       }
       
       if (musicData) {
@@ -1601,6 +1901,20 @@
       } else if (musicUrl) {
         // Note: Direct YouTube embedding won't work, but URL can be displayed
         console.log('Music URL saved:', musicUrl);
+      }
+
+      // Restore social links
+      const discordLink = localStorage.getItem('discordLink');
+      const facebookLink = localStorage.getItem('facebookLink');
+      if (discordLink) {
+        document.getElementById('welcomeDiscordBtn').href = discordLink;
+        const inp = document.getElementById('discordLinkInput');
+        if (inp) inp.value = discordLink;
+      }
+      if (facebookLink) {
+        document.getElementById('welcomeFacebookBtn').href = facebookLink;
+        const inp = document.getElementById('facebookLinkInput');
+        if (inp) inp.value = facebookLink;
       }
     }
 
@@ -1627,12 +1941,30 @@
 
     function updateMusicStatus() {
       const status = document.getElementById('musicStatus');
+      const titleEl = document.getElementById('musicPlayerTitle');
+      const ticker = document.getElementById('musicSongTicker');
+      const songText = document.getElementById('musicSongText');
+      const musicName = localStorage.getItem('musicName') || '';
+
       if (isPlaying && audio.src) {
-        status.textContent = '🎵 Đang Phát';
+        status.textContent = '🎵 Music Playing';
         status.classList.add('playing');
+        if (titleEl) titleEl.textContent = '🎵 Music Playing';
+        // Show scrolling ticker
+        if (ticker && songText && musicName) {
+          songText.textContent = musicName;
+          ticker.style.display = 'block';
+          ticker.classList.add('active');
+        }
       } else {
-        status.textContent = '🎵 Chế độ Chờ';
+        status.textContent = '🎵 Music Standby';
         status.classList.remove('playing');
+        if (titleEl) titleEl.textContent = '🎵 Music Standby';
+        // Stop ticker
+        if (ticker && songText) {
+          ticker.classList.remove('active');
+          ticker.style.display = 'none';
+        }
       }
     }
 
@@ -1662,17 +1994,28 @@
       document.getElementById('app').classList.add('active');
       document.body.classList.remove('welcome-bg');
       document.body.classList.add('app-bg');
+
+      // Show music player only when in app
+      document.getElementById('musicPlayer').style.display = 'block';
       
-      // Apply background image for app
+      // Apply background image + overlay classes for zone
       if (zone === 'hospital') {
         const hospitalBg = localStorage.getItem('hospitalBgImage');
         if (hospitalBg) {
           document.body.style.backgroundImage = `url('${hospitalBg}')`;
+          document.body.classList.add('has-custom-bg', 'zone-hospital-active');
+          document.body.classList.remove('zone-cainhien-active');
+        } else {
+          document.body.classList.remove('has-custom-bg', 'zone-hospital-active', 'zone-cainhien-active');
         }
       } else {
         const cainhienBg = localStorage.getItem('cainhienBgImage');
         if (cainhienBg) {
           document.body.style.backgroundImage = `url('${cainhienBg}')`;
+          document.body.classList.add('has-custom-bg', 'zone-cainhien-active');
+          document.body.classList.remove('zone-hospital-active');
+        } else {
+          document.body.classList.remove('has-custom-bg', 'zone-hospital-active', 'zone-cainhien-active');
         }
       }
       
@@ -1832,10 +2175,60 @@
     }
 
     function confirmLogout() {
-      if (confirm('Bạn chắc chắn muốn đăng xuất?')) {
-        localStorage.removeItem('adminLogged');
-        location.reload();
+      document.getElementById('logoutConfirmOverlay').classList.add('show');
+    }
+
+    function closeLogoutConfirm() {
+      document.getElementById('logoutConfirmOverlay').classList.remove('show');
+    }
+
+    function doLogout() {
+      closeLogoutConfirm();
+      localStorage.removeItem('adminLogged');
+      location.reload();
+    }
+
+    // ============ SETTINGS TABS ============
+    function switchSettingsTab(tabId, btn) {
+      // Deactivate all tabs and panels
+      document.querySelectorAll('.settings-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.settings-tab-panel').forEach(p => p.classList.remove('active'));
+      // Activate selected
+      btn.classList.add('active');
+      document.getElementById('tab-' + tabId).classList.add('active');
+    }
+
+    function saveSettingsTab(tabId) {
+      if (tabId === 'giaodien') {
+        const theme = document.querySelector('input[name="theme"]:checked');
+        if (theme) setTheme(theme.value);
+        showToast('✅ Đã lưu cài đặt giao diện!');
+      } else if (tabId === 'hinhanh') {
+        // Images are already saved on file select; just confirm
+        showToast('✅ Đã lưu cài đặt hình nền!');
+      } else if (tabId === 'nhacnen') {
+        const youtubeUrl = document.getElementById('youtubeUrlInput').value.trim();
+        if (youtubeUrl) {
+          saveMusicUrl();
+        } else {
+          showToast('✅ Đã lưu cài đặt nhạc nền!');
+        }
+      } else if (tabId === 'lienket') {
+        saveSocialLinks();
+        showToast('✅ Đã lưu liên kết!');
       }
+    }
+
+    // ============ TOAST NOTIFICATION ============
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('toastNotification');
+      toast.textContent = message;
+      toast.classList.add('show');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2800);
     }
 
     function filterPrompts() {
@@ -1856,6 +2249,21 @@
       // Placeholder for loading genres
     }
 
+    // ============ SOCIAL LINKS MANAGEMENT ============
+    function saveSocialLinks() {
+      const discordLink = document.getElementById('discordLinkInput').value.trim();
+      const facebookLink = document.getElementById('facebookLinkInput').value.trim();
+      
+      if (discordLink) {
+        localStorage.setItem('discordLink', discordLink);
+        document.getElementById('welcomeDiscordBtn').href = discordLink;
+      }
+      if (facebookLink) {
+        localStorage.setItem('facebookLink', facebookLink);
+        document.getElementById('welcomeFacebookBtn').href = facebookLink;
+      }
+    }
+
     // Check if admin is logged in
     window.addEventListener('DOMContentLoaded', () => {
       if (localStorage.getItem('adminLogged')) {
@@ -1864,6 +2272,19 @@
         document.getElementById('adminPanelBtn').style.display = 'inline-block';
         document.getElementById('configLinksBtn').style.display = 'inline-block';
         document.getElementById('logoutBtn').style.display = 'inline-block';
+      }
+      // Restore social links
+      const discordLink = localStorage.getItem('discordLink');
+      const facebookLink = localStorage.getItem('facebookLink');
+      if (discordLink) {
+        document.getElementById('welcomeDiscordBtn').href = discordLink;
+        const inp = document.getElementById('discordLinkInput');
+        if (inp) inp.value = discordLink;
+      }
+      if (facebookLink) {
+        document.getElementById('welcomeFacebookBtn').href = facebookLink;
+        const inp = document.getElementById('facebookLinkInput');
+        if (inp) inp.value = facebookLink;
       }
     });
   </script>
