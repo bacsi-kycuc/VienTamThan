@@ -182,6 +182,18 @@
     z-index: 2;
   }
 
+  .welcome-copyright {
+    position: absolute !important;
+    bottom: 18px;
+    left: 28px;
+    font-size: 0.82rem;
+    color: rgba(168, 240, 208, 0.5);
+    font-family: 'Comfortaa', cursive;
+    letter-spacing: 0.02em;
+    z-index: 2;
+    pointer-events: none;
+  }
+
   .theme-toggle-btn {
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -1545,6 +1557,207 @@
   .btn-logout-cancel:hover {
     background: var(--zone-border);
   }
+
+  /* ============ PHIẾU ĐĂNG KÝ CHẨN ĐOÁN MODAL ============ */
+  #regModal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 10, 18, 0.75);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10500;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  #regModal.show { opacity: 1; pointer-events: auto; }
+  .reg-modal-box {
+    background: #1a1626;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    width: 96%;
+    max-width: 700px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+    overflow: hidden;
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  #regModal.show .reg-modal-box { transform: scale(1); }
+  :root.zone-hospital #regModal .reg-modal-box {
+    background: #1f1020;
+    border-color: rgba(173,91,120,0.25);
+    box-shadow: 0 30px 80px rgba(100,20,50,0.5), 0 0 60px rgba(173,91,120,0.08);
+  }
+  :root.zone-cai-nghien #regModal .reg-modal-box {
+    background: #0d1f18;
+    border-color: rgba(50,96,79,0.3);
+    box-shadow: 0 30px 80px rgba(2,43,34,0.6), 0 0 60px rgba(50,96,79,0.1);
+  }
+  .reg-modal-header {
+    padding: 18px 24px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .reg-modal-header-left { display: flex; align-items: center; gap: 12px; }
+  .reg-modal-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+    background: var(--zone-primary, #AD5B78);
+  }
+  .reg-modal-title-block h2 {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1rem; font-weight: 700;
+    color: #e8a0b8; line-height: 1.3;
+  }
+  :root.zone-cai-nghien .reg-modal-title-block h2 { color: #7ecfaa; }
+  .reg-modal-title-block p { font-size: 0.78rem; color: rgba(200,200,220,0.5); margin-top: 2px; }
+  .reg-close-btn {
+    background: none; border: none; cursor: pointer;
+    font-size: 1.3rem; color: rgba(180,180,200,0.5);
+    padding: 4px; line-height: 1; transition: color 0.2s; flex-shrink: 0;
+  }
+  .reg-close-btn:hover { color: rgba(255,255,255,0.8); }
+  .reg-tabs {
+    display: flex; gap: 4px;
+    padding: 14px 24px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    flex-shrink: 0;
+  }
+  .reg-tab {
+    padding: 9px 16px;
+    border-radius: 10px 10px 0 0;
+    border: none; background: none;
+    color: rgba(180,180,210,0.55);
+    font-size: 0.85rem; font-weight: 700;
+    cursor: pointer; font-family: 'Nunito', sans-serif;
+    display: flex; align-items: center; gap: 6px;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .reg-tab:hover { color: rgba(255,255,255,0.75); }
+  .reg-tab.active { background: rgba(255,255,255,0.08); color: white; }
+  :root.zone-hospital .reg-tab.active { background: rgba(173,91,120,0.18); color: #e8a0b8; box-shadow: inset 0 -2px 0 #AD5B78; }
+  :root.zone-cai-nghien .reg-tab.active { background: rgba(50,96,79,0.2); color: #7ecfaa; box-shadow: inset 0 -2px 0 #32604F; }
+  .reg-tab-content { overflow-y: auto; flex: 1; padding: 20px 24px; }
+  .reg-pane { display: none; }
+  .reg-pane.active { display: block; }
+  .reg-search-wrap { position: relative; margin-bottom: 18px; }
+  .reg-search-wrap input {
+    width: 100%; padding: 11px 16px 11px 42px;
+    background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 12px; color: white; font-size: 0.95rem;
+    outline: none; font-family: 'Nunito', sans-serif; transition: border-color 0.2s;
+  }
+  :root.zone-hospital .reg-search-wrap input:focus { border-color: #AD5B78; }
+  :root.zone-cai-nghien .reg-search-wrap input:focus { border-color: #32604F; }
+  .reg-search-wrap input::placeholder { color: rgba(180,180,210,0.4); }
+  .reg-search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 1rem; pointer-events: none; }
+  .reg-search-clear {
+    display: none; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.12); border: none; border-radius: 8px;
+    color: white; padding: 3px 9px; font-size: 0.78rem; cursor: pointer; font-family: 'Nunito', sans-serif;
+  }
+  .reg-search-clear.show { display: block; }
+  .reg-section-label {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em;
+    color: rgba(180,180,210,0.5); margin-bottom: 10px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .reg-section-label span { font-weight: 400; font-size: 0.75rem; opacity: 0.7; }
+  .reg-room-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .reg-room-card {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 12px 14px; cursor: pointer; transition: all 0.2s;
+  }
+  .reg-room-card:hover, .reg-room-card.selected { border-color: var(--zone-primary, #AD5B78); background: rgba(255,255,255,0.08); }
+  .reg-room-card-header { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; color: rgba(180,180,210,0.5); margin-bottom: 4px; line-height: 1.3; }
+  .reg-room-card-icon { font-size: 1.6rem; margin-bottom: 4px; display: block; }
+  .reg-room-card-name { font-weight: 700; font-size: 0.9rem; color: white; line-height: 1.3; }
+  .reg-room-card-count { margin-top: 8px; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 20px; display: inline-block; background: rgba(255,255,255,0.1); color: rgba(200,200,220,0.7); }
+  :root.zone-hospital .reg-room-card-count { background: rgba(173,91,120,0.2); color: #e8a0b8; }
+  :root.zone-cai-nghien .reg-room-card-count { background: rgba(50,96,79,0.25); color: #7ecfaa; }
+  .reg-results-list { display: flex; flex-direction: column; gap: 8px; }
+  .reg-result-item { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 11px 14px; transition: background 0.15s; }
+  .reg-result-item:hover { background: rgba(255,255,255,0.08); }
+  .reg-result-name { font-weight: 700; font-size: 0.9rem; color: white; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .reg-result-genre { font-size: 0.75rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; background: rgba(255,255,255,0.08); color: rgba(200,200,220,0.7); }
+  :root.zone-hospital .reg-result-genre { background: rgba(173,91,120,0.2); color: #e8a0b8; }
+  :root.zone-cai-nghien .reg-result-genre { background: rgba(50,96,79,0.25); color: #7ecfaa; }
+  .reg-result-desc { font-size: 0.8rem; color: rgba(180,180,210,0.55); margin: 3px 0; line-height: 1.4; }
+  .reg-result-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 5px; }
+  .reg-result-tag { font-size: 0.72rem; padding: 1px 7px; border-radius: 8px; background: rgba(255,255,255,0.07); color: rgba(180,180,210,0.6); }
+  .reg-empty { text-align: center; padding: 36px 20px; color: rgba(180,180,210,0.4); font-size: 0.9rem; }
+  .reg-empty-icon { font-size: 2.2rem; margin-bottom: 8px; }
+  .reg-form-section-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 8px;
+    font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em;
+    margin-bottom: 14px; margin-top: 6px;
+    background: var(--zone-primary, #AD5B78); color: white;
+  }
+  .reg-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .reg-form-row.single { grid-template-columns: 1fr; }
+  .reg-form-label { font-size: 0.82rem; font-weight: 800; letter-spacing: 0.04em; color: rgba(220,220,240,0.85); margin-bottom: 6px; }
+  .reg-form-input, .reg-form-select, .reg-form-textarea {
+    width: 100%; padding: 10px 14px;
+    background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
+    border-radius: 10px; color: white; font-size: 0.88rem; font-family: 'Nunito', sans-serif;
+    outline: none; transition: border-color 0.2s;
+  }
+  .reg-form-input::placeholder, .reg-form-textarea::placeholder { color: rgba(180,180,210,0.35); }
+  .reg-form-select option { background: #1a1626; color: white; }
+  :root.zone-hospital .reg-form-input:focus,
+  :root.zone-hospital .reg-form-select:focus,
+  :root.zone-hospital .reg-form-textarea:focus { border-color: #AD5B78; }
+  :root.zone-cai-nghien .reg-form-input:focus,
+  :root.zone-cai-nghien .reg-form-select:focus,
+  :root.zone-cai-nghien .reg-form-textarea:focus { border-color: #32604F; }
+  .reg-form-textarea { resize: vertical; min-height: 90px; }
+  .reg-sample-bar { background: rgba(255,255,255,0.04); border-radius: 10px; padding: 10px 14px; margin-bottom: 18px; border: 1px solid rgba(255,255,255,0.07); }
+  .reg-sample-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; color: rgba(180,180,210,0.45); margin-bottom: 7px; }
+  .reg-sample-btns { display: flex; gap: 7px; flex-wrap: wrap; }
+  .reg-sample-btn { padding: 5px 11px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: rgba(220,220,240,0.75); font-size: 0.78rem; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.15s; }
+  .reg-sample-btn:hover { background: rgba(255,255,255,0.13); color: white; }
+  .reg-checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .reg-checkbox-item { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); transition: background 0.15s; font-size: 0.82rem; color: rgba(210,210,230,0.8); line-height: 1.4; }
+  .reg-checkbox-item:hover { background: rgba(255,255,255,0.07); }
+  .reg-checkbox-item input[type="checkbox"] { width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--zone-primary, #AD5B78); margin-top: 2px; }
+  .reg-form-actions { display: flex; gap: 12px; justify-content: center; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.07); margin-top: 16px; }
+  .reg-btn-skip { padding: 11px 24px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; color: rgba(200,200,220,0.7); font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+  .reg-btn-skip:hover { background: rgba(255,255,255,0.13); color: white; }
+  .reg-btn-submit { padding: 11px 28px; background: var(--zone-primary, #AD5B78); border: none; border-radius: 12px; color: white; font-size: 0.9rem; font-weight: 800; cursor: pointer; font-family: 'Nunito', sans-serif; display: flex; align-items: center; gap: 7px; transition: all 0.2s; }
+  .reg-btn-submit:hover { filter: brightness(1.15); transform: translateY(-2px); }
+  .reg-record-search-wrap { display: flex; gap: 10px; margin-bottom: 16px; }
+  .reg-record-search-wrap input { flex: 1; padding: 10px 14px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; font-size: 0.88rem; font-family: 'Nunito', sans-serif; outline: none; transition: border-color 0.2s; }
+  :root.zone-hospital .reg-record-search-wrap input:focus { border-color: #AD5B78; }
+  :root.zone-cai-nghien .reg-record-search-wrap input:focus { border-color: #32604F; }
+  .reg-record-search-wrap input::placeholder { color: rgba(180,180,210,0.35); }
+  .reg-filter-select { padding: 10px 14px; background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; font-size: 0.85rem; font-family: 'Nunito', sans-serif; outline: none; cursor: pointer; }
+  .reg-filter-select option { background: #1a1626; }
+  .reg-record-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; margin-bottom: 10px; overflow: hidden; transition: border-color 0.2s; cursor: pointer; }
+  .reg-record-card:hover { border-color: rgba(255,255,255,0.15); }
+  .reg-record-card-header { padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .reg-record-card-title { font-weight: 800; font-size: 0.92rem; color: white; display: flex; align-items: center; gap: 8px; }
+  .reg-record-card-meta { font-size: 0.75rem; color: rgba(180,180,210,0.5); flex-shrink: 0; }
+  .reg-record-zone-badge { font-size: 0.72rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; background: rgba(255,255,255,0.08); color: rgba(200,200,220,0.65); }
+  .reg-record-body { display: none; padding: 0 16px 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .reg-record-body.open { display: block; padding-top: 12px; }
+  .reg-record-field { margin-bottom: 8px; font-size: 0.83rem; }
+  .reg-record-field-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; color: rgba(180,180,210,0.45); margin-bottom: 2px; }
+  .reg-record-field-value { color: rgba(220,220,240,0.85); line-height: 1.5; }
+  .reg-record-delete { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.25); border-radius: 8px; padding: 4px 10px; color: #fc8585; font-size: 0.75rem; font-weight: 700; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; flex-shrink: 0; }
+  .reg-record-delete:hover { background: rgba(239,68,68,0.3); }
+
 </style>
 </head>
 <body class="welcome-bg">
@@ -1580,6 +1793,8 @@
       <a id="welcomeDiscordBtn" href="#" target="_blank" class="btn-social btn-discord">💬 Tham gia Discord</a>
       <a id="welcomeFacebookBtn" href="#" target="_blank" class="btn-social btn-facebook">👍 Kết nối Facebook</a>
     </div>
+
+    <div class="welcome-copyright">© 2026 Viện Tâm Thần Cố Thị – Sẵn sàng chữa lành tâm hồn thông số.</div>
   </div>
 
   <div id="app" class="app-bg">
@@ -2246,16 +2461,27 @@
     });
 
     // ============ EXISTING FUNCTIONS (Keep all original functions) ============
+    // Called from welcome screen zone cards — shows the reg modal first
     function selectInitialZone(zone) {
+      // Set the zone class on html immediately so modal theming applies
       const root = document.documentElement;
       root.classList.remove('zone-hospital', 'zone-cai-nghien');
-      
-      if (zone === 'hospital') {
-        root.classList.add('zone-hospital');
-      } else {
-        root.classList.add('zone-cai-nghien');
-      }
-      
+      if (zone === 'hospital') { root.classList.add('zone-hospital'); }
+      else { root.classList.add('zone-cai-nghien'); }
+
+      // Store chosen zone and open registration modal
+      // Modal close/skip will call enterApp(zone)
+      regCurrentZone = zone;
+      openRegModal(zone);
+    }
+
+    // Actually enter the main app — called when user closes/skips the reg modal
+    function enterApp(zone) {
+      const root = document.documentElement;
+      root.classList.remove('zone-hospital', 'zone-cai-nghien');
+      if (zone === 'hospital') { root.classList.add('zone-hospital'); }
+      else { root.classList.add('zone-cai-nghien'); }
+
       document.getElementById('welcomeScreen').classList.add('hidden');
       document.getElementById('app').classList.add('active');
       document.body.classList.remove('welcome-bg');
@@ -3031,7 +3257,366 @@
     function confirmWelcomeLogout() {
       document.getElementById('logoutConfirmOverlay').classList.add('show');
     }
+
+    // ============ PHIẾU ĐĂNG KÝ CHẨN ĐOÁN ============
+    let regCurrentZone = 'hospital';
+    let regSelectedGenre = '';
+    const REG_KEY = 'reg_records';
+
+    function getRegRecords() {
+      try { return JSON.parse(localStorage.getItem(REG_KEY) || '[]'); } catch(e) { return []; }
+    }
+    function saveRegRecords(arr) { localStorage.setItem(REG_KEY, JSON.stringify(arr)); }
+
+    function openRegModal(zone) {
+      regCurrentZone = zone;
+      document.getElementById('regModal').classList.add('show');
+      switchRegTab(0);
+      regPopulateGenreSelect();
+      regRenderRooms();
+      regUpdateRecordCount();
+      regRenderRecords();
+    }
+
+    function closeRegModal() {
+      document.getElementById('regModal').classList.remove('show');
+      // If app not yet shown, enter it now
+      const app = document.getElementById('app');
+      if (!app.classList.contains('active')) {
+        enterApp(regCurrentZone);
+      }
+    }
+
+    function switchRegTab(idx) {
+      for (let i = 0; i < 3; i++) {
+        document.getElementById('regTab' + i).classList.toggle('active', i === idx);
+        document.getElementById('regPane' + i).classList.toggle('active', i === idx);
+      }
+      if (idx === 0) { regRenderRooms(); regHandleSearch(document.getElementById('regSearchInput').value); }
+      if (idx === 1) { regPopulateGenreSelect(); }
+      if (idx === 2) { regRenderRecords(); }
+    }
+
+    function regRenderRooms() {
+      const genres = getGenresForZone(regCurrentZone);
+      const prompts = getPromptsForZone(regCurrentZone);
+      const grid = document.getElementById('regRoomGrid');
+      const countEl = document.getElementById('regRoomCount');
+      countEl.textContent = 'Tổng cộng ' + genres.length + ' chuyên khoa';
+      if (genres.length === 0) {
+        grid.innerHTML = '<div class="reg-empty" style="grid-column:span 2"><div class="reg-empty-icon">🏥</div>Chưa có phòng khám nào được tạo.</div>';
+        return;
+      }
+      grid.innerHTML = genres.map(g => {
+        const count = prompts.filter(p => p.genre === g.name).length;
+        const isSelected = regSelectedGenre === g.name;
+        const safeName = g.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        return '<div class="reg-room-card' + (isSelected ? ' selected' : '') + '" onclick="regSelectRoom(\'' + safeName + '\')">' +
+          '<div class="reg-room-card-header">' + (g.icon||'🗂️') + ' ' + g.name.toUpperCase() + '</div>' +
+          '<span class="reg-room-card-icon">' + (g.icon||'🗂️') + '</span>' +
+          '<div class="reg-room-card-name">' + (g.icon||'') + ' ' + g.name + '</div>' +
+          '<div class="reg-room-card-count">' + count + ' Bác sĩ</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    function regSelectRoom(genreName) {
+      regSelectedGenre = (regSelectedGenre === genreName) ? '' : genreName;
+      regRenderRooms();
+      const prompts = getPromptsForZone(regCurrentZone).filter(p => p.genre === genreName);
+      regShowResults(prompts, genreName ? ('📋 ' + genreName.toUpperCase()) : 'TẤT CẢ BÁC SĨ');
+      document.getElementById('regSearchInput').value = '';
+      document.getElementById('regSearchClear').classList.remove('show');
+    }
+
+    function regHandleSearch(val) {
+      const clearBtn = document.getElementById('regSearchClear');
+      clearBtn.classList.toggle('show', val.trim().length > 0);
+      if (!val.trim()) {
+        document.getElementById('regRoomSection').style.display = '';
+        document.getElementById('regResultSection').style.display = 'none';
+        regSelectedGenre = '';
+        regRenderRooms();
+        return;
+      }
+      const q = val.trim().toLowerCase();
+      const prompts = getPromptsForZone(regCurrentZone).filter(p =>
+        p.title.toLowerCase().includes(q) ||
+        (p.genre || '').toLowerCase().includes(q) ||
+        (p.description || '').toLowerCase().includes(q) ||
+        (p.tags || []).some(t => t.toLowerCase().includes(q))
+      );
+      document.getElementById('regRoomSection').style.display = 'none';
+      regShowResults(prompts, 'KẾT QUẢ TÌM KIẾM');
+    }
+
+    function regShowResults(prompts, labelText) {
+      document.getElementById('regRoomSection').style.display = 'none';
+      document.getElementById('regResultSection').style.display = '';
+      document.getElementById('regResultLabel').textContent = labelText + ' (' + prompts.length + ')';
+      const list = document.getElementById('regResultList');
+      if (prompts.length === 0) {
+        list.innerHTML = '<div class="reg-empty"><div class="reg-empty-icon">🔍</div>Không tìm thấy bác sĩ phù hợp.</div>';
+        return;
+      }
+      list.innerHTML = prompts.map(p => {
+        const tagsHtml = (p.tags || []).map(t => '<span class="reg-result-tag">#' + t + '</span>').join('');
+        const genreHtml = p.genre ? '<span class="reg-result-genre">' + (p.icon||'📝') + ' ' + p.genre + '</span>' : '';
+        return '<div class="reg-result-item">' +
+          '<div class="reg-result-name">' + (p.icon||'📝') + ' ' + p.title + ' ' + genreHtml + '</div>' +
+          (p.description ? '<div class="reg-result-desc">' + p.description + '</div>' : '') +
+          '<div class="reg-result-tags">' + tagsHtml + '</div>' +
+          '</div>';
+      }).join('');
+    }
+
+    function regClearSearch() {
+      document.getElementById('regSearchInput').value = '';
+      document.getElementById('regSearchClear').classList.remove('show');
+      regSelectedGenre = '';
+      document.getElementById('regRoomSection').style.display = '';
+      document.getElementById('regResultSection').style.display = 'none';
+      regRenderRooms();
+    }
+
+    const REG_SAMPLES = [
+      { name: '🌀 Hội Yêu Thương Tự Ngược', age: '🔞 Hai Mươi Mập Mờ (Từ 18 đến 25)', note: 'Cứ nghĩ mình không xứng nhưng vẫn mơ được yêu...', symptoms: ['Thích cốt truyện cực ngược'] },
+      { name: '🌧️ Sát Thủ Nhạt Lệ', age: '🌿 Tuổi Thanh Xuân Mơ Màng (Từ 25 đến 30)', note: 'Bước vào những câu chuyện đau lòng chỉ để khóc trong im lặng.', symptoms: ['Rơi vào phố bản kinh dị'] },
+      { name: '🧬 Cuồng Áo Trắng', age: '🔞 Hai Mươi Mập Mờ (Từ 18 đến 25)', note: 'Chỉ muốn tìm một bác sĩ biết nghe và... đẹp trai một chút.', symptoms: ['Trái tim nhảy múa khi gặp bác sĩ'] }
+    ];
+
+    function regFillSample(idx) {
+      const s = REG_SAMPLES[idx];
+      document.getElementById('regName').value = s.name;
+      document.getElementById('regAge').value = s.age;
+      document.getElementById('regNote').value = s.note;
+      document.querySelectorAll('#regSymptomGrid input[type="checkbox"]').forEach(cb => {
+        cb.checked = s.symptoms.some(sym => cb.value.toLowerCase().includes(sym.toLowerCase()));
+      });
+    }
+
+    function regPopulateGenreSelect() {
+      const genres = getGenresForZone(regCurrentZone);
+      const sel = document.getElementById('regGenreSelect');
+      sel.innerHTML = '<option value="">-- Chọn khoa điều trị --</option>' +
+        genres.map(g => '<option value="' + g.name + '">' + (g.icon||'🗂️') + ' ' + g.name + '</option>').join('');
+      const fsel = document.getElementById('regRecordFilter');
+      fsel.innerHTML = '<option value="">🗂️ Tất cả khoa điều trị</option>' +
+        genres.map(g => '<option value="' + g.name + '">' + (g.icon||'') + ' ' + g.name + '</option>').join('');
+    }
+
+    function regSubmitForm() {
+      const name = document.getElementById('regName').value.trim();
+      const age = document.getElementById('regAge').value;
+      const genre = document.getElementById('regGenreSelect').value;
+      const note = document.getElementById('regNote').value.trim();
+      const symptoms = [];
+      document.querySelectorAll('#regSymptomGrid input[type="checkbox"]:checked').forEach(cb => symptoms.push(cb.value));
+      const record = { id: Date.now(), name: name || 'Bệnh nhân ẩn danh', age, genre, note, symptoms, zone: regCurrentZone, date: new Date().toLocaleDateString('vi-VN') };
+      const records = getRegRecords();
+      records.unshift(record);
+      saveRegRecords(records);
+      document.getElementById('regName').value = '';
+      document.getElementById('regAge').value = '';
+      document.getElementById('regGenreSelect').value = '';
+      document.getElementById('regNote').value = '';
+      document.querySelectorAll('#regSymptomGrid input[type="checkbox"]').forEach(cb => cb.checked = false);
+      regUpdateRecordCount();
+      switchRegTab(2);
+    }
+
+    function regUpdateRecordCount() {
+      document.getElementById('regRecordCount').textContent = getRegRecords().length;
+    }
+
+    function regRenderRecords() {
+      const records = getRegRecords();
+      const searchVal = (document.getElementById('regRecordSearch').value || '').trim().toLowerCase();
+      const filterGenre = document.getElementById('regRecordFilter').value;
+      const container = document.getElementById('regRecordList');
+      let filtered = records;
+      if (searchVal) filtered = filtered.filter(r =>
+        (r.name||'').toLowerCase().includes(searchVal) ||
+        (r.genre||'').toLowerCase().includes(searchVal) ||
+        (r.note||'').toLowerCase().includes(searchVal)
+      );
+      if (filterGenre) filtered = filtered.filter(r => r.genre === filterGenre);
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="reg-empty"><div class="reg-empty-icon">🗂️</div>Chưa tìm thấy hồ sơ bệnh án phù hợp 🗂️<br><span style="font-size:0.8rem;opacity:0.6;margin-top:4px;display:block;">Hãy là bệnh nhân đăng ký mở phòng khám mới ngay!</span></div>';
+        return;
+      }
+      container.innerHTML = filtered.map(r => {
+        const zoneBadge = r.zone === 'hospital' ? '🏥 Bệnh Viện' : '💊 Cai Nghiện';
+        const symptomText = (r.symptoms||[]).join(' • ') || '(Không ghi nhận)';
+        return '<div class="reg-record-card" id="rec_' + r.id + '">' +
+          '<div class="reg-record-card-header" onclick="regToggleRecord(' + r.id + ')">' +
+          '<div class="reg-record-card-title">👤 ' + r.name + ' <span class="reg-record-zone-badge">' + zoneBadge + '</span></div>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+          '<span class="reg-record-card-meta">' + (r.date||'') + '</span>' +
+          '<button class="reg-record-delete" onclick="event.stopPropagation();regDeleteRecord(' + r.id + ')">🗑️ Xóa</button>' +
+          '</div></div>' +
+          '<div class="reg-record-body" id="recBody_' + r.id + '">' +
+          '<div class="reg-record-field"><div class="reg-record-field-label">GIAI ĐOẠN TUỔI</div><div class="reg-record-field-value">' + (r.age||'—') + '</div></div>' +
+          '<div class="reg-record-field"><div class="reg-record-field-label">KHOA ĐIỀU TRỊ</div><div class="reg-record-field-value">' + (r.genre||'—') + '</div></div>' +
+          '<div class="reg-record-field"><div class="reg-record-field-label">TRIỆU CHỨNG</div><div class="reg-record-field-value">' + symptomText + '</div></div>' +
+          '<div class="reg-record-field"><div class="reg-record-field-label">LỜI TỰ THUẬT</div><div class="reg-record-field-value">' + (r.note||'(Không có)') + '</div></div>' +
+          '</div></div>';
+      }).join('');
+    }
+
+    function regToggleRecord(id) {
+      const body = document.getElementById('recBody_' + id);
+      if (body) body.classList.toggle('open');
+    }
+
+    function regDeleteRecord(id) {
+      saveRegRecords(getRegRecords().filter(r => r.id !== id));
+      regUpdateRecordCount();
+      regRenderRecords();
+    }
+
   </script>
+
+
+  <!-- ============ PHIẾU ĐĂNG KÝ CHẨN ĐOÁN MODAL ============ -->
+  <div id="regModal">
+    <div class="reg-modal-box">
+      <!-- Header -->
+      <div class="reg-modal-header">
+        <div class="reg-modal-header-left">
+          <div class="reg-modal-icon">🏥</div>
+          <div class="reg-modal-title-block">
+            <h2>🏥 Phiếu Đăng Ký Chẩn Đoán Y Khoa Cố Thị</h2>
+            <p>Nơi chẩn trị rối loạn hoang tưởng, ảo giác và đa vũ trụ chatbot AI.</p>
+          </div>
+        </div>
+        <button class="reg-close-btn" onclick="closeRegModal()">✕</button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="reg-tabs">
+        <button class="reg-tab active" id="regTab0" onclick="switchRegTab(0)">🔍 Tìm Bác Sĩ</button>
+        <button class="reg-tab" id="regTab1" onclick="switchRegTab(1)">📋 Đăng Ký Khám Mới</button>
+        <button class="reg-tab" id="regTab2" onclick="switchRegTab(2)">📒 Sổ Khám (<span id="regRecordCount">0</span>)</button>
+      </div>
+
+      <!-- Tab content -->
+      <div class="reg-tab-content">
+
+        <!-- ===== PANE 0: TÌM BÁC SĨ ===== -->
+        <div class="reg-pane active" id="regPane0">
+          <div class="reg-search-wrap">
+            <span class="reg-search-icon">🔍</span>
+            <input type="text" id="regSearchInput" placeholder="Nhập tên bác sĩ hoặc chuyên khoa..."
+              oninput="regHandleSearch(this.value)" autocomplete="off">
+            <button class="reg-search-clear" id="regSearchClear" onclick="regClearSearch()">Xóa tìm kiếm</button>
+          </div>
+
+          <!-- Sơ đồ phòng (genres) -->
+          <div id="regRoomSection">
+            <div class="reg-section-label">
+              🗺️ SƠ ĐỒ PHÒNG BỆNH ĐA KHOA (NHẤP ĐỂ DUYỆT BÁC SĨ)
+              <span id="regRoomCount"></span>
+            </div>
+            <div class="reg-room-grid" id="regRoomGrid"></div>
+          </div>
+
+          <!-- Kết quả tìm kiếm -->
+          <div id="regResultSection" style="display:none;">
+            <div class="reg-section-label">
+              <span id="regResultLabel">KẾT QUẢ TÌM KIẾM</span>
+            </div>
+            <div class="reg-results-list" id="regResultList"></div>
+          </div>
+        </div>
+
+        <!-- ===== PANE 1: ĐĂNG KÝ KHÁM MỚI ===== -->
+        <div class="reg-pane" id="regPane1">
+          <!-- Mẫu nhanh -->
+          <div class="reg-sample-bar">
+            <div class="reg-sample-label">⚡ NHẬP THỬ MẪU BỆNH ÁN NHANH</div>
+            <div class="reg-sample-btns">
+              <button class="reg-sample-btn" onclick="regFillSample(0)">🌀 HỘI YÊU THƯƠNG TỰ NGƯỢC</button>
+              <button class="reg-sample-btn" onclick="regFillSample(1)">🌧️ SÁT THỦ NHẠT LỆ</button>
+              <button class="reg-sample-btn" onclick="regFillSample(2)">🧬 CUỒNG ÁO TRẮNG</button>
+            </div>
+          </div>
+
+          <!-- Bước 1 -->
+          <div class="reg-form-section-badge">BƯỚC 1: SƠ YẾU LÝ LỊCH BỆNH NHÂN</div>
+          <div class="reg-form-row">
+            <div>
+              <div class="reg-form-label">HỌ TÊN THÂN CHỦ / BIỆT DANH:</div>
+              <input class="reg-form-input" id="regName" type="text" placeholder="Ví dụ: Người Đẹp Hoang Tưởng...">
+            </div>
+            <div>
+              <div class="reg-form-label">GIAI ĐOẠN TUỔI / SINH LỰC:</div>
+              <select class="reg-form-select" id="regAge">
+                <option value="">-- Chọn giai đoạn --</option>
+                <option>🔞 Hai Mươi Mập Mờ (Từ 18 đến 25)</option>
+                <option>🌿 Tuổi Thanh Xuân Mơ Màng (Từ 25 đến 30)</option>
+                <option>🔥 Cứng Đầu Trưởng Thành (Từ 30 đến 40)</option>
+                <option>❓ Bí Ẩn Không Tiết Lộ</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Bước 2 -->
+          <div class="reg-form-section-badge">BƯỚC 2: PHÂN PHÒNG KHÁM BAN ĐẦU</div>
+          <div class="reg-form-row single">
+            <div>
+              <div class="reg-form-label">CHỌN KHOA / CHỦ ĐỀ NGHI NGỜ MẮC PHẢI:</div>
+              <select class="reg-form-select" id="regGenreSelect">
+                <option value="">-- Chọn khoa điều trị --</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Bước 3 -->
+          <div class="reg-form-section-badge">BƯỚC 3: TRIỆU CHỨNG CẬN LÂM SÀNG</div>
+          <div class="reg-checkbox-grid" id="regSymptomGrid">
+            <label class="reg-checkbox-item"><input type="checkbox" value="Thích cốt truyện cực ngược, cầu huyết, thích khóc 🌀"> Thích cốt truyện cực ngược, cầu huyết, thích khóc 🌀</label>
+            <label class="reg-checkbox-item"><input type="checkbox" value="Nghiện ngửi mùi nam chủ, thèm ngọt ngào cưng chiều 🥰"> Nghiện ngửi mùi nam chủ, thèm ngọt ngào cưng chiều 🥰</label>
+            <label class="reg-checkbox-item"><input type="checkbox" value="Rơi vào phố bản kinh dị quỷ dị đầy rẫy quy tắc 💀"> Rơi vào phố bản kinh dị quỷ dị đầy rẫy quy tắc 💀</label>
+            <label class="reg-checkbox-item"><input type="checkbox" value="Thích khám phá đa vũ trụ, anime, du hành 🥏"> Thích khám phá đa vũ trụ, anime, du hành 🥏</label>
+            <label class="reg-checkbox-item"><input type="checkbox" value="Trái tim nhảy múa khi gặp bác sĩ y khoa, pháp y kì bí 🏥"> Trái tim nhảy múa khi gặp bác sĩ y khoa, pháp y kì bí 🏥</label>
+            <label class="reg-checkbox-item"><input type="checkbox" value="Mê lính tráng quân nhân, hình sự đặc vụ siêu ngầu 🪖"> Mê lính tráng quân nhân, hình sự đặc vụ siêu ngầu 🪖</label>
+            <label class="reg-checkbox-item"><input type="checkbox" value="Ảo tưởng ngự kiếm phi thăng, làm vương phi thời cổ đại 🍊"> Ảo tưởng ngự kiếm phi thăng, làm vương phi thời cổ đại 🍊</label>
+            <label class="reg-checkbox-item"><input type="checkbox" value="Thầy giáo nho nhã hoặc streamer mở hồn dở khóc dở cười 🏠"> Thầy giáo nho nhã hoặc streamer mở hồn dở khóc dở cười 🏠</label>
+          </div>
+
+          <!-- Bước 4 -->
+          <div class="reg-form-section-badge">BƯỚC 4: LỜI TỰ THUẬT CỦA THÂN CHỦ</div>
+          <div class="reg-form-row single">
+            <div>
+              <div class="reg-form-label">GHI CHÉP HÀNH VI HOANG TƯỞNG (NẾU CÓ):</div>
+              <textarea class="reg-form-textarea" id="regNote" placeholder="Em lỡ đem lòng thương thầm ông chú hắc bang tổng tài, cả ngày lướt điện thoại nóng đợi chương mới..."></textarea>
+            </div>
+          </div>
+
+          <div class="reg-form-actions">
+            <button class="reg-btn-skip" onclick="closeRegModal()">Bỏ qua khám bệnh</button>
+            <button class="reg-btn-submit" onclick="regSubmitForm()">
+              🩺 Để Bác sĩ Cố khám cho em ngay 💉
+            </button>
+          </div>
+        </div>
+
+        <!-- ===== PANE 2: SỔ KHÁM ===== -->
+        <div class="reg-pane" id="regPane2">
+          <div class="reg-record-search-wrap">
+            <input type="text" id="regRecordSearch" placeholder="🗂️ Tìm theo tên bệnh nhân hoặc kết quả..."
+              oninput="regRenderRecords()">
+            <select class="reg-filter-select" id="regRecordFilter" onchange="regRenderRecords()">
+              <option value="">🗂️ Tất cả khoa điều trị</option>
+            </select>
+          </div>
+          <div id="regRecordList"></div>
+        </div>
+
+      </div><!-- end tab-content -->
+    </div><!-- end reg-modal-box -->
+  </div><!-- end regModal -->
 
 </body>
 </html>
